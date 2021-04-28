@@ -50,6 +50,30 @@ const arrayInit = () => {
         return new ArrayToken(newArr)
     }))
 
+    // Idiom functions
+    module.set("foldl", FunToken.native(toks => {
+        const fun = toks[0]
+        const base = toks[1]
+        const arr = toks[2].request("array")
+        return new ArrayToken(arr.reduce((acc, tok) => fun.call([acc, tok]), base))
+    }))
+    module.set("foldr", FunToken.native(toks => {
+        const fun = toks[0]
+        const base = toks[1]
+        const arr = toks[2].request("array")
+        return new ArrayToken(arr.reverse().reduce((acc, tok) => fun.call([acc, tok]), base))
+    }))
+    module.set("map", FunToken.native(toks => {
+        const fun = toks[0]
+        const arr = toks[1].request("array")
+        return new ArrayToken(arr.map(tok => fun.call([tok])))
+    }))
+    module.set("filter", FunToken.native(toks => {
+        const fun = toks[0]
+        const arr = toks[1].request("array")
+        return new ArrayToken(arr.filter(tok => fun.call([tok]).request("boolean")))
+    }))
+
     // Assigning
     // vars.setVar("Array", new StructToken(module), true)
     return new StructToken(module)

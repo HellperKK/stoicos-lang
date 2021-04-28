@@ -2,6 +2,7 @@ import nearley from "nearley"
 import grammar from "./grammar"
 import prelude from "./definitions/prelude"
 import VarManager from "./manager/VarManager"
+import colorize from "./syntax"
 
 const body = document.body
 
@@ -10,18 +11,52 @@ compileButton.innerText = "compile"
 body.appendChild(compileButton)
 body.appendChild(document.createElement("br"))
 
+const editorDiv = document.createElement("div")
+editorDiv.classList.add("editor-main")
+body.appendChild(editorDiv)
 
 const inputArea = document.createElement("textarea")
-inputArea.cols = 90
 inputArea.rows = 40
 inputArea.placeholder = "your code here..."
-body.appendChild(inputArea)
+inputArea.classList.add("editor-writer")
+inputArea.spellcheck = false
+editorDiv.appendChild(inputArea)
+
+const renderElement = document.createElement("code")
+renderElement.classList.add("editor-render")
+editorDiv.appendChild(renderElement)
+
+inputArea.addEventListener("input", function (e) {
+    renderElement.innerHTML = ""
+    const nodes = colorize(this.value)
+    nodes.forEach(node => renderElement.appendChild(node))
+})
+
+inputArea.addEventListener("keydown", function (e: KeyboardEvent) {
+    if (e.key === "Tab") {
+        const ev = new InputEvent("input", {
+            inputType: "insertText",
+            data: "    ",
+            isComposing: false
+        })
+        this.dispatchEvent(ev)
+        e.preventDefault()
+    }
+})
+
+inputArea.addEventListener("scroll", function (e: UIEvent) {
+    renderElement.style.top = `${-this.scrollTop}px`
+})
+
+const parentDiv = document.createElement("div")
+body.appendChild(parentDiv)
 
 const outputArea = document.createElement("textarea")
 outputArea.cols = 90
 outputArea.rows = 40
 outputArea.placeholder = "your result here..."
-body.appendChild(outputArea)
+outputArea.spellcheck = false
+parentDiv.appendChild(outputArea)
 
 compileButton.addEventListener("click", () => {
     outputArea.value = ""

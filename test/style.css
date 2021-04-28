@@ -1,0 +1,62 @@
+.editor-main {
+    position: relative;
+    overflow: hidden;
+    color: #d1d1d1;
+    background-color: #181716;
+}
+
+.editor-render,
+.editor-writer {
+    font-family: monospace;
+    display: block;
+}
+
+.editor-render {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 8px;
+}
+
+.editor-writer {
+    position:relative;
+    color: transparent;
+    background-color: transparent;
+    border: none;
+    caret-color: #d1d1d1;
+    padding: 5px 6px;
+    margin: 4px 0;
+    width: 100%;
+    resize: none;
+    overflow: auto;
+    z-index: 10;
+    outline: none;
+}
+
+.editor-render .token-comment {
+    color: #6e6e6e;
+}
+
+.editor-render .token-symbol {
+    color: #4adac4;
+}
+
+.editor-render .token-ident {
+    color: #4a60da;
+}
+
+.editor-render .token-operator {
+    color: #da4a4a;
+}
+
+.editor-render .token-number {
+    color: #4fda4a;
+}
+
+.editor-render .token-string {
+    color: #daa34a;
+}
+
+.editor-render .token-space {
+    color: transparent;
+}
