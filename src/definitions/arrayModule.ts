@@ -1,5 +1,3 @@
-import { isTemplateExpression } from "typescript"
-import VarManager from "../manager/VarManager"
 import ArrayToken from "../tokens/ArrayToken"
 import BaseToken from "../tokens/BaseToken"
 import FunToken from "../tokens/FunToken"

@@ -1,11 +1,9 @@
-import { isTemplateExpression } from "typescript"
 import StringToken from "../tokens/StringToken"
 import ArrayToken from "../tokens/ArrayToken"
 import BaseToken from "../tokens/BaseToken"
 import FunToken from "../tokens/FunToken"
 import StructToken from "../tokens/StructToken"
 import NumberToken from "../tokens/NumberToken"
-import BoolToken from "../tokens/BoolToken"
 
 const stringInit = () => {
     const module = new Map<String, BaseToken>()
