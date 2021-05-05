@@ -3,6 +3,7 @@ import FunToken from "../tokens/FunToken"
 import NumberToken from "../tokens/NumberToken"
 import BoolToken from "../tokens/BoolToken"
 import arrayInit from "./arrayModule"
+import stringInit from "./stringModule"
 
 const prelude = () => {
     const stdOut = { content: "" }
@@ -14,6 +15,9 @@ const prelude = () => {
         switch (mod) {
             case "Array":
                 return arrayInit()
+
+            case "String":
+                return stringInit()
 
             default:
                 throw new Error(`unknown module ${mod}`)

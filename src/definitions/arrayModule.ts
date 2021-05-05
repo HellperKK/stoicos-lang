@@ -5,9 +5,10 @@ import BaseToken from "../tokens/BaseToken"
 import FunToken from "../tokens/FunToken"
 import StructToken from "../tokens/StructToken"
 import NumberToken from "../tokens/NumberToken"
+import BoolToken from "../tokens/BoolToken"
+import StringToken from "../tokens/StringToken"
 
 const arrayInit = () => {
-    //const vars = VarManager.get()
     const module = new Map<String, BaseToken>()
 
     // Building functions
@@ -73,6 +74,51 @@ const arrayInit = () => {
         const arr = toks[1].request("array")
         return new ArrayToken(arr.filter(tok => fun.call([tok]).request("boolean")))
     }))
+
+    // Check functions
+    module.set("include", FunToken.native(toks => {
+        const val = toks[0]
+        const arr: Array<BaseToken> = toks[1].request("array")
+        return new BoolToken(arr.some(tok => tok.compare(val) == 0))
+    }))
+    module.set("any", FunToken.native(toks => {
+        const fun = toks[0]
+        const arr: Array<BaseToken> = toks[1].request("array")
+        return new BoolToken(arr.some(tok => fun.call([tok]).request("bool")))
+    }))
+    module.set("all", FunToken.native(toks => {
+        const fun = toks[0]
+        const arr: Array<BaseToken> = toks[1].request("array")
+        return new BoolToken(arr.every(tok => fun.call([tok]).request("bool")))
+    }))
+
+    // Extracting functions
+    module.set("get", FunToken.native(toks => {
+        const ind = toks[0].request("number")
+        const arr: Array<BaseToken> = toks[1].request("array")
+        return arr[ind]
+    }))
+    module.set("slice", FunToken.native(toks => {
+        const min = toks[0].request("number")
+        const max = toks[1].request("number")
+        const arr: Array<BaseToken> = toks[2].request("array")
+        return new ArrayToken(arr.slice(min, max))
+    }))
+    module.set("sub", FunToken.native(toks => {
+        const min = toks[0].request("number")
+        const len = toks[1].request("number")
+        const arr: Array<BaseToken> = toks[2].request("array")
+        return new ArrayToken(arr.slice(min, min + len))
+    }))
+
+    // Other functions
+    module.set("sub", FunToken.native(toks => {
+        const sep = toks[0].request("string")
+        const arr: Array<BaseToken> = toks[2].request("array")
+        const str = arr.map(tok => tok.request("string")).join(sep)
+        return new StringToken(str)
+    }))
+
 
     // Assigning
     // vars.setVar("Array", new StructToken(module), true)
