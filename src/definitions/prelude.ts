@@ -148,6 +148,18 @@ const prelude = () => {
         return new BoolToken(tok.compare(other) !== -1)
     }), true)
 
+    // Logical operation
+    vars.setVar("&&", FunToken.native(toks => {
+        const bool = toks[0].request("bool")
+        const boolb = toks[1].request("bool")
+        return new NumberToken(bool && boolb)
+    }), true)
+    vars.setVar("||", FunToken.native(toks => {
+        const bool = toks[0].request("bool")
+        const boolb = toks[1].request("bool")
+        return new NumberToken(bool || boolb)
+    }), true)
+
     return stdOut
 }
 

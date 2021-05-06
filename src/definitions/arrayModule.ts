@@ -110,11 +110,16 @@ const arrayInit = () => {
     }))
 
     // Other functions
-    module.set("sub", FunToken.native(toks => {
+    module.set("join", FunToken.native(toks => {
         const sep = toks[0].request("string")
         const arr: Array<BaseToken> = toks[2].request("array")
         const str = arr.map(tok => tok.request("string")).join(sep)
         return new StringToken(str)
+    }))
+    module.set("concat", FunToken.native(toks => {
+        const arr = toks[0].request("array")
+        const arrb = toks[1].request("array")
+        return new ArrayToken(arr.concat(arrb))
     }))
 
 

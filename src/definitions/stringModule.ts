@@ -52,6 +52,11 @@ const stringInit = () => {
         const strs = str.split(sep).map(str => new StringToken(str))
         return new ArrayToken(strs)
     }))
+    module.set("concat", FunToken.native(toks => {
+        const str = toks[0].request("string")
+        const strb = toks[1].request("string")
+        return new StringToken(str + strb)
+    }))
 
     return new StructToken(module)
 }
