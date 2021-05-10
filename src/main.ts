@@ -6,17 +6,21 @@ import colorize from "./syntax"
 
 const body = document.body
 
+
+const gridDiv = document.createElement("div")
+gridDiv.classList.add("editor-grid")
+body.appendChild(gridDiv)
+
 const compileButton = document.createElement("button")
-compileButton.innerText = "compile"
-body.appendChild(compileButton)
-body.appendChild(document.createElement("br"))
+compileButton.innerText = "run"
+gridDiv.appendChild(compileButton)
+//body.appendChild(document.createElement("br"))
 
 const editorDiv = document.createElement("div")
 editorDiv.classList.add("editor-main")
-body.appendChild(editorDiv)
+gridDiv.appendChild(editorDiv)
 
 const inputArea = document.createElement("textarea")
-inputArea.rows = 40
 inputArea.placeholder = "your code here..."
 inputArea.classList.add("editor-writer")
 inputArea.spellcheck = false
@@ -49,13 +53,19 @@ inputArea.addEventListener("scroll", function (e: UIEvent) {
 })
 
 const parentDiv = document.createElement("div")
+parentDiv.classList.add("result-modal", "hidden")
+parentDiv.addEventListener("click", function () {
+    this.classList.add("hidden")
+})
 body.appendChild(parentDiv)
 
 const outputArea = document.createElement("textarea")
-outputArea.cols = 90
-outputArea.rows = 40
-outputArea.placeholder = "your result here..."
 outputArea.spellcheck = false
+outputArea.readOnly = true
+outputArea.classList.add("result-out")
+outputArea.addEventListener("click", function (e) {
+    e.stopPropagation()
+})
 parentDiv.appendChild(outputArea)
 
 compileButton.addEventListener("click", () => {
@@ -80,6 +90,7 @@ compileButton.addEventListener("click", () => {
         results[0].forEach(token => token && token.get())
 
         outputArea.value = stdOut.content
+        parentDiv.classList.remove("hidden")
         console.log(JSON.stringify(results[0], null, 4))
     } catch (error) {
         outputArea.value += "\n\n---------------\n\n" + error.message
