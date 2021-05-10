@@ -54,7 +54,7 @@ inputArea.addEventListener("scroll", function (e: UIEvent) {
 
 const parentDiv = document.createElement("div")
 parentDiv.classList.add("result-modal", "hidden")
-parentDiv.addEventListener("click", function () {
+parentDiv.addEventListener("mousedown", function () {
     this.classList.add("hidden")
 })
 body.appendChild(parentDiv)
@@ -63,7 +63,7 @@ const outputArea = document.createElement("textarea")
 outputArea.spellcheck = false
 outputArea.readOnly = true
 outputArea.classList.add("result-out")
-outputArea.addEventListener("click", function (e) {
+outputArea.addEventListener("mousedown", function (e) {
     e.stopPropagation()
 })
 parentDiv.appendChild(outputArea)
