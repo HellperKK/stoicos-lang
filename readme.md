@@ -22,10 +22,10 @@ Here are a few examples of what it can do
 ; The good old hello world
 (println "Hello world!")
 
-; Defines a variables named age
+; Defines a variable named age
 (def :age 42)
 
-; Defines a function that does an equation then prints is
+; Defines a function that does an equation then prints it
 (deffun :squared [:x] {(* x x)})
 (println (squared 12)) ; 144
 
