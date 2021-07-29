@@ -3,7 +3,7 @@
 ## definition
 
 The stoicos language is an interpreted, functionnal, imperative and object-oriented programming language.
-It is inpired from many programming languages such as :
+It is inspired from many programming languages such as :
 - OCaml
 - Python
 - Ruby
