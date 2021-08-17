@@ -70,6 +70,8 @@ parentDiv.appendChild(outputArea)
 
 compileButton.addEventListener("click", () => {
     outputArea.value = ""
+
+    VarManager.clean()
     const stdOut = prelude()
 
     try {
@@ -97,5 +99,5 @@ compileButton.addEventListener("click", () => {
         throw error
     }
 
-    VarManager.clean()
+    //console.log(VarManager.get())
 })

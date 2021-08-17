@@ -9,7 +9,7 @@ export default class ArrayToken extends BaseToken {
     }
 
     public update() {
-        this.value.forEach(tok => tok.update())
+        return new ArrayToken(this.value.map(tok => tok.update()))
     }
 
     public request(type: "array"): Array<BaseToken> {

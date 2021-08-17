@@ -12,7 +12,7 @@ export default class FunToken extends BaseToken {
             const vars = VarManager.get()
             vars.addStack()
             args.forEach((sym, pos) => vars.setVar(sym.request("symbol"), toks[pos], false))
-            block.update()
+            block = block.update()
             const ret = block.calculate()
             vars.delStack()
             return ret

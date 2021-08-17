@@ -14,7 +14,6 @@ export default class CallToken extends BaseToken {
     }
 
     public update() {
-        this.value.update()
-        this.args.forEach(tok => tok.update())
+        return new CallToken(this.value.update(), this.args.map(tok => tok.update()))
     }
 }

@@ -4,6 +4,7 @@ import NumberToken from "../tokens/NumberToken"
 import BoolToken from "../tokens/BoolToken"
 import arrayInit from "./arrayModule"
 import stringInit from "./stringModule"
+import structInit from "./structModule"
 
 const prelude = () => {
     const stdOut = { content: "" }
@@ -19,6 +20,9 @@ const prelude = () => {
             case "String":
                 return stringInit()
 
+            case "Struct":
+                return structInit()
+
             default:
                 throw new Error(`unknown module ${mod}`)
         }
@@ -26,9 +30,9 @@ const prelude = () => {
 
 
     // Constants
-    vars.setVar("unit", VarManager.unit, true)
-    vars.setVar("true", new BoolToken(true), true)
-    vars.setVar("false", new BoolToken(false), true)
+    vars.setVar("unit", VarManager.unit, false)
+    vars.setVar("true", new BoolToken(true), false)
+    vars.setVar("false", new BoolToken(false), false)
 
     // Conditionnals
     vars.setVar("if", FunToken.native(toks => {
@@ -56,6 +60,7 @@ const prelude = () => {
     }), true)
     vars.setVar("debug", FunToken.native(toks => {
         stdOut.content += JSON.stringify(toks[0]) + "\n"
+        console.log(toks[0])
         return VarManager.unit
     }), true)
     /*vars.setVar("stack", FunToken.native(toks => {
@@ -158,6 +163,12 @@ const prelude = () => {
         const bool = toks[0].request("bool")
         const boolb = toks[1].request("bool")
         return new NumberToken(bool || boolb)
+    }), true)
+
+    // Miscs
+    vars.setVar("eval", FunToken.native(toks => {
+        const block = toks[0]
+        return block.calculate()
     }), true)
 
     return stdOut
