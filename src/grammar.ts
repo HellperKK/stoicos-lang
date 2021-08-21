@@ -1,4 +1,4 @@
-// Generated automatically by nearley, version 2.19.7
+// Generated automatically by nearley, version 2.20.1
 // http://github.com/Hardmath123/nearley
 // Bypasses TS6133. Allow declared but unused functions.
 // @ts-ignore
@@ -42,6 +42,7 @@ const lexer = moo.compile({
   hash: /#/,
   dot: /\./,
   colon: /:/,
+  singleQuote: /'/,
 
   // group symbols
   openPar: /\(/,
@@ -61,7 +62,8 @@ const lexer = moo.compile({
   ws: {match: /\s+/, lineBreaks: true}
 });
 
-interface NearleyToken {  value: any;
+interface NearleyToken {
+  value: any;
   [key: string]: any;
 };
 
@@ -69,7 +71,7 @@ interface NearleyLexer {
   reset: (chunk: string, info: any) => void;
   next: () => NearleyToken | undefined;
   save: () => any;
-  formatError: (token: NearleyToken) => string;
+  formatError: (token: never) => string;
   has: (tokenType: string) => boolean;
 };
 
@@ -111,6 +113,7 @@ const grammar: Grammar = {
     {"name": "curried", "symbols": [(lexer.has("arobase") ? {type: "arobase"} : arobase), "value"], "postprocess": function(arr) { return { type: "curried", value: arr[1] } }},
     {"name": "macro", "symbols": [(lexer.has("dollar") ? {type: "dollar"} : dollar), "value"], "postprocess": function(arr) { return { type: "macro", value: arr[1] } }},
     {"name": "block", "symbols": [(lexer.has("openCur") ? {type: "openCur"} : openCur), "_", "vallist", "_", (lexer.has("closeCur") ? {type: "closeCur"} : closeCur)], "postprocess": arr => new BlockToken(arr[2].filter(x => x))},
+    {"name": "block", "symbols": [(lexer.has("colon") ? {type: "colon"} : colon), "phrase"], "postprocess": arr => new BlockToken([arr[1]])},
     {"name": "array", "symbols": [(lexer.has("openSqu") ? {type: "openSqu"} : openSqu), "_", "vallist", "_", (lexer.has("closeSqu") ? {type: "closeSqu"} : closeSqu)], "postprocess": arr => new ArrayModelToken(arr[2].filter(x => x))},
     {"name": "name", "symbols": [(lexer.has("ident") ? {type: "ident"} : ident)], "postprocess": id},
     {"name": "name", "symbols": [(lexer.has("operator") ? {type: "operator"} : operator)], "postprocess": id},

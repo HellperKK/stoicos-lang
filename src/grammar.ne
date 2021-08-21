@@ -21,6 +21,7 @@ const lexer = moo.compile({
   hash: /#/,
   dot: /\./,
   colon: /:/,
+  singleQuote: /'/,
 
   // group symbols
   openPar: /\(/,
@@ -75,6 +76,7 @@ curried -> %arobase value {% function(arr) { return { type: "curried", value: ar
 macro -> %dollar value {% function(arr) { return { type: "macro", value: arr[1] } } %}
 
 block -> %openCur _ vallist _ %closeCur {% arr => new BlockToken(arr[2].filter(x => x)) %}
+        | %colon phrase {% arr => new BlockToken([arr[1]]) %}
 
 array -> %openSqu _ vallist _ %closeSqu {% arr => new ArrayModelToken(arr[2].filter(x => x)) %}
 
