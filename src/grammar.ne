@@ -35,7 +35,7 @@ const lexer = moo.compile({
   number: { match:/\d+\.?\d*/, value: str => parseFloat(str) },
   string: { match:/"(?:[^"]|\\")*"/, value: str => str.slice(1, -1) },
   ident: /[A-Za-z_][A-Za-z0-9_]*/,
-  operator: /[!%&*+./<=>?^|\-~:]+/,
+  operator: /[!%&*+./<=>?^|\-~]+/,
 
   // spaces
   ws: {match: /\s+/, lineBreaks: true}
