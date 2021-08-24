@@ -101,3 +101,13 @@ body {
 .hidden {
     display: none;
 }
+
+.button-run {
+    border: none;
+    border-radius: 0;
+    background-color: #ccc;
+}
+
+.button-run:hover {
+    background-color: #ddd;
+}

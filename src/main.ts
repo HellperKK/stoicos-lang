@@ -13,6 +13,7 @@ body.appendChild(gridDiv)
 
 const compileButton = document.createElement("button")
 compileButton.innerText = "run"
+compileButton.classList.add("button-run")
 gridDiv.appendChild(compileButton)
 //body.appendChild(document.createElement("br"))
 
