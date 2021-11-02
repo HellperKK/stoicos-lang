@@ -21,7 +21,11 @@ export default class VarToken extends BaseToken {
 
     public update() {
         try {
-            this.current = VarManager.get().getVar(this.value)
-        } catch (error) { }
+            const newVar = new VarToken(this.value)
+            newVar.current = VarManager.get().getVar(this.value)
+            return newVar
+        } catch (error) { 
+            return this
+        }
     }
 }

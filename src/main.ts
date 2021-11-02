@@ -13,6 +13,7 @@ body.appendChild(gridDiv)
 
 const compileButton = document.createElement("button")
 compileButton.innerText = "run"
+compileButton.classList.add("button-run")
 gridDiv.appendChild(compileButton)
 //body.appendChild(document.createElement("br"))
 
@@ -70,6 +71,8 @@ parentDiv.appendChild(outputArea)
 
 compileButton.addEventListener("click", () => {
     outputArea.value = ""
+
+    VarManager.clean()
     const stdOut = prelude()
 
     try {
@@ -97,5 +100,5 @@ compileButton.addEventListener("click", () => {
         throw error
     }
 
-    VarManager.clean()
+    //console.log(VarManager.get())
 })

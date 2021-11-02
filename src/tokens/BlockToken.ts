@@ -9,7 +9,7 @@ export default class BlockToken extends BaseToken {
     }
 
     public update() {
-        this.value.forEach(tok => tok.update())
+        return new BlockToken(this.value.map(tok => tok.update()))
     }
 
     public calculate() {

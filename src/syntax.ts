@@ -7,7 +7,7 @@ const tokener = (type, content) => {
 
 const colorize = code => {
     const children = []
-    const rule = /(;.*)|("(?:[^"]|\\")*")|(:[A-Za-z_][A-Za-z0-9_]*)|([A-Za-z_][A-Za-z0-9_]*)|([!%&*+.\/<=>?^|\-~:]+)|(\d+\.?\d*)|(\n)|([^ ;":\n\w!%&*+./<=>?^|\-~:]+)|( +)/g
+    const rule = /(;.*)|("(?:[^"]|\\")*")|(:[A-Za-z_][A-Za-z0-9_]*)|([A-Za-z_][A-Za-z0-9_]*)|([!%&*+.\/<=>?^|\-~]+)|(\d+\.?\d*)|(\n)|([^ ]+?)|( +?)/g
     // code = code.replace(/\t+/g, code => " ".repeat(code.length * 4))
     code.replace(rule, (...args) => {
         if (args[1]) children.push(tokener("comment", args[1]))

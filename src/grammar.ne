@@ -21,6 +21,7 @@ const lexer = moo.compile({
   hash: /#/,
   dot: /\./,
   colon: /:/,
+  singleQuote: /'/,
 
   // group symbols
   openPar: /\(/,
@@ -34,7 +35,7 @@ const lexer = moo.compile({
   number: { match:/\d+\.?\d*/, value: str => parseFloat(str) },
   string: { match:/"(?:[^"]|\\")*"/, value: str => str.slice(1, -1) },
   ident: /[A-Za-z_][A-Za-z0-9_]*/,
-  operator: /[!%&*+./<=>?^|\-~:]+/,
+  operator: /[!%&*+./<=>?^|\-~]+/,
 
   // spaces
   ws: {match: /\s+/, lineBreaks: true}
@@ -74,9 +75,10 @@ curried -> %arobase value {% function(arr) { return { type: "curried", value: ar
 
 macro -> %dollar value {% function(arr) { return { type: "macro", value: arr[1] } } %}
 
-block -> %openCur _ vallist _ %closeCur {% arr => new BlockToken(arr[2].filter(x => x)) %}
+block -> %openCur _ vallist:? _ %closeCur {% arr => new BlockToken((arr[2] ?? []).filter(x => x)) %}
+        | %colon phrase {% arr => new BlockToken([arr[1]]) %}
 
-array -> %openSqu _ vallist _ %closeSqu {% arr => new ArrayModelToken(arr[2].filter(x => x)) %}
+array -> %openSqu _ vallist:? _ %closeSqu {% arr => new ArrayModelToken((arr[2] ?? []).filter(x => x)) %}
 
 name -> %ident {% id %}
         | %operator {% id %}

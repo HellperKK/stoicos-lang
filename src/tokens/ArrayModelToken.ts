@@ -10,7 +10,7 @@ export default class ArrayModelToken extends BaseToken {
     }
 
     public update() {
-        this.value.forEach(tok => tok.update())
+        return new ArrayModelToken(this.value.map(tok => tok.update())) as BaseToken
     }
 
     public get() {

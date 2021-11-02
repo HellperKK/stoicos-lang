@@ -57,5 +57,7 @@ export default class BaseToken {
         }
     }
 
-    public update() { }
+    public update() { 
+        return this as BaseToken;
+    }
 }

@@ -61,8 +61,7 @@ export default class VarManager {
     }
 
     public delStack() {
-        if (this.dicts.length <= 1) throw new Error("Max stack reached")
-
+        if (this.dicts.length <= 1) throw new Error("Min stack reached")
         return this.dicts.shift()
     }
 

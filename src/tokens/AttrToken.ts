@@ -20,7 +20,12 @@ export default class AttrToken extends VarToken {
 
     public update() {
         try {
-            this.current = VarManager.get().getVar(this.value)
-        } catch (error) { }
+            const newAttr = new AttrToken(this.value, this.attrs)
+            let tok = super.get()
+            newAttr.current = this.attrs.reduce((tok, attr) => tok.request("struct").get(attr), tok)
+            return newAttr
+        } catch (error) { 
+            return this
+        }
     }
 }
