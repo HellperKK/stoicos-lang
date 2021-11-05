@@ -1,0 +1,27 @@
+.tokenComment {
+  color: #6e6e6e;
+}
+
+.tokenSymbol {
+  color: #4adac4;
+}
+
+.tokenIdent {
+  color: #4a60da;
+}
+
+.tokenOperator {
+  color: #da4a4a;
+}
+
+.tokenNumber {
+  color: #4fda4a;
+}
+
+.tokenString {
+  color: #daa34a;
+}
+
+.tokenSpace {
+  color: transparent;
+}
