@@ -26,7 +26,7 @@ interface CompProps {
 }
 
 const initialValue: Descendant[] = [
-  { type: 'neutral', children: [{ text: 'hi' }] },
+  { type: 'neutral', children: [{ text: '' }] },
 ];
 
 const getLength = (token: any) => {
@@ -134,7 +134,7 @@ function CodeHighlightingExample(props: CompProps) {
         onKeyDown={(e) => {
           if (e.key === 'Tab') {
             e.preventDefault();
-            editor.insertText('   ');
+            editor.insertText(' '.repeat(4));
           }
         }}
         placeholder="Write some code..."
