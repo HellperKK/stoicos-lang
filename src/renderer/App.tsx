@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -17,6 +18,7 @@ export default function App() {
   const [resultOpened, setResultOpened] = useState(false);
 
   const evaluate = () => {
+    console.log(code);
     setOutput('');
 
     VarManager.clean();
@@ -39,7 +41,6 @@ export default function App() {
       results[0].forEach((token: any) => token && token.get());
 
       setOutput(stdOut.content);
-      // eslint-disable-next-line no-console
       console.log(JSON.stringify(results[0], null, 4));
     } catch (error: any) {
       setOutput(

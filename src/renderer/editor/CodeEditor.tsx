@@ -40,7 +40,7 @@ const getLength = (token: any) => {
 };
 
 const nodesString = (nodes: Array<Descendant>) =>
-  nodes.map((n) => Node.string(n)).join('');
+  nodes.map((n) => Node.string(n)).join('\n');
 
 const Leaf = ({ attributes, children, leaf }: any) => {
   return (
