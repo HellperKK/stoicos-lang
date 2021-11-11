@@ -62,7 +62,7 @@ export default function App() {
       `}
     >
       <button type="button" onClick={evaluate}>
-        Hello
+        Run
       </button>
       <CodeEditor setCode={setCode} />
       <div

@@ -45,6 +45,7 @@ const nodesString = (nodes: Array<Descendant>) =>
 const Leaf = ({ attributes, children, leaf }: any) => {
   return (
     <span
+      spellCheck={false}
       {...attributes}
       className={css`
         font-family: monospace;
