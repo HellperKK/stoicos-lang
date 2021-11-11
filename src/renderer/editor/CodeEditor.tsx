@@ -1,97 +1,129 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
-import nearley from 'nearley';
-import { colorize } from './highlighter';
-import renderElement from './syntaxNodes';
-import grammar from '../../language/grammar';
-import prelude from '../../language/definitions/prelude';
-import VarManager from '../../language/manager/VarManager';
+import React, { useState, useCallback, useMemo } from 'react';
+import { Slate, Editable, withReact, ReactEditor } from 'slate-react';
+import { Text, createEditor, Descendant, BaseEditor } from 'slate';
+import { withHistory } from 'slate-history';
+import { css } from '@emotion/css';
 
-declare module 'nearley' {}
+import { CustomBlock, colorize } from './highlighter';
 
-function CodeEditor() {
-  const [code, setCode] = useState('');
-  const [output, setOutput] = useState('');
-  const [scroll, setScroll] = useState(0);
-  const [resultOpened, setResultOpened] = useState(false);
-  const cololorized = colorize(code).map(renderElement);
+type CustomText = { text: string };
+type CustomElement = { type: CustomBlock; children: CustomText[] };
 
-  const evaluate = () => {
-    setOutput('');
-
-    VarManager.clean();
-    const stdOut = prelude();
-
-    try {
-      const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
-      const trees = parser.feed(code);
-      const { results } = trees;
-
-      if (results.length === 0) {
-        throw new Error('no result');
-      }
-
-      /* if (results.length > 1) {
-            console.log(results)
-            throw new Error("too much results")
-        } */
-
-      results[0].forEach((token: any) => token && token.get());
-
-      setOutput(stdOut.content);
-      // eslint-disable-next-line no-console
-      console.log(JSON.stringify(results[0], null, 4));
-    } catch (error: any) {
-      setOutput(
-        (currentOutput: string) =>
-          `${currentOutput}\n\n---------------\n\n${error.message}`
-      );
-      throw error;
-    }
-    setResultOpened(true);
-
-    // console.log(VarManager.get())
-  };
-
-  return (
-    <div>
-      <div className="editor-grid">
-        <button type="button" className="button-run" onClick={evaluate}>
-          run
-        </button>
-        <div className="editor-main">
-          <textarea
-            className="editor-writer"
-            placeholder="your code here..."
-            spellCheck="false"
-            onChange={(e) => setCode(e.target.value)}
-            onScroll={(e) =>
-              setScroll((e.target as HTMLTextAreaElement).scrollTop)
-            }
-            value={code}
-          />
-          <code className="editor-render" style={{ top: `-${scroll}px` }}>
-            {cololorized}
-          </code>
-        </div>
-      </div>
-      <div
-        className={resultOpened ? 'result-modal' : 'result-modal hidden'}
-        onClick={() => setResultOpened(false)}
-      >
-        <textarea
-          className="result-out"
-          spellCheck="false"
-          readOnly
-          onClick={(e) => e.stopPropagation()}
-          value={output}
-        />
-      </div>
-    </div>
-  );
+declare module 'slate' {
+  interface CustomTypes {
+    Editor: BaseEditor & ReactEditor;
+    Element: CustomElement;
+    Text: CustomText;
+  }
 }
 
-export default CodeEditor;
+const initialValue: Descendant[] = [
+  { type: 'neutral', children: [{ text: 'hi' }] },
+];
+
+const getLength = (token: any) => {
+  if (typeof token === 'string') {
+    return token.length;
+  }
+  if (typeof token.content === 'string') {
+    return token.content.length;
+  }
+  return token.content.reduce((l: any, t: any) => l + getLength(t), 0);
+};
+
+const Leaf = ({ attributes, children, leaf }: any) => {
+  return (
+    <span
+      {...attributes}
+      className={css`
+        font-family: monospace;
+
+        ${leaf.symbol &&
+        css`
+          color: #4adac4;
+        `}
+
+        ${leaf.string &&
+        css`
+          color: #daa34a;
+        `}
+        ${leaf.ident &&
+        css`
+          color: #4a60da;
+        `}
+        ${leaf.operator &&
+        css`
+          color: #da4a4a;
+        `}
+        ${leaf.number &&
+        css`
+          color: #4fda4a;
+        `}
+        ${leaf.neutral &&
+        css`
+          color: white;
+        `}
+      `}
+    >
+      {children}
+    </span>
+  );
+};
+
+const CodeHighlightingExample = () => {
+  const [value, setValue] = useState<Descendant[]>(initialValue);
+  const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
+  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+
+  const decorate = useCallback(([node, path]) => {
+    const ranges: Array<any> = [];
+    if (!Text.isText(node)) {
+      return ranges;
+    }
+    const tokens = colorize(node.text);
+    let start = 0;
+
+    tokens.forEach((token) => {
+      const length = getLength(token);
+      const end = start + length;
+
+      if (typeof token !== 'string') {
+        ranges.push({
+          [token.type]: true,
+          anchor: { path, offset: start },
+          focus: { path, offset: end },
+        });
+      }
+
+      start = end;
+    });
+
+    return ranges;
+  }, []);
+
+  return (
+    <Slate editor={editor} value={value} onChange={(val) => setValue(val)}>
+      <Editable
+        decorate={decorate}
+        renderLeaf={renderLeaf}
+        className={css`
+          background-color: #181716;
+          padding: 4px 8px;
+        `}
+        onKeyDown={(e) => {
+          if (e.key === 'Tab') {
+            e.preventDefault();
+            editor.insertText('   ');
+          }
+        }}
+        placeholder="Write some code..."
+      />
+    </Slate>
+  );
+};
+
+export default CodeHighlightingExample;
