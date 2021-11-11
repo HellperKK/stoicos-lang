@@ -10,17 +10,6 @@ const structInit = () => {
   const module = new Map<string, BaseToken>();
 
   // Building functions
-  /* module.set("make", FunToken.native(toks => {
-        const vars = VarManager.get()
-        let block = toks[0]
-        vars.addStack()
-        block = block.update()
-        block.calculate()
-        const stack = vars.getStack()
-        vars.delStack()
-        const struct = new Map(Array.from(stack.entries()).map(pair => [pair[0], pair[1].getVal()]))
-        return new StructToken(struct)
-    })) */
   module.set(
     'make',
     FunToken.native((toks) => {

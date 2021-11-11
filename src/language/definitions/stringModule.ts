@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import StringToken from '../tokens/StringToken';
 import ArrayToken from '../tokens/ArrayToken';
 import BaseToken from '../tokens/BaseToken';
@@ -76,6 +77,35 @@ const stringInit = () => {
       const str = toks[0].request('string');
       const strb = toks[1].request('string');
       return new StringToken(str + strb);
+    })
+  );
+  module.set(
+    'replace',
+    FunToken.native((toks) => {
+      const str = toks[0].request('string');
+      const strb = toks[1].request('string');
+      const strt = toks[2].request('string');
+      return new StringToken(strt.replace(str, strb));
+    })
+  );
+  module.set(
+    'replace_all',
+    FunToken.native((toks) => {
+      const str = toks[0].request('string');
+      const strb = toks[1].request('string');
+      const strt = toks[2].request('string');
+      return new StringToken(strt.replaceAll(str, strb));
+    })
+  );
+  module.set(
+    'format',
+    FunToken.native((toks) => {
+      const str: string = toks[0].request('string');
+      const vals: Array<BaseToken> = toks[1].request('array');
+      const res = str.replaceAll(/\{(\d+)\}/g, (_total, sub) =>
+        vals[parseInt(sub, 10)].request('string')
+      );
+      return new StringToken(res);
     })
   );
 

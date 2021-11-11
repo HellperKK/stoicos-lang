@@ -2,6 +2,7 @@ import VarManager from '../manager/VarManager';
 import FunToken from '../tokens/FunToken';
 import NumberToken from '../tokens/NumberToken';
 import BoolToken from '../tokens/BoolToken';
+import BaseToken from '../tokens/BaseToken';
 import arrayInit from './arrayModule';
 import stringInit from './stringModule';
 import structInit from './structModule';
@@ -15,19 +16,25 @@ const prelude = () => {
     'import',
     FunToken.native((toks) => {
       const mod = toks[0].request('symbol');
+      let val: BaseToken;
       switch (mod) {
         case 'Array':
-          return arrayInit();
+          val = arrayInit();
+          break;
 
         case 'String':
-          return stringInit();
+          val = stringInit();
+          break;
 
         case 'Struct':
-          return structInit();
+          val = structInit();
+          break;
 
         default:
           throw new Error(`unknown module ${mod}`);
       }
+      VarManager.get().setVar(mod, val, true);
+      return VarManager.unit;
     }),
     true
   );
@@ -87,10 +94,6 @@ const prelude = () => {
     }),
     true
   );
-  /* vars.setVar("stack", FunToken.native(toks => {
-        console.log(VarManager.get().getStack())
-        return VarManager.unit
-    }), true) */
 
   // Defining
   vars.setVar(
