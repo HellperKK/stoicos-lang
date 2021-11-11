@@ -4,7 +4,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useCallback, useMemo } from 'react';
 import { Slate, Editable, withReact, ReactEditor } from 'slate-react';
-import { Text, createEditor, Descendant, BaseEditor } from 'slate';
+import { Text, createEditor, Descendant, BaseEditor, Node } from 'slate';
 import { withHistory } from 'slate-history';
 import { css } from '@emotion/css';
 
@@ -21,6 +21,10 @@ declare module 'slate' {
   }
 }
 
+interface CompProps {
+  setCode: (code: string) => void;
+}
+
 const initialValue: Descendant[] = [
   { type: 'neutral', children: [{ text: 'hi' }] },
 ];
@@ -34,6 +38,9 @@ const getLength = (token: any) => {
   }
   return token.content.reduce((l: any, t: any) => l + getLength(t), 0);
 };
+
+const nodesString = (nodes: Array<Descendant>) =>
+  nodes.map((n) => Node.string(n)).join('');
 
 const Leaf = ({ attributes, children, leaf }: any) => {
   return (
@@ -74,9 +81,11 @@ const Leaf = ({ attributes, children, leaf }: any) => {
   );
 };
 
-const CodeHighlightingExample = () => {
+function CodeHighlightingExample(props: CompProps) {
+  const { setCode } = props;
+
   const [value, setValue] = useState<Descendant[]>(initialValue);
-  const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
+  const renderLeaf = useCallback((_props) => <Leaf {..._props} />, []);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
 
   const decorate = useCallback(([node, path]) => {
@@ -106,7 +115,14 @@ const CodeHighlightingExample = () => {
   }, []);
 
   return (
-    <Slate editor={editor} value={value} onChange={(val) => setValue(val)}>
+    <Slate
+      editor={editor}
+      value={value}
+      onChange={(val) => {
+        setValue(val);
+        setCode(nodesString(val));
+      }}
+    >
       <Editable
         decorate={decorate}
         renderLeaf={renderLeaf}
@@ -124,6 +140,6 @@ const CodeHighlightingExample = () => {
       />
     </Slate>
   );
-};
+}
 
 export default CodeHighlightingExample;
