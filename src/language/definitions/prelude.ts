@@ -246,7 +246,7 @@ const prelude = () => {
     FunToken.native((toks) => {
       const bool = toks[0].request('bool');
       const boolb = toks[1].request('bool');
-      return new NumberToken(bool && boolb);
+      return new BoolToken(bool && boolb);
     }),
     true
   );
@@ -255,7 +255,7 @@ const prelude = () => {
     FunToken.native((toks) => {
       const bool = toks[0].request('bool');
       const boolb = toks[1].request('bool');
-      return new NumberToken(bool || boolb);
+      return new BoolToken(bool || boolb);
     }),
     true
   );

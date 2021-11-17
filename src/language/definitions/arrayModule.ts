@@ -83,8 +83,9 @@ const arrayInit = () => {
       const fun = toks[0];
       const base = toks[1];
       const arr = toks[2].request('array');
-      return new ArrayToken(
-        arr.reduce((acc: any, tok: any) => fun.call([acc, tok]), base)
+      return arr.reduce(
+        (acc: BaseToken, tok: BaseToken) => fun.call([acc, tok]),
+        base
       );
     })
   );
@@ -94,9 +95,9 @@ const arrayInit = () => {
       const fun = toks[0];
       const base = toks[1];
       const arr = toks[2].request('array');
-      return new ArrayToken(
-        arr.reverse().reduce((acc: any, tok: any) => fun.call([acc, tok]), base)
-      );
+      return arr
+        .reverse()
+        .reduce((acc: any, tok: any) => fun.call([acc, tok]), base);
     })
   );
   module.set(

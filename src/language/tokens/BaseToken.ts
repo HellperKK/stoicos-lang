@@ -27,7 +27,7 @@ export default class BaseToken {
     return this as BaseToken;
   }
 
-  public call(_other: any[]) {
+  public call(_other: BaseToken[]) {
     return this as BaseToken;
   }
 

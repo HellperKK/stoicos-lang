@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
+import VarManager from '../manager/VarManager';
 import ArrayToken from '../tokens/ArrayToken';
 import BaseToken from '../tokens/BaseToken';
 import FunToken from '../tokens/FunToken';
@@ -14,12 +15,12 @@ const structInit = () => {
     'make',
     FunToken.native((toks) => {
       const pairs = toks[0].request('array');
-      const sanePairs = pairs.map((pair: any) => {
+      const map = new Map<string, BaseToken>();
+      pairs.forEach((pair: BaseToken) => {
         const sanePair = pair.request('array');
-        return [sanePair[0].request('symbol'), sanePair[1]];
+        map.set(sanePair[0].request('symbol'), sanePair[1]);
       });
-      console.log(sanePairs);
-      return new StructToken(new Map(sanePairs));
+      return new StructToken(map);
     })
   );
 
@@ -30,7 +31,7 @@ const structInit = () => {
       const struct = toks[0].request('struct');
 
       return new ArrayToken(
-        struct.keys().map((key: string) => new SymbolToken(key))
+        Array.from(struct.keys()).map((key: string) => new SymbolToken(key))
       );
     })
   );
@@ -40,7 +41,7 @@ const structInit = () => {
     FunToken.native((toks) => {
       const struct = toks[0].request('struct');
 
-      return new ArrayToken(struct.values());
+      return new ArrayToken(Array.from(struct.values()));
     })
   );
 
@@ -50,10 +51,8 @@ const structInit = () => {
       const struct = toks[0].request('struct');
 
       return new ArrayToken(
-        Array.from(
-          struct
-            .entries()
-            .map((pair: any) => [new SymbolToken(pair[0]), pair[1]])
+        Array.from(struct.entries()).map(
+          (pair) => new ArrayToken([new SymbolToken(pair[0]), pair[1]])
         )
       );
     })
@@ -64,8 +63,8 @@ const structInit = () => {
     FunToken.native((toks) => {
       const key = toks[0].request('symbol');
       const struct = toks[1].request('struct');
-
-      return struct.get(key);
+      const val = struct.get(key);
+      return val ?? VarManager.unit;
     })
   );
 
@@ -91,7 +90,7 @@ const structInit = () => {
       const struct = toks[2].request('struct');
 
       const newSruct: Map<string, BaseToken> = new Map(struct.entries());
-      newSruct.set(key, value.call([struct.get(key)]));
+      newSruct.set(key, value.call([struct.get(key) ?? VarManager.unit]));
 
       return new StructToken(newSruct);
     })
