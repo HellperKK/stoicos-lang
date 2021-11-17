@@ -221,6 +221,7 @@
     "electron-log": "^4.4.1",
     "electron-updater": "^4.3.9",
     "history": "4.x.x",
+    "http": "^0.0.1-security",
     "moo": "^0.5.1",
     "nearley": "^2.20.1",
     "react": "^17.0.2",
@@ -229,7 +230,8 @@
     "regenerator-runtime": "^0.13.9",
     "slate": "^0.66.5",
     "slate-history": "^0.66.0",
-    "slate-react": "^0.66.6"
+    "slate-react": "^0.66.6",
+    "stream-http": "^3.2.0"
   },
   "devEngines": {
     "node": ">=14.x",
