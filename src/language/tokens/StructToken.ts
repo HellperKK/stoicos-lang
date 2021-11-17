@@ -8,7 +8,13 @@ export default class StructToken extends BaseToken {
     super(value, 'struct');
   }
 
-  public request(_type: 'struct'): Map<string, BaseToken> {
-    return this.value;
+  public request(type: string) {
+    switch (type) {
+      case 'struct':
+        return this.value;
+
+      default:
+        return super.request(type);
+    }
   }
 }

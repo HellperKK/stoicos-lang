@@ -16,6 +16,6 @@ export default class ArrayModelToken extends BaseToken {
   }
 
   public get() {
-    return new ArrayToken(this.value.map((tok) => tok.get()));
+    return new ArrayToken(this.value.map((tok) => tok.get())) as BaseToken;
   }
 }

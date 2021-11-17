@@ -9,15 +9,21 @@ export default class BlockToken extends BaseToken {
     super(value, 'block');
   }
 
-  public update() {
-    return new BlockToken(this.value.map((tok) => tok.update()));
+  public update(): BaseToken {
+    return new BlockToken(this.value.map((tok) => tok.update())) as BaseToken;
   }
 
   public calculate() {
     return this.value.reduce((_acc, tok) => tok.get(), VarManager.unit);
   }
 
-  public request(_type: 'block'): Array<BaseToken> {
-    return this.value;
+  public request(type: string) {
+    switch (type) {
+      case 'block':
+        return this.value;
+
+      default:
+        return super.request(type);
+    }
   }
 }

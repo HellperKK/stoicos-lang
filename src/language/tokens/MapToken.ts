@@ -8,7 +8,13 @@ export default class MapToken extends BaseToken {
     super(value, 'map');
   }
 
-  public request(_type: 'map'): Map<BaseToken, BaseToken> {
-    return this.value;
+  public request(type: string) {
+    switch (type) {
+      case 'map':
+        return this.value;
+
+      default:
+        return super.request(type);
+    }
   }
 }

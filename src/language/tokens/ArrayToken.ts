@@ -8,11 +8,17 @@ export default class ArrayToken extends BaseToken {
     super(value, 'array');
   }
 
-  public update() {
-    return new ArrayToken(this.value.map((tok) => tok.update()));
+  public update(): BaseToken {
+    return new ArrayToken(this.value.map((tok) => tok.update())) as BaseToken;
   }
 
-  public request(_type: 'array'): Array<BaseToken> {
-    return this.value;
+  public request(type: string) {
+    switch (type) {
+      case 'array':
+        return this.value;
+
+      default:
+        return super.request(type);
+    }
   }
 }

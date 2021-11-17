@@ -18,7 +18,7 @@ export default class AttrToken extends VarToken {
   public get() {
     const tok = super.get();
     const res = this.attrs.reduce(
-      (_tok, attr) => tok.request('struct').get(attr),
+      (_tok, attr) => tok.request('struct').get(attr) as BaseToken,
       tok
     );
     return res;
@@ -27,11 +27,7 @@ export default class AttrToken extends VarToken {
   public update() {
     try {
       const newAttr = new AttrToken(this.value, this.attrs);
-      const tok = super.get();
-      newAttr.current = this.attrs.reduce(
-        (_tok, attr) => _tok.request('struct').get(attr),
-        tok
-      );
+      newAttr.current = newAttr.get();
       return newAttr;
     } catch (error) {
       return this;

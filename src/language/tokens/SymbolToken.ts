@@ -7,8 +7,13 @@ export default class SymbolToken extends BaseToken {
     super(value, 'symbol');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public request(_type: 'symbol'): string {
-    return this.value;
+  public request(type: string) {
+    switch (type) {
+      case 'symbol':
+        return this.value;
+
+      default:
+        return super.request(type);
+    }
   }
 }

@@ -8,7 +8,13 @@ export default class BoolToken extends BaseToken {
     super(value, 'bool');
   }
 
-  public request(_type: 'bool'): boolean {
-    return this.value;
+  public request(type: string) {
+    switch (type) {
+      case 'bool':
+        return this.value;
+
+      default:
+        return super.request(type);
+    }
   }
 }

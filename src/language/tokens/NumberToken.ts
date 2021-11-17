@@ -8,7 +8,13 @@ export default class NumberToken extends BaseToken {
     super(value, 'number');
   }
 
-  public request(_type: 'number'): number {
-    return this.value;
+  public request(type: string) {
+    switch (type) {
+      case 'number':
+        return this.value;
+
+      default:
+        return super.request(type);
+    }
   }
 }

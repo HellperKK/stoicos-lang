@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export default class BaseToken {
@@ -50,7 +51,15 @@ export default class BaseToken {
     return 0;
   }
 
-  public request(type: string): any {
+  public request(type: string): any;
+  public request(type: 'string'): string;
+  public request(type: 'number'): number;
+  public request(type: 'bool'): boolean;
+  public request(type: 'symbol'): string;
+  public request(type: 'array'): Array<BaseToken>;
+  public request(type: 'struct'): Map<string, BaseToken>;
+  public request(type: 'map'): Map<BaseToken, BaseToken>;
+  public request(type: string) {
     switch (type) {
       case 'string':
         return this.value.toString();
@@ -60,7 +69,7 @@ export default class BaseToken {
     }
   }
 
-  public update() {
-    return this as BaseToken;
+  public update(): BaseToken {
+    return this;
   }
 }

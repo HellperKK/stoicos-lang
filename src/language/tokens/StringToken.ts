@@ -8,7 +8,13 @@ export default class StringToken extends BaseToken {
     super(value, 'string');
   }
 
-  public request(_type: 'string'): string {
-    return this.value;
+  public request(type: string) {
+    switch (type) {
+      case 'string':
+        return this.value;
+
+      default:
+        return super.request(type);
+    }
   }
 }
