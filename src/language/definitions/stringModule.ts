@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+import TypeToken from '../tokens/TypeToken';
 import StringToken from '../tokens/StringToken';
 import ArrayToken from '../tokens/ArrayToken';
 import BaseToken from '../tokens/BaseToken';
@@ -6,8 +6,13 @@ import FunToken from '../tokens/FunToken';
 import StructToken from '../tokens/StructToken';
 import NumberToken from '../tokens/NumberToken';
 
+import { stringType } from '../utils/Types';
+
 const stringInit = () => {
   const module = new Map<string, BaseToken>();
+
+  // Main type
+  module.set('type', new TypeToken(stringType));
 
   // Building functions
   module.set(

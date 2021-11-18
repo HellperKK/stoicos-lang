@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-console */
+import TypeToken from '../tokens/TypeToken';
 import VarManager from '../manager/VarManager';
 import ArrayToken from '../tokens/ArrayToken';
 import BaseToken from '../tokens/BaseToken';
@@ -7,8 +6,13 @@ import FunToken from '../tokens/FunToken';
 import StructToken from '../tokens/StructToken';
 import SymbolToken from '../tokens/SymbolToken';
 
+import { structType } from '../utils/Types';
+
 const structInit = () => {
   const module = new Map<string, BaseToken>();
+
+  // Main type
+  module.set('type', new TypeToken(structType));
 
   // Building functions
   module.set(

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line import/no-cycle
-import Type from '../../utils/Type';
+import Type from '../utils/Type';
 
 export default class BaseToken {
   public type: string;

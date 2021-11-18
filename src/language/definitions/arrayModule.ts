@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import TypeToken from '../tokens/TypeToken';
 import ArrayToken from '../tokens/ArrayToken';
 import BaseToken from '../tokens/BaseToken';
 import FunToken from '../tokens/FunToken';
@@ -7,8 +7,13 @@ import NumberToken from '../tokens/NumberToken';
 import BoolToken from '../tokens/BoolToken';
 import StringToken from '../tokens/StringToken';
 
+import { arrayType } from '../utils/Types';
+
 const arrayInit = () => {
   const module = new Map<string, BaseToken>();
+
+  // Main type
+  module.set('type', new TypeToken(arrayType));
 
   // Building functions
   module.set(
@@ -95,9 +100,7 @@ const arrayInit = () => {
       const fun = toks[0];
       const base = toks[1];
       const arr = toks[2].request('array');
-      return arr
-        .reverse()
-        .reduce((acc: any, tok: any) => fun.call([acc, tok]), base);
+      return arr.reverse().reduce((acc, tok) => fun.call([acc, tok]), base);
     })
   );
   module.set(
@@ -105,7 +108,7 @@ const arrayInit = () => {
     FunToken.native((toks) => {
       const fun = toks[0];
       const arr = toks[1].request('array');
-      return new ArrayToken(arr.map((tok: any) => fun.call([tok])));
+      return new ArrayToken(arr.map((tok) => fun.call([tok])));
     })
   );
   module.set(
@@ -114,7 +117,7 @@ const arrayInit = () => {
       const fun = toks[0];
       const arr = toks[1].request('array');
       return new ArrayToken(
-        arr.filter((tok: any) => fun.call([tok]).request('boolean'))
+        arr.filter((tok) => fun.call([tok]).request('boolean'))
       );
     })
   );

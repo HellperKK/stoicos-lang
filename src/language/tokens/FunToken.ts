@@ -1,5 +1,4 @@
 /* eslint-disable class-methods-use-this */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import VarManager from '../manager/VarManager';
 import BaseToken from './BaseToken';
 import BlockToken from './BlockToken';
@@ -33,7 +32,7 @@ export default class FunToken extends BaseToken {
     return this.value(args);
   }
 
-  public compare(_other: BaseToken) {
+  public compare() {
     return 0;
   }
 }

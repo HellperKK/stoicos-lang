@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import BaseToken from '../tokens/BaseToken';
 import UnitToken from '../tokens/UnitToken';
 import Var from './Var';
@@ -42,10 +41,10 @@ export default class VarManager {
   }
 
   public getVar(name: string) {
-    for (const dict of this.dicts) {
-      if (dict.has(name)) {
-        return dict.get(name)?.getVal() ?? VarManager.unit;
-      }
+    const dict = this.dicts.find((d) => d.has(name));
+
+    if (dict !== undefined) {
+      return dict.get(name)?.getVal() ?? VarManager.unit;
     }
 
     throw new Error(`Value ${name} not found`);
