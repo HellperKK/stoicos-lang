@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import VarManager from '../manager/VarManager';
 import BaseToken from './BaseToken';
 

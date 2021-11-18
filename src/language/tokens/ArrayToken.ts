@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import BaseToken from './BaseToken';
 
 export default class ArrayToken extends BaseToken {

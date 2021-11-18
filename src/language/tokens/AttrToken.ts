@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import BaseToken from './BaseToken';
 import VarToken from './VarToken';
 
@@ -10,7 +8,7 @@ export default class AttrToken extends VarToken {
 
   public attrs: Array<string>;
 
-  public constructor(value: any, attrs: Array<string>) {
+  public constructor(value: string, attrs: Array<string>) {
     super(value);
     this.attrs = attrs;
   }

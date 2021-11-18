@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import VarManager from '../manager/VarManager';
 import BaseToken from './BaseToken';
 
@@ -7,7 +6,7 @@ export default class VarToken extends BaseToken {
 
   public value!: string;
 
-  public constructor(value: any) {
+  public constructor(value: string) {
     super(value, 'var');
     this.current = VarManager.unit;
   }

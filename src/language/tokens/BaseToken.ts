@@ -1,6 +1,9 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+// eslint-disable-next-line import/no-cycle
+import Type from '../../utils/Type';
+
 export default class BaseToken {
   public type: string;
 
@@ -59,6 +62,7 @@ export default class BaseToken {
   public request(type: 'array'): Array<BaseToken>;
   public request(type: 'struct'): Map<string, BaseToken>;
   public request(type: 'map'): Map<BaseToken, BaseToken>;
+  public request(type: 'type'): Type;
   public request(type: string) {
     switch (type) {
       case 'string':

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import ArrayToken from './ArrayToken';
 import BaseToken from './BaseToken';
 
