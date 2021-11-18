@@ -7,7 +7,7 @@ import VarManager from '../manager/VarManager';
 import BaseToken from '../tokens/BaseToken';
 import StructToken from '../tokens/StructToken';
 
-const serverInit = (stdOut: { content: string }) => {
+const serverInit = () => {
   const module = new Map<string, BaseToken>();
 
   const host = 'localhost';
@@ -25,7 +25,7 @@ const serverInit = (stdOut: { content: string }) => {
     FunToken.native((_toks) => {
       const server = createServer(requestListener);
       server.listen(port, host, () => {
-        stdOut.content += `Server is running on http://${host}:${port}`;
+        VarManager.stdOut.content += `Server is running on http://${host}:${port}`;
       });
       return VarManager.unit;
     })

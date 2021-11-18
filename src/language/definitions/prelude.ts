@@ -8,7 +8,7 @@ import stringInit from './stringModule';
 import structInit from './structModule';
 
 const prelude = () => {
-  const stdOut = { content: '' };
+  const { stdOut } = VarManager;
   const vars = VarManager.get();
 
   // Imports
@@ -269,8 +269,6 @@ const prelude = () => {
     }),
     true
   );
-
-  return stdOut;
 };
 
 export default prelude;

@@ -8,6 +8,8 @@ export default class VarManager {
 
   public static unit = new UnitToken();
 
+  public static stdOut = { content: '' };
+
   public static get() {
     if (this.Instance == null) {
       this.Instance = new VarManager();
@@ -18,6 +20,7 @@ export default class VarManager {
 
   public static clean() {
     this.Instance = new VarManager();
+    this.stdOut.content = '';
   }
 
   private dicts: Array<Map<string, Var>>;
