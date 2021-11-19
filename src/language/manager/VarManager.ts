@@ -3,22 +3,22 @@ import UnitToken from '../tokens/UnitToken';
 import Var from './Var';
 
 export default class VarManager {
-  private static Instance: VarManager;
+  private static instance: VarManager;
 
   public static unit = new UnitToken();
 
   public static stdOut = { content: '' };
 
   public static get() {
-    if (this.Instance == null) {
-      this.Instance = new VarManager();
+    if (this.instance == null) {
+      this.instance = new VarManager();
     }
 
-    return this.Instance;
+    return this.instance;
   }
 
   public static clean() {
-    this.Instance = new VarManager();
+    this.instance = new VarManager();
     this.stdOut.content = '';
   }
 
