@@ -97,6 +97,16 @@ const prelude = () => {
 
   // Defining
   vars.setVar(
+    'type',
+    FunToken.native((toks) => {
+      const name = toks[0].request('symbol');
+      const type = toks[1].request('type');
+      vars.typeVar(name, type);
+      return VarManager.unit;
+    }),
+    true
+  );
+  vars.setVar(
     'def',
     FunToken.native((toks) => {
       const name = toks[0].request('symbol');

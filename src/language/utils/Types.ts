@@ -5,7 +5,7 @@ const dynamicType = new Type('dynamic', [], function () {
   return true;
 });
 
-const makeArray = (type = [dynamicType]) =>
+const makeArrayType = (type = [dynamicType]) =>
   new Type('array', type, function (token) {
     if (token.type !== this.name) {
       return false;
@@ -16,7 +16,7 @@ const makeArray = (type = [dynamicType]) =>
     return arr.every((tok) => this.parameters[0].compatible(tok));
   });
 
-const makeMap = (type = [dynamicType, dynamicType]) =>
+const makeMapType = (type = [dynamicType, dynamicType]) =>
   new Type('map', type, function (token) {
     if (token.type !== this.name) {
       return false;
@@ -54,11 +54,12 @@ const blockType = new Type('block', [], function (token) {
 const structType = new Type('block', [], function (token) {
   return token.type === this.name;
 });
-const arrayType = makeArray();
+const arrayType = makeArrayType();
 
-const mapType = makeMap();
+const mapType = makeMapType();
 
 export {
+  dynamicType,
   numberType,
   boolType,
   stringType,
@@ -67,4 +68,6 @@ export {
   arrayType,
   mapType,
   structType,
+  makeArrayType,
+  makeMapType,
 };

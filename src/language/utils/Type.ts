@@ -17,4 +17,10 @@ export default class Type {
     this.parameters = parameters;
     this.compatible = compatible;
   }
+
+  public typeName(): string {
+    return `${this.name}<${this.parameters
+      .map((param) => param.typeName())
+      .join(', ')}>`;
+  }
 }

@@ -1,6 +1,8 @@
 import BaseToken from '../tokens/BaseToken';
 import UnitToken from '../tokens/UnitToken';
 import Var from './Var';
+import { dynamicType } from '../utils/Types';
+import Type from '../utils/Type';
 
 export default class VarManager {
   private static instance: VarManager;
@@ -32,11 +34,19 @@ export default class VarManager {
     return this.dicts[0].has(name);
   }
 
+  public typeVar(name: string, type: Type) {
+    if (this.dicts[0] && this.dicts[0].has(name)) {
+      this.dicts[0].get(name)?.setType(type);
+    } else {
+      this.dicts[0].set(name, new Var(VarManager.unit, false, type));
+    }
+  }
+
   public setVar(name: string, value: BaseToken, cons: boolean) {
     if (this.dicts[0] && this.dicts[0].has(name)) {
       this.dicts[0].get(name)?.setVal(value);
     } else {
-      this.dicts[0].set(name, new Var(value, cons, 'Dynamic'));
+      this.dicts[0].set(name, new Var(value, cons, dynamicType));
     }
   }
 

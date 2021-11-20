@@ -26,7 +26,7 @@ const evaluate = (code: string) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     stdOut.content += `\n\n---------------\n\n${error.message}`;
-    throw error;
+    // throw error;
   }
 };
 
