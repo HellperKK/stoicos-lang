@@ -19,6 +19,10 @@ export default class Type {
   }
 
   public typeName(): string {
+    if (this.parameters.length === 0) {
+      return this.name;
+    }
+
     return `${this.name}<${this.parameters
       .map((param) => param.typeName())
       .join(', ')}>`;

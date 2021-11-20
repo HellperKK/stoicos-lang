@@ -18,7 +18,7 @@ export default class Var {
     if (this.cons) throw new Error('Const modification');
     if (!this.type.compatible(newVal))
       throw new Error(
-        `Type ${newVal.getType()} incompatible with type ${this.type.name}`
+        `Type ${newVal.getType()} incompatible with type ${this.type.typeName()}`
       );
 
     this.val = newVal;
