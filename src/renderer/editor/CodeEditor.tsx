@@ -49,6 +49,7 @@ const Leaf = ({ attributes, children, leaf }: any) => {
       {...attributes}
       className={css`
         font-family: monospace;
+        caret-color: white;
 
         ${leaf.symbol &&
         css`
@@ -70,6 +71,10 @@ const Leaf = ({ attributes, children, leaf }: any) => {
         ${leaf.number &&
         css`
           color: #4fda4a;
+        `}
+        ${leaf.group &&
+        css`
+          color: #da4ac7;
         `}
         ${leaf.neutral &&
         css`
@@ -104,6 +109,7 @@ function CodeHighlightingExample(props: CompProps) {
       if (typeof token !== 'string') {
         ranges.push({
           [token.type]: true,
+          size: token.size ?? 0,
           anchor: { path, offset: start },
           focus: { path, offset: end },
         });
@@ -135,6 +141,30 @@ function CodeHighlightingExample(props: CompProps) {
           if (e.key === 'Tab') {
             e.preventDefault();
             editor.insertText(' '.repeat(4));
+          }
+          if (e.key === '(') {
+            e.preventDefault();
+            if (window.getSelection !== null) {
+              editor.insertText(`(${window.getSelection()?.toString()})`);
+            }
+          }
+          if (e.key === '{') {
+            e.preventDefault();
+            if (window.getSelection !== null) {
+              editor.insertText(`{${window.getSelection()?.toString()}}`);
+            }
+          }
+          if (e.key === '[') {
+            e.preventDefault();
+            if (window.getSelection !== null) {
+              editor.insertText(`[${window.getSelection()?.toString()}]`);
+            }
+          }
+          if (e.key === '"') {
+            e.preventDefault();
+            if (window.getSelection !== null) {
+              editor.insertText(`"${window.getSelection()?.toString()}"`);
+            }
           }
         }}
         placeholder="Write some code..."
