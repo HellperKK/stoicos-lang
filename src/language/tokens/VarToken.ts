@@ -2,13 +2,13 @@ import VarManager from '../manager/VarManager';
 import BaseToken from './BaseToken';
 
 export default class VarToken extends BaseToken {
-  public current: BaseToken;
+  public current: BaseToken | null;
 
   public value!: string;
 
   public constructor(value: string) {
     super(value, 'var');
-    this.current = VarManager.unit;
+    this.current = null;
   }
 
   public get(): BaseToken {
@@ -16,6 +16,11 @@ export default class VarToken extends BaseToken {
     if (manager.hasVar(this.value)) {
       return manager.getVar(this.value);
     }
+
+    if (this.current === null) {
+      throw new Error(`Value ${this.value} not found`);
+    }
+
     return this.current;
   }
 
