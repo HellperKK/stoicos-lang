@@ -68,7 +68,12 @@ const structInit = () => {
       const key = toks[0].request('symbol');
       const struct = toks[1].request('struct');
       const val = struct.get(key);
-      return val ?? VarManager.unit;
+
+      if (val === undefined) {
+        throw new Error(`Key ${key} not found`);
+      }
+
+      return val;
     })
   );
 

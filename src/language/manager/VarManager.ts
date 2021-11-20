@@ -51,13 +51,16 @@ export default class VarManager {
   }
 
   public getVar(name: string) {
-    const dict = this.dicts.find((d) => d.has(name));
+    const token = this.dicts
+      .find((d) => d.has(name))
+      ?.get(name)
+      ?.getVal();
 
-    if (dict !== undefined) {
-      return dict.get(name)?.getVal() ?? VarManager.unit;
+    if (token === undefined) {
+      throw new Error(`Value ${name} not found`);
     }
 
-    throw new Error(`Value ${name} not found`);
+    return token;
   }
 
   public delete(name: string) {
