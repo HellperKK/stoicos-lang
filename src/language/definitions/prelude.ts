@@ -6,6 +6,7 @@ import BaseToken from '../tokens/BaseToken';
 import arrayInit from './arrayModule';
 import stringInit from './stringModule';
 import structInit from './structModule';
+import typeInit from './typeModule';
 
 const prelude = () => {
   const { stdOut } = VarManager;
@@ -28,6 +29,10 @@ const prelude = () => {
 
         case 'Struct':
           val = structInit();
+          break;
+
+        case 'Type':
+          val = typeInit();
           break;
 
         default:

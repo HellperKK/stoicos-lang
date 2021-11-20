@@ -7,13 +7,20 @@ import NumberToken from '../tokens/NumberToken';
 import BoolToken from '../tokens/BoolToken';
 import StringToken from '../tokens/StringToken';
 
-import { arrayType } from '../utils/Types';
+import { arrayType, makeArrayType } from '../utils/Types';
 
 const arrayInit = () => {
   const module = new Map<string, BaseToken>();
 
   // Main type
   module.set('type', new TypeToken(arrayType));
+  module.set(
+    'of',
+    FunToken.native((toks) => {
+      const typeParam = toks[0].request('type');
+      return new TypeToken(makeArrayType(typeParam));
+    })
+  );
 
   // Building functions
   module.set(
