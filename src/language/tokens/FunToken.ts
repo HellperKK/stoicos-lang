@@ -35,4 +35,14 @@ export default class FunToken extends BaseToken {
   public compare() {
     return 0;
   }
+
+  public request(type: string) {
+    switch (type) {
+      case 'fun':
+        return this.value;
+
+      default:
+        return super.request(type);
+    }
+  }
 }

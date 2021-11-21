@@ -63,6 +63,7 @@ export default class BaseToken {
   public request(type: 'struct'): Map<string, BaseToken>;
   public request(type: 'map'): Map<BaseToken, BaseToken>;
   public request(type: 'type'): Type;
+  public request(type: 'fun'): (toks: Array<BaseToken>) => BaseToken;
   public request(type: string) {
     switch (type) {
       case 'string':
