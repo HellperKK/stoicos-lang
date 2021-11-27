@@ -7,6 +7,7 @@ import arrayInit from './arrayModule';
 import stringInit from './stringModule';
 import structInit from './structModule';
 import typeInit from './typeModule';
+import loopInit from './loopModule';
 
 const prelude = () => {
   const { stdOut } = VarManager;
@@ -33,6 +34,10 @@ const prelude = () => {
 
         case 'Type':
           val = typeInit();
+          break;
+
+        case 'Loop':
+          val = loopInit();
           break;
 
         default:
