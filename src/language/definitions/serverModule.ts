@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createServer, RequestListener } from 'http';
+import fastify from 'fastify';
 import FunToken from '../tokens/FunToken';
 import VarManager from '../manager/VarManager';
 import BaseToken from '../tokens/BaseToken';
@@ -10,23 +10,29 @@ import StructToken from '../tokens/StructToken';
 const serverInit = () => {
   const module = new Map<string, BaseToken>();
 
-  const host = 'localhost';
-  const port = 8000;
-
-  const requestListener: RequestListener = (_req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello, World!\n');
-  };
+  const Fastify = fastify({ logger: true });
 
   // Building functions
   module.set(
     'start',
     FunToken.native((_toks) => {
-      const server = createServer(requestListener);
-      server.listen(port, host, () => {
-        VarManager.stdOut.content += `Server is running on http://${host}:${port}`;
+      // Declare a route
+      Fastify.get('/', async (_request, _reply) => {
+        return { hello: 'world' };
       });
+
+      // Run the server!
+      const start = async () => {
+        try {
+          await Fastify.listen(3000);
+        } catch (err) {
+          Fastify.log.error(err);
+          process.exit(1);
+        }
+      };
+
+      start();
+
       return VarManager.unit;
     })
   );

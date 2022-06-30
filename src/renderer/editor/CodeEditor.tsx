@@ -109,7 +109,7 @@ function CodeHighlightingExample(props: CompProps) {
       if (typeof token !== 'string') {
         ranges.push({
           [token.type]: true,
-          size: token.size ?? 0,
+          size: token.content.length ?? 0,
           anchor: { path, offset: start },
           focus: { path, offset: end },
         });
