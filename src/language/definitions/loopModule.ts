@@ -56,6 +56,32 @@ const loopInit = () => {
     })
   );
 
+  module.set(
+    'upto',
+    FunToken.native((toks) => {
+      const min = toks[0].request('number');
+      const max = toks[1].request('number');
+      const f = toks[2].request('fun');
+      for (let index = min; index < max; index++) {
+        f([new NumberToken(index)]);
+      }
+      return VarManager.unit;
+    })
+  );
+
+  module.set(
+    'downto',
+    FunToken.native((toks) => {
+      const max = toks[0].request('number');
+      const min = toks[1].request('number');
+      const f = toks[2].request('fun');
+      for (let index = max; index > min; index--) {
+        f([new NumberToken(index)]);
+      }
+      return VarManager.unit;
+    })
+  );
+
   return new StructToken(module);
 };
 
