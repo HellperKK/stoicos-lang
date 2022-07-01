@@ -1,10 +1,16 @@
 import BaseToken from './BaseToken';
+import { symbolType } from '../utils/Types';
 
 export default class SymbolToken extends BaseToken {
   public value!: string;
 
   public constructor(value: string) {
     super(value, 'symbol');
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public getType() {
+    return symbolType;
   }
 
   public request(type: string) {

@@ -1,4 +1,8 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable func-names */
+import FunToken from '../tokens/FunToken';
+import BaseToken from '../tokens/BaseToken';
+import StructToken from '../tokens/StructToken';
 import Type from './Type';
 
 const dynamicType = new Type('dynamic', [], function () {
@@ -31,12 +35,43 @@ const makeMapType = (type = [dynamicType, dynamicType]) =>
     );
   });
 
+const makeStructType = (type = new Map<string, Type>()) =>
+  new Type('struct', [], function (token) {
+    if (token.type !== this.name) {
+      return false;
+    }
+
+    const values = (token as StructToken).value;
+
+    let ret = true;
+
+    type.forEach((value: Type, key: string) => {
+      if (!values.has(key) || !value.compatible(values.get(key) as BaseToken)) {
+        ret = false;
+      }
+    });
+
+    return ret;
+  });
+
+const makeFunType = (params: Array<string>) =>
+  new Type('fun', Array(params.length).fill(dynamicType), function (token) {
+    if (token.type !== this.name) {
+      return false;
+    }
+
+    return (token as FunToken).args.length === this.parameters.length;
+  });
+
 const makeUnionType = (types: Array<Type>) =>
   new Type('union', types, function (token) {
     return this.parameters.some((type) => type.compatible(token));
   });
 
 const numberType = new Type('number', [], function (token) {
+  return token.type === this.name;
+});
+const unitType = new Type('number', [], function (token) {
   return token.type === this.name;
 });
 
@@ -71,9 +106,12 @@ const mapType = makeMapType();
 export {
   makeArrayType,
   makeMapType,
+  makeStructType,
   makeUnionType,
+  makeFunType,
   dynamicType,
   numberType,
+  unitType,
   boolType,
   stringType,
   symbolType,

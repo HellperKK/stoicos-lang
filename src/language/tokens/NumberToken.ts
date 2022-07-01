@@ -1,10 +1,16 @@
 import BaseToken from './BaseToken';
+import { numberType } from '../utils/Types';
 
 export default class NumberToken extends BaseToken {
   public value!: number;
 
   public constructor(value: number) {
     super(value, 'number');
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public getType() {
+    return numberType;
   }
 
   public request(type: string) {

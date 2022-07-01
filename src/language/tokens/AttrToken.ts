@@ -13,6 +13,10 @@ export default class AttrToken extends VarToken {
     this.attrs = attrs;
   }
 
+  public getType() {
+    return this.get().getType();
+  }
+
   public get() {
     const tok = super.get();
     const res = this.attrs.reduce(

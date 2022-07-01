@@ -14,8 +14,12 @@ export default class BaseToken {
     this.type = type;
   }
 
-  public getType() {
-    return this.type;
+  public getType(): Type {
+    throw new Error('unsuported here');
+  }
+
+  public getTypeName() {
+    return this.getType().typeName();
   }
 
   public getValue() {

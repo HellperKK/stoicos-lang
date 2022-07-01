@@ -11,6 +11,11 @@ export default class VarToken extends BaseToken {
     this.current = null;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  public getType() {
+    return this.get().getType();
+  }
+
   public get(): BaseToken {
     const manager = VarManager.get();
     if (manager.hasVar(this.value)) {

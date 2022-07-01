@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
 import VarManager from '../manager/VarManager';
 import BaseToken from './BaseToken';
@@ -9,23 +10,37 @@ export default class FunToken extends BaseToken {
   }
 
   public static custom(args: Array<BaseToken>, block: BlockToken) {
-    return new FunToken((toks) => {
-      const vars = VarManager.get();
-      vars.addStack();
-      args.forEach((sym, pos) =>
-        vars.setVar(sym.request('symbol'), toks[pos], false)
-      );
-      const nblock = block.update();
-      const ret = nblock.calculate();
-      vars.delStack();
-      return ret;
-    });
+    return new FunToken(
+      (toks) => {
+        const vars = VarManager.get();
+
+        vars.addStack();
+
+        args.forEach((sym, pos) =>
+          vars.setVar(sym.request('symbol'), toks[pos], false)
+        );
+
+        const nblock = block.update();
+        const ret = nblock.calculate();
+
+        vars.delStack();
+
+        return ret;
+      },
+      args.map((tok) => tok.request('string'))
+    );
   }
 
   public value!: (toks: Array<BaseToken>) => BaseToken;
 
-  public constructor(value: (toks: Array<BaseToken>) => BaseToken) {
+  public args: Array<string>;
+
+  public constructor(
+    value: (toks: Array<BaseToken>) => BaseToken,
+    args: Array<string> = []
+  ) {
     super(value, 'fun');
+    this.args = args;
   }
 
   public call(args: Array<BaseToken>) {
