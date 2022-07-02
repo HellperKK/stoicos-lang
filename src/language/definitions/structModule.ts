@@ -7,6 +7,7 @@ import StructToken from '../tokens/StructToken';
 import SymbolToken from '../tokens/SymbolToken';
 
 import { structType } from '../utils/Types';
+import BoolToken from '../tokens/BoolToken';
 
 const structInit = () => {
   const module = new Map<string, BaseToken>();
@@ -25,6 +26,38 @@ const structInit = () => {
         map.set(sanePair[0].request('symbol'), sanePair[1]);
       });
       return new StructToken(map);
+    })
+  );
+
+  module.set(
+    'build',
+    FunToken.native((toks) => {
+      const keys = toks[0].request('array').map((tok) => tok.request('symbol'));
+      const structModule = new Map<string, BaseToken>();
+
+      structModule.set(
+        'make',
+        FunToken.native((tokens) => {
+          const newStruct = new Map<string, BaseToken>();
+
+          keys.forEach((key, index) => newStruct.set(key, tokens[index]));
+
+          return new StructToken(newStruct);
+        })
+      );
+
+      structModule.set(
+        'is',
+        FunToken.native((tokens) => {
+          const struct = tokens[0].request('struct');
+
+          const isValid = keys.every((key) => struct.has(key));
+
+          return new BoolToken(isValid);
+        })
+      );
+
+      return new StructToken(structModule);
     })
   );
 
