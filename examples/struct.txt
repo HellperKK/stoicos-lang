@@ -1,5 +1,4 @@
-; Imports Struct module
-(def :Struct (import "Struct"))
+(import :Struct)
 
 ; Makes a struct
 (def :test (Struct.make [
