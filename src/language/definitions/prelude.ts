@@ -66,6 +66,23 @@ const prelude = () => {
     true
   );
 
+  vars.setVar(
+    'cond',
+    FunToken.native((toks) => {
+      const conds = toks[0].request('array');
+
+      // eslint-disable-next-line no-restricted-syntax
+      for (const cond of conds) {
+        const [trueCond, tok] = cond.request('array');
+        if (trueCond.calculate().request('bool')) {
+          return tok.calculate();
+        }
+      }
+      return VarManager.unit;
+    }),
+    true
+  );
+
   // Constructors
   vars.setVar(
     'fun',
