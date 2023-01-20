@@ -15,6 +15,9 @@ const structInit = () => {
   // Main type
   module.set('type', new TypeToken(structType));
 
+  // Constants
+  module.set('empty', new StructToken(new Map<string, BaseToken>()));
+
   // Building functions
   module.set(
     'make',

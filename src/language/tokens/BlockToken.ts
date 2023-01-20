@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { unitType } from '../utils/Types';
 import VarManager from '../manager/VarManager';
 import BaseToken from './BaseToken';

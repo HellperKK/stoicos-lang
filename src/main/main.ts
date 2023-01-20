@@ -14,8 +14,26 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import fastify from 'fastify';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+
+const Fastify = fastify({ logger: true });
+Fastify.get('/', async (_request, _reply) => {
+  return { hello: 'world' };
+});
+
+// Run the server!
+const start = async () => {
+  try {
+    await Fastify.listen(3000);
+  } catch (err) {
+    Fastify.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();
 
 export default class AppUpdater {
   constructor() {
