@@ -8,6 +8,8 @@ import stringInit from './stringModule';
 import structInit from './structModule';
 import typeInit from './typeModule';
 import loopInit from './loopModule';
+import mapInit from './mapModule';
+// import serverInit from './serverModule';
 
 const prelude = () => {
   const { stdOut } = VarManager;
@@ -32,6 +34,10 @@ const prelude = () => {
           val = structInit();
           break;
 
+        case 'Map':
+          val = mapInit();
+          break;
+
         case 'Type':
           val = typeInit();
           break;
@@ -39,6 +45,12 @@ const prelude = () => {
         case 'Loop':
           val = loopInit();
           break;
+
+        /*
+        case 'Server':
+          val = serverInit();
+          break;
+          */
 
         default:
           throw new Error(`unknown module ${mod}`);
@@ -170,6 +182,24 @@ const prelude = () => {
       const fn = FunToken.custom(args, block);
       vars.setVar(name, fn, false);
       return fn;
+    }),
+    true
+  );
+  vars.setVar(
+    'bind',
+    FunToken.native((toks) => {
+      const names = toks[0].request('array');
+      const values = toks[1].request('array');
+
+      if (names.length !== values.length) {
+        throw new Error('invalid parameter length in bind function');
+      }
+
+      names.forEach((name, index) => {
+        vars.setVar(name.request('symbol'), values[index], false);
+      });
+
+      return VarManager.unit;
     }),
     true
   );

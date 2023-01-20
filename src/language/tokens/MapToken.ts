@@ -1,11 +1,12 @@
+import { HashMap } from '@nebtex/hashmaps';
 import Type from '../utils/Type';
 import BaseToken from './BaseToken';
 import { makeMapType, dynamicType } from '../utils/Types';
 
 export default class MapToken extends BaseToken {
-  public value!: Map<BaseToken, BaseToken>;
+  public value!: HashMap<BaseToken, BaseToken>;
 
-  public constructor(value: Map<BaseToken, BaseToken>) {
+  public constructor(value: HashMap<BaseToken, BaseToken>) {
     super(value, 'map');
   }
 
@@ -14,7 +15,14 @@ export default class MapToken extends BaseToken {
     const keyTypes: Array<Type> = [];
     const valueTypes: Array<Type> = [];
 
-    this.value.forEach((key: BaseToken, value: BaseToken) => {
+    this.value.forEach((key, value) => {
+      if (key === undefined) {
+        throw new Error('error');
+      }
+      if (value === undefined) {
+        throw new Error('error');
+      }
+
       const keyType = key.getType();
       const keyIndex = keyTypes.findIndex(
         (t: Type) => t.typeName() === keyType.typeName()

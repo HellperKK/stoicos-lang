@@ -2,9 +2,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line import/no-cycle
+import objectHash from 'object-hash';
+import { HashMap } from '@nebtex/hashmaps';
+// eslint-disable-next-line import/no-cycle
 import Type from '../utils/Type';
 
-export default class BaseToken {
+export default abstract class BaseToken {
+  public hash(): string {
+    return objectHash(this.value);
+  }
+
   public type: string;
 
   public value: any;
@@ -65,7 +72,7 @@ export default class BaseToken {
   public request(type: 'symbol'): string;
   public request(type: 'array'): Array<BaseToken>;
   public request(type: 'struct'): Map<string, BaseToken>;
-  public request(type: 'map'): Map<BaseToken, BaseToken>;
+  public request(type: 'map'): HashMap<BaseToken, BaseToken>;
   public request(type: 'type'): Type;
   public request(type: 'fun'): (toks: Array<BaseToken>) => BaseToken;
   public request(type: string) {
