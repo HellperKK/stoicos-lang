@@ -112,6 +112,36 @@ const structInit = () => {
       return val;
     })
   );
+  module.set(
+    'get_or',
+    FunToken.native((toks) => {
+      const key = toks[0].request('symbol');
+      const struct = toks[1].request('struct');
+      const defaultValue = toks[2];
+      const val = struct.get(key);
+
+      if (val === undefined) {
+        return defaultValue;
+      }
+
+      return val;
+    })
+  );
+  module.set(
+    'get_or_fun',
+    FunToken.native((toks) => {
+      const key = toks[0].request('symbol');
+      const struct = toks[1].request('struct');
+      const defaultFunction = toks[2];
+      const val = struct.get(key);
+
+      if (val === undefined) {
+        return defaultFunction.call([]);
+      }
+
+      return val;
+    })
+  );
 
   module.set(
     'set',
