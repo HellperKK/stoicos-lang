@@ -26,7 +26,7 @@ const loopInit = () => {
       const min = toks[0].request('number');
       const max = toks[1].request('number');
       const f = toks[2].request('fun');
-      for (let index = min; index < max; index++) {
+      for (let index = min; index <= max; index++) {
         f([new NumberToken(index)]);
       }
       return VarManager.unit;
@@ -38,8 +38,8 @@ const loopInit = () => {
       const max = toks[0].request('number');
       const min = toks[1].request('number');
       const f = toks[2].request('fun');
-      for (let index = 0; index < max - min; index++) {
-        f([new NumberToken(max - index)]);
+      for (let index = max; index >= min; index--) {
+        f([new NumberToken(index)]);
       }
       return VarManager.unit;
     })
@@ -50,32 +50,6 @@ const loopInit = () => {
       const times = toks[0].request('number');
       const f = toks[1].request('fun');
       for (let index = 0; index < times; index++) {
-        f([new NumberToken(index)]);
-      }
-      return VarManager.unit;
-    })
-  );
-
-  module.set(
-    'upto',
-    FunToken.native((toks) => {
-      const min = toks[0].request('number');
-      const max = toks[1].request('number');
-      const f = toks[2].request('fun');
-      for (let index = min; index < max; index++) {
-        f([new NumberToken(index)]);
-      }
-      return VarManager.unit;
-    })
-  );
-
-  module.set(
-    'downto',
-    FunToken.native((toks) => {
-      const max = toks[0].request('number');
-      const min = toks[1].request('number');
-      const f = toks[2].request('fun');
-      for (let index = max; index > min; index--) {
         f([new NumberToken(index)]);
       }
       return VarManager.unit;
