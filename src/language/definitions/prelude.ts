@@ -345,6 +345,24 @@ const prelude = () => {
     true
   );
 
+  // Conversions
+  vars.setVar(
+    'parseInt',
+    FunToken.native((toks) => {
+      const val = toks[0].request('string');
+      return new NumberToken(parseInt(val, 10));
+    }),
+    true
+  );
+  vars.setVar(
+    'parseFloat',
+    FunToken.native((toks) => {
+      const val = toks[0].request('string');
+      return new NumberToken(parseFloat(val));
+    }),
+    true
+  );
+
   // Miscs
   vars.setVar(
     'eval',
