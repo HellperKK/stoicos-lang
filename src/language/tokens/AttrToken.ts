@@ -1,11 +1,7 @@
-import BaseToken from './BaseToken';
-import VarToken from './VarToken';
+import BaseToken from "./BaseToken";
+import VarToken from "./VarToken";
 
 export default class AttrToken extends VarToken {
-  public current!: BaseToken;
-
-  public value!: string;
-
   public attrs: Array<string>;
 
   public constructor(value: string, attrs: Array<string>) {
@@ -20,7 +16,7 @@ export default class AttrToken extends VarToken {
   public get() {
     const tok = super.get();
     const res = this.attrs.reduce(
-      (_tok, attr) => tok.request('struct').get(attr) as BaseToken,
+      (_tok, attr) => tok.request("struct").get(attr) as BaseToken,
       tok
     );
     return res;

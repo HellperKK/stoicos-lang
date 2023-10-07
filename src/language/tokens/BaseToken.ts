@@ -2,10 +2,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line import/no-cycle
-import objectHash from 'object-hash';
-import { HashMap } from '@nebtex/hashmaps';
+import objectHash from "object-hash";
+import { HashMap } from "@nebtex/hashmaps";
 // eslint-disable-next-line import/no-cycle
-import Type from '../utils/Type';
+import Type from "../utils/Type";
+import { HashMapTemp } from "../utils/HashMapTemp";
 
 export default abstract class BaseToken {
   public hash(): string {
@@ -22,7 +23,7 @@ export default abstract class BaseToken {
   }
 
   public getType(): Type {
-    throw new Error('unsuported here');
+    throw new Error("unsuported here");
   }
 
   public getTypeName() {
@@ -66,18 +67,18 @@ export default abstract class BaseToken {
   }
 
   public request(type: string): any;
-  public request(type: 'string'): string;
-  public request(type: 'number'): number;
-  public request(type: 'bool'): boolean;
-  public request(type: 'symbol'): string;
-  public request(type: 'array'): Array<BaseToken>;
-  public request(type: 'struct'): Map<string, BaseToken>;
-  public request(type: 'map'): HashMap<BaseToken, BaseToken>;
-  public request(type: 'type'): Type;
-  public request(type: 'fun'): (toks: Array<BaseToken>) => BaseToken;
+  public request(type: "string"): string;
+  public request(type: "number"): number;
+  public request(type: "bool"): boolean;
+  public request(type: "symbol"): string;
+  public request(type: "array"): Array<BaseToken>;
+  public request(type: "struct"): Map<string, BaseToken>;
+  public request(type: "map"): HashMapTemp<BaseToken, BaseToken>;
+  public request(type: "type"): Type;
+  public request(type: "fun"): (toks: Array<BaseToken>) => BaseToken;
   public request(type: string) {
     switch (type) {
-      case 'string':
+      case "string":
         return this.value.toString();
 
       default:

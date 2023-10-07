@@ -1,13 +1,11 @@
-import Type from '../utils/Type';
-import BaseToken from './BaseToken';
+import Type from "../utils/Type";
+import BaseToken from "./BaseToken";
 // eslint-disable-next-line import/no-cycle
-import { makeStructType } from '../utils/Types';
+import { makeStructType } from "../utils/Types";
 
 export default class StructToken extends BaseToken {
-  public value!: Map<string, BaseToken>;
-
   public constructor(value: Map<string, BaseToken>) {
-    super(value, 'struct');
+    super(value, "struct");
   }
 
   public getType() {
@@ -22,7 +20,7 @@ export default class StructToken extends BaseToken {
 
   public request(type: string) {
     switch (type) {
-      case 'struct':
+      case "struct":
         return this.value;
 
       default:

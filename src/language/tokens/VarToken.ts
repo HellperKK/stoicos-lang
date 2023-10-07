@@ -1,13 +1,11 @@
-import VarManager from '../manager/VarManager';
-import BaseToken from './BaseToken';
+import VarManager from "../manager/VarManager";
+import BaseToken from "./BaseToken";
 
 export default class VarToken extends BaseToken {
   public current: BaseToken | null;
 
-  public value!: string;
-
   public constructor(value: string) {
-    super(value, 'var');
+    super(value, "var");
     this.current = null;
   }
 

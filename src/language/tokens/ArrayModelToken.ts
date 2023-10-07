@@ -1,26 +1,26 @@
-import Type from '../utils/Type';
-import ArrayToken from './ArrayToken';
-import BaseToken from './BaseToken';
+import Type from "../utils/Type";
+import ArrayToken from "./ArrayToken";
+import BaseToken from "./BaseToken";
 
 export default class ArrayModelToken extends BaseToken {
-  public value!: Array<BaseToken>;
-
   public constructor(value: Array<BaseToken>) {
-    super(value, 'arrayModel');
+    super(value, "arrayModel");
   }
 
   // eslint-disable-next-line class-methods-use-this
   public getType(): Type {
-    throw new Error('should not happen');
+    throw new Error("should not happen");
   }
 
   public update(): BaseToken {
     return new ArrayModelToken(
-      this.value.map((tok) => tok.update())
+      this.value.map((tok: BaseToken) => tok.update())
     ) as BaseToken;
   }
 
   public get() {
-    return new ArrayToken(this.value.map((tok) => tok.get())) as BaseToken;
+    return new ArrayToken(
+      this.value.map((tok: BaseToken) => tok.get())
+    ) as BaseToken;
   }
 }

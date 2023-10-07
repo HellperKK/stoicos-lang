@@ -1,11 +1,9 @@
-import BaseToken from './BaseToken';
-import { symbolType } from '../utils/Types';
+import BaseToken from "./BaseToken";
+import { symbolType } from "../utils/Types";
 
 export default class SymbolToken extends BaseToken {
-  public value!: string;
-
   public constructor(value: string) {
-    super(value, 'symbol');
+    super(value, "symbol");
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -15,7 +13,7 @@ export default class SymbolToken extends BaseToken {
 
   public request(type: string) {
     switch (type) {
-      case 'symbol':
+      case "symbol":
         return this.value;
 
       default:

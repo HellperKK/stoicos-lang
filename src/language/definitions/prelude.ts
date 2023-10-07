@@ -1,14 +1,16 @@
-import VarManager from '../manager/VarManager';
-import FunToken from '../tokens/FunToken';
-import NumberToken from '../tokens/NumberToken';
-import BoolToken from '../tokens/BoolToken';
-import BaseToken from '../tokens/BaseToken';
-import arrayInit from './arrayModule';
-import stringInit from './stringModule';
-import structInit from './structModule';
-import typeInit from './typeModule';
-import loopInit from './loopModule';
-import mapInit from './mapModule';
+import VarManager from "../manager/VarManager";
+import FunToken from "../tokens/FunToken";
+import NumberToken from "../tokens/NumberToken";
+import BoolToken from "../tokens/BoolToken";
+import BaseToken from "../tokens/BaseToken";
+import arrayInit from "./arrayModule";
+import stringInit from "./stringModule";
+import structInit from "./structModule";
+import typeInit from "./typeModule";
+import loopInit from "./loopModule";
+import StringToken from "../tokens/StringToken";
+import StructToken from "../tokens/StructToken";
+import mapInit from "./mapModule";
 // import serverInit from './serverModule';
 
 const prelude = () => {
@@ -17,32 +19,32 @@ const prelude = () => {
 
   // Imports
   vars.setVar(
-    'import',
+    "import",
     FunToken.native((toks) => {
-      const mod = toks[0].request('symbol');
+      const mod = toks[0].request("symbol");
       let val: BaseToken;
       switch (mod) {
-        case 'Array':
+        case "Array":
           val = arrayInit();
           break;
 
-        case 'String':
+        case "String":
           val = stringInit();
           break;
 
-        case 'Struct':
+        case "Struct":
           val = structInit();
           break;
 
-        case 'Map':
+        case "Map":
           val = mapInit();
           break;
 
-        case 'Type':
+        case "Type":
           val = typeInit();
           break;
 
-        case 'Loop':
+        case "Loop":
           val = loopInit();
           break;
 
@@ -62,15 +64,15 @@ const prelude = () => {
   );
 
   // Constants
-  vars.setVar('unit', VarManager.unit, false);
-  vars.setVar('true', new BoolToken(true), false);
-  vars.setVar('false', new BoolToken(false), false);
+  vars.setVar("unit", VarManager.unit, false);
+  vars.setVar("true", new BoolToken(true), false);
+  vars.setVar("false", new BoolToken(false), false);
 
   // Conditionnals
   vars.setVar(
-    'if',
+    "if",
     FunToken.native((toks) => {
-      const cond = toks[0].request('bool');
+      const cond = toks[0].request("bool");
       const block = toks[1];
       const other = toks[2];
       return cond ? block.calculate() : other.calculate();
@@ -79,14 +81,13 @@ const prelude = () => {
   );
 
   vars.setVar(
-    'cond',
+    "cond",
     FunToken.native((toks) => {
-      const conds = toks[0].request('array');
+      const conds = toks[0].request("array");
 
-      // eslint-disable-next-line no-restricted-syntax
       for (const cond of conds) {
-        const [trueCond, tok] = cond.request('array');
-        if (trueCond.calculate().request('bool')) {
+        const [trueCond, tok] = cond.request("array");
+        if (trueCond.calculate().request("bool")) {
           return tok.calculate();
         }
       }
@@ -96,14 +97,13 @@ const prelude = () => {
   );
 
   vars.setVar(
-    'switch',
+    "switch",
     FunToken.native((toks) => {
       const value = toks[0];
-      const conds = toks[1].request('array');
+      const conds = toks[1].request("array");
 
-      // eslint-disable-next-line no-restricted-syntax
       for (const cond of conds) {
-        const [trueCond, tok] = cond.request('array');
+        const [trueCond, tok] = cond.request("array");
         if (trueCond.calculate().compare(value) === 0) {
           return tok.calculate();
         }
@@ -115,34 +115,51 @@ const prelude = () => {
 
   // Constructors
   vars.setVar(
-    'fun',
+    "fun",
     FunToken.native((toks) => {
-      const args = toks[0].request('array');
+      const args = toks[0].request("array");
       const block = toks[1];
       return FunToken.custom(args, block);
+    }),
+    true
+  );
+  vars.setVar(
+    "enum",
+    FunToken.native((toks) => {
+      const names = toks[0]
+        .request("array")
+        .map((tok: BaseToken) => tok.request("symbol"));
+
+      const enumToken = new Map<string, BaseToken>();
+
+      names.forEach((name) => {
+        enumToken.set(name, new StringToken(name));
+      });
+
+      return new StructToken(enumToken);
     }),
     true
   );
 
   // IO
   vars.setVar(
-    'println',
+    "println",
     FunToken.native((toks) => {
-      stdOut.content += `${toks[0].request('string')}\n`;
+      stdOut.content += `${toks[0].request("string")}\n`;
       return VarManager.unit;
     }),
     true
   );
   vars.setVar(
-    'print',
+    "print",
     FunToken.native((toks) => {
-      stdOut.content += toks[0].request('string');
+      stdOut.content += toks[0].request("string");
       return VarManager.unit;
     }),
     true
   );
   vars.setVar(
-    'debug',
+    "debug",
     FunToken.native((toks) => {
       stdOut.content += `${JSON.stringify(toks[0])}\n`;
       // eslint-disable-next-line no-console
@@ -154,19 +171,19 @@ const prelude = () => {
 
   // Defining
   vars.setVar(
-    'type',
+    "type",
     FunToken.native((toks) => {
-      const name = toks[0].request('symbol');
-      const type = toks[1].request('type');
+      const name = toks[0].request("symbol");
+      const type = toks[1].request("type");
       vars.typeVar(name, type);
       return VarManager.unit;
     }),
     true
   );
   vars.setVar(
-    'def',
+    "def",
     FunToken.native((toks) => {
-      const name = toks[0].request('symbol');
+      const name = toks[0].request("symbol");
       const value = toks[1];
       vars.setVar(name, value, false);
       return value;
@@ -174,10 +191,10 @@ const prelude = () => {
     true
   );
   vars.setVar(
-    'deffun',
+    "deffun",
     FunToken.native((toks) => {
-      const name = toks[0].request('symbol');
-      const args = toks[1].request('array');
+      const name = toks[0].request("symbol");
+      const args = toks[1].request("array");
       const block = toks[2];
       const fn = FunToken.custom(args, block);
       vars.setVar(name, fn, false);
@@ -186,17 +203,17 @@ const prelude = () => {
     true
   );
   vars.setVar(
-    'bind',
+    "bind",
     FunToken.native((toks) => {
-      const names = toks[0].request('array');
-      const values = toks[1].request('array');
+      const names = toks[0].request("array");
+      const values = toks[1].request("array");
 
       if (names.length !== values.length) {
-        throw new Error('invalid parameter length in bind function');
+        throw new Error("invalid parameter length in bind function");
       }
 
       names.forEach((name, index) => {
-        vars.setVar(name.request('symbol'), values[index], false);
+        vars.setVar(name.request("symbol"), values[index], false);
       });
 
       return VarManager.unit;
@@ -206,64 +223,64 @@ const prelude = () => {
 
   // Numerics
   vars.setVar(
-    '+',
+    "+",
     FunToken.native((toks) => {
-      const x = toks[0].request('number');
-      const y = toks[1].request('number');
+      const x = toks[0].request("number");
+      const y = toks[1].request("number");
       return new NumberToken(x + y);
     }),
     true
   );
   vars.setVar(
-    '-',
+    "-",
     FunToken.native((toks) => {
-      const x = toks[0].request('number');
-      const y = toks[1].request('number');
+      const x = toks[0].request("number");
+      const y = toks[1].request("number");
       return new NumberToken(x - y);
     }),
     true
   );
   vars.setVar(
-    '*',
+    "*",
     FunToken.native((toks) => {
-      const x = toks[0].request('number');
-      const y = toks[1].request('number');
+      const x = toks[0].request("number");
+      const y = toks[1].request("number");
       return new NumberToken(x * y);
     }),
     true
   );
   vars.setVar(
-    '/',
+    "/",
     FunToken.native((toks) => {
-      const x = toks[0].request('number');
-      const y = toks[1].request('number');
+      const x = toks[0].request("number");
+      const y = toks[1].request("number");
       return new NumberToken(x / y);
     }),
     true
   );
   vars.setVar(
-    '// ',
+    "// ",
     FunToken.native((toks) => {
-      const x = toks[0].request('number');
-      const y = toks[1].request('number');
+      const x = toks[0].request("number");
+      const y = toks[1].request("number");
       return new NumberToken(Math.floor(x / y));
     }),
     true
   );
   vars.setVar(
-    '**',
+    "**",
     FunToken.native((toks) => {
-      const x = toks[0].request('number');
-      const y = toks[1].request('number');
+      const x = toks[0].request("number");
+      const y = toks[1].request("number");
       return new NumberToken(x ** y);
     }),
     true
   );
   vars.setVar(
-    '%',
+    "%",
     FunToken.native((toks) => {
-      const x = toks[0].request('number');
-      const y = toks[1].request('number');
+      const x = toks[0].request("number");
+      const y = toks[1].request("number");
       return new NumberToken(x % y);
     }),
     true
@@ -271,7 +288,7 @@ const prelude = () => {
 
   // Comparisons
   vars.setVar(
-    '==',
+    "==",
     FunToken.native((toks) => {
       const tok = toks[0];
       const other = toks[1];
@@ -280,7 +297,7 @@ const prelude = () => {
     true
   );
   vars.setVar(
-    '!=',
+    "!=",
     FunToken.native((toks) => {
       const tok = toks[0];
       const other = toks[1];
@@ -289,7 +306,7 @@ const prelude = () => {
     true
   );
   vars.setVar(
-    '<',
+    "<",
     FunToken.native((toks) => {
       const tok = toks[0];
       const other = toks[1];
@@ -298,7 +315,7 @@ const prelude = () => {
     true
   );
   vars.setVar(
-    '>',
+    ">",
     FunToken.native((toks) => {
       const tok = toks[0];
       const other = toks[1];
@@ -307,7 +324,7 @@ const prelude = () => {
     true
   );
   vars.setVar(
-    '<=',
+    "<=",
     FunToken.native((toks) => {
       const tok = toks[0];
       const other = toks[1];
@@ -316,7 +333,7 @@ const prelude = () => {
     true
   );
   vars.setVar(
-    '>=',
+    ">=",
     FunToken.native((toks) => {
       const tok = toks[0];
       const other = toks[1];
@@ -327,19 +344,19 @@ const prelude = () => {
 
   // Logical operation
   vars.setVar(
-    '&&',
+    "&&",
     FunToken.native((toks) => {
-      const bool = toks[0].request('bool');
-      const boolb = toks[1].request('bool');
+      const bool = toks[0].request("bool");
+      const boolb = toks[1].request("bool");
       return new BoolToken(bool && boolb);
     }),
     true
   );
   vars.setVar(
-    '||',
+    "||",
     FunToken.native((toks) => {
-      const bool = toks[0].request('bool');
-      const boolb = toks[1].request('bool');
+      const bool = toks[0].request("bool");
+      const boolb = toks[1].request("bool");
       return new BoolToken(bool || boolb);
     }),
     true
@@ -347,17 +364,17 @@ const prelude = () => {
 
   // Conversions
   vars.setVar(
-    'parseInt',
+    "parseInt",
     FunToken.native((toks) => {
-      const val = toks[0].request('string');
+      const val = toks[0].request("string");
       return new NumberToken(parseInt(val, 10));
     }),
     true
   );
   vars.setVar(
-    'parseFloat',
+    "parseFloat",
     FunToken.native((toks) => {
-      const val = toks[0].request('string');
+      const val = toks[0].request("string");
       return new NumberToken(parseFloat(val));
     }),
     true
@@ -365,7 +382,7 @@ const prelude = () => {
 
   // Miscs
   vars.setVar(
-    'eval',
+    "eval",
     FunToken.native((toks) => {
       const block = toks[0];
       return block.calculate();

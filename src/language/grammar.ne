@@ -48,7 +48,7 @@ const lexer = moo.compile({
 
 main -> phrase:+ {% id %}
 
-phrase -> %openPar _ vallist _ %closePar _ {% function(arr) { const list = arr[2].filter(x => x); return new CallToken(list[0], list.slice(1)) } %}
+phrase -> %openPar _ vallist _ %closePar _ {% function(arr) { const list = arr[2].filter(x => x); return new CallToken(list.shift(), list) } %}
         | %comment _ {% ignore %}
 
 vallist -> vallist __ value {% function(arr) { return arr[0].concat([arr[2]]) } %}

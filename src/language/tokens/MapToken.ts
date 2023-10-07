@@ -1,13 +1,12 @@
-import { HashMap } from '@nebtex/hashmaps';
-import Type from '../utils/Type';
-import BaseToken from './BaseToken';
-import { makeMapType, dynamicType } from '../utils/Types';
+// import { HashMap } from "@nebtex/hashmaps";
+import Type from "../utils/Type";
+import BaseToken from "./BaseToken";
+import { makeMapType, dynamicType } from "../utils/Types";
+import { HashMapTemp } from "../utils/HashMapTemp";
 
 export default class MapToken extends BaseToken {
-  public value!: HashMap<BaseToken, BaseToken>;
-
-  public constructor(value: HashMap<BaseToken, BaseToken>) {
-    super(value, 'map');
+  public constructor(value: HashMapTemp<BaseToken, BaseToken>) {
+    super(value, "map");
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -15,12 +14,12 @@ export default class MapToken extends BaseToken {
     const keyTypes: Array<Type> = [];
     const valueTypes: Array<Type> = [];
 
-    this.value.forEach((key, value) => {
+    this.value.forEach((key: BaseToken, value: BaseToken) => {
       if (key === undefined) {
-        throw new Error('error');
+        throw new Error("error");
       }
       if (value === undefined) {
-        throw new Error('error');
+        throw new Error("error");
       }
 
       const keyType = key.getType();
@@ -50,7 +49,7 @@ export default class MapToken extends BaseToken {
 
   public request(type: string) {
     switch (type) {
-      case 'map':
+      case "map":
         return this.value;
 
       default:

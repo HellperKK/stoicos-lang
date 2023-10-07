@@ -1,12 +1,10 @@
-import Type from '../utils/Type';
-import BaseToken from './BaseToken';
-import { makeArrayType, dynamicType } from '../utils/Types';
+import Type from "../utils/Type";
+import BaseToken from "./BaseToken";
+import { makeArrayType, dynamicType } from "../utils/Types";
 
 export default class ArrayToken extends BaseToken {
-  public value!: Array<BaseToken>;
-
   public constructor(value: Array<BaseToken>) {
-    super(value, 'array');
+    super(value, "array");
   }
 
   public getType() {
@@ -28,12 +26,14 @@ export default class ArrayToken extends BaseToken {
   }
 
   public update(): BaseToken {
-    return new ArrayToken(this.value.map((tok) => tok.update())) as BaseToken;
+    return new ArrayToken(
+      this.value.map((tok: BaseToken) => tok.update())
+    ) as BaseToken;
   }
 
   public request(type: string) {
     switch (type) {
-      case 'array':
+      case "array":
         return this.value;
 
       default:

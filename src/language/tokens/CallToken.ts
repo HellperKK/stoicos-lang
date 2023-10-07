@@ -1,12 +1,10 @@
-import BaseToken from './BaseToken';
+import BaseToken from "./BaseToken";
 
 export default class CallToken extends BaseToken {
-  public value!: BaseToken;
-
   public args: Array<BaseToken>;
 
   public constructor(value: BaseToken, args: Array<BaseToken>) {
-    super(value, 'call');
+    super(value, "call");
     this.args = args;
   }
 

@@ -1,8 +1,8 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
-import VarManager from '../manager/VarManager';
-import BaseToken from './BaseToken';
-import BlockToken from './BlockToken';
+import VarManager from "../manager/VarManager";
+import BaseToken from "./BaseToken";
+import BlockToken from "./BlockToken";
 
 export default class FunToken extends BaseToken {
   public static native(value: (toks: Array<BaseToken>) => BaseToken) {
@@ -17,7 +17,7 @@ export default class FunToken extends BaseToken {
         vars.addStack();
 
         args.forEach((sym, pos) =>
-          vars.setVar(sym.request('symbol'), toks[pos], false)
+          vars.setVar(sym.request("symbol"), toks[pos], false)
         );
 
         const nblock = block.update();
@@ -27,11 +27,9 @@ export default class FunToken extends BaseToken {
 
         return ret;
       },
-      args.map((tok) => tok.request('string'))
+      args.map((tok) => tok.request("string"))
     );
   }
-
-  public value!: (toks: Array<BaseToken>) => BaseToken;
 
   public args: Array<string>;
 
@@ -39,7 +37,7 @@ export default class FunToken extends BaseToken {
     value: (toks: Array<BaseToken>) => BaseToken,
     args: Array<string> = []
   ) {
-    super(value, 'fun');
+    super(value, "fun");
     this.args = args;
   }
 
@@ -53,7 +51,7 @@ export default class FunToken extends BaseToken {
 
   public request(type: string) {
     switch (type) {
-      case 'fun':
+      case "fun":
         return this.value;
 
       default:

@@ -1,11 +1,9 @@
-import BaseToken from './BaseToken';
-import { numberType } from '../utils/Types';
+import BaseToken from "./BaseToken";
+import { numberType } from "../utils/Types";
 
 export default class NumberToken extends BaseToken {
-  public value!: number;
-
   public constructor(value: number) {
-    super(value, 'number');
+    super(value, "number");
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -15,7 +13,7 @@ export default class NumberToken extends BaseToken {
 
   public request(type: string) {
     switch (type) {
-      case 'number':
+      case "number":
         return this.value;
 
       default:
