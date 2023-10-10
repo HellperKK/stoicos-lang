@@ -1,0 +1,11 @@
+(import :Map)
+
+; Makes a map
+(def :test (Map.make [
+  ["name" "Paul"]
+  ["age" 42]
+]))
+
+; Prints
+(debug (Map.get_or "name" test "world"))
+(debug (Map.get_or "adress" test "world"))

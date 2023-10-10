@@ -1,0 +1,14 @@
+(import :Loop)
+
+(deffun :fibbo [:x] {
+    (deffun :aux [:a :b :i] {
+        (if (== i 0)
+          b
+          {(aux b (+ a b) (- i 1))}
+        )
+    })
+    (aux 0 1 x)
+})
+
+
+(Loop.times 100 (fun [:x] {(println (fibbo x))}))

@@ -1,0 +1,6 @@
+(import :Struct)
+
+(def :Point2D (Struct.build [:x :y]))
+(def :point (Point2D.make 42 27))
+(println point.x)
+(println point.y)

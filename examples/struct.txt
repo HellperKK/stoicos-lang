@@ -1,0 +1,11 @@
+(import :Struct)
+
+; Makes a struct
+(def :test (Struct.make [
+  [:x 0]
+  [:y 42]
+]))
+
+; Prints
+(println test.x)
+(println test.y)

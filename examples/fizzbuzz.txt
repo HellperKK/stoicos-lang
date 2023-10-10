@@ -1,0 +1,16 @@
+(import :Loop)
+
+(deffun :is_divisor [:x :y] {
+  (== 0 (% y x))
+})
+
+(deffun :fizzbuzz [:x] {
+  (cond [
+    [:(is_divisor 15 x) "fizzbuzz"]
+    [:(is_divisor 5 x) "buzz"]
+    [:(is_divisor 3 x) "fizz"]
+    [true x]
+  ])
+})
+
+(Loop.upto 1 100 (fun [:x] :(println (fizzbuzz x))))

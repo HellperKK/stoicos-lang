@@ -1,0 +1,6 @@
+(def :x 42)
+(println (switch x [
+    [10 "hi"]
+    [42 "yeah"]
+    [96 "no"]
+]))

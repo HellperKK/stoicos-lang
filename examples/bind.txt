@@ -1,0 +1,3 @@
+(bind [:a :b] [42 37])
+(println a)
+(println b)

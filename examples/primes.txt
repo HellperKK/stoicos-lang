@@ -1,7 +1,10 @@
+(import :Loop)
+
 ; Tells if x is a divisor of y
 (deffun :is_divisor [:x :y] {
   (== 0 (% y x))
 })
+
 
 ; Tells if x is prime
 (deffun :is_prime [:x] {
@@ -14,19 +17,5 @@
   (aux 2)
 })
 
-; Counts primes up to x
-(deffun :count_prime [:x] {
-  (deffun :aux [:i] {
-    ;(println i)
-    (if (< i x)
-      {
-        (if (is_prime i) {(println i)} unit)
-        (aux (+ i 1))
-      }
-      unit
-    )
-  })
-  (aux 2)
-})
 
-(count_prime 100)
+(Loop.upto 2 100 (fun [:x] :(if (is_prime x) :(println x) unit)))
