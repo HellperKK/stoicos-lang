@@ -10,6 +10,7 @@ export default class FunToken extends BaseToken {
   }
 
   public static custom(args: Array<BaseToken>, block: BlockToken) {
+    const nblock = block.update();
     return new FunToken(
       (toks) => {
         const vars = VarManager.get();
@@ -20,7 +21,6 @@ export default class FunToken extends BaseToken {
           vars.setVar(sym.request("symbol"), toks[pos], false)
         );
 
-        const nblock = block.update();
         const ret = nblock.calculate();
 
         vars.delStack();

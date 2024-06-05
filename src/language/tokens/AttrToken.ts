@@ -1,3 +1,4 @@
+import VarManager from "../manager/VarManager";
 import BaseToken from "./BaseToken";
 import VarToken from "./VarToken";
 
@@ -14,12 +15,22 @@ export default class AttrToken extends VarToken {
   }
 
   public get() {
-    const tok = super.get();
-    const res = this.attrs.reduce(
-      (_tok, attr) => tok.request("struct").get(attr) as BaseToken,
-      tok
-    );
-    return res;
+    const manager = VarManager.get();
+    if (manager.hasVar(this.value)) {
+      const tok = manager.getVar(this.value);
+
+      const res = this.attrs.reduce(
+        (_tok, attr) => tok.request("struct").get(attr) as BaseToken,
+        tok
+      );
+      return res;
+    }
+
+    if (this.current === null) {
+      throw new Error(`Value ${this.value} not found`);
+    }
+
+    return this.current;
   }
 
   public update() {

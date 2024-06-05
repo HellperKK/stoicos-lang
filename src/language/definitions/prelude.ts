@@ -196,9 +196,10 @@ const prelude = () => {
       const name = toks[0].request("symbol");
       const args = toks[1].request("array");
       const block = toks[2];
-      const fn = FunToken.custom(args, block);
-      vars.setVar(name, fn, false);
-      return fn;
+      const emptyFn = FunToken.native((_args) => {return VarManager.unit});
+      vars.setVar(name, emptyFn, false);
+      emptyFn.value = FunToken.custom(args, block).value;
+      return emptyFn;
     }),
     true
   );
