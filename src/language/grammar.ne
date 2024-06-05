@@ -32,7 +32,7 @@ const lexer = moo.compile({
   closeSqu: /\]/,
 
   // tokens
-  number: { match:/\d+\.?\d*/, value: str => parseFloat(str) },
+  number: { match:/-?\d+\.?\d*/, value: str => parseFloat(str) },
   string: { match:/"(?:[^"]|\\")*"/, value: str => str.slice(1, -1) },
   ident: /[A-Za-z_][A-Za-z0-9_]*/,
   operator: /[!%&*+./<=>?^|\-~]+/,
@@ -65,7 +65,7 @@ value -> %number {% arr => new NumberToken(arr[0].value) %}
         | phrase {% id %}
 
 var -> name {% arr => new VarToken(arr[0].value) %}
-        | value %dot attrlist {% arr => new AttrToken(arr[0].value, arr[2].map(attr => attr.value)) %}
+        | value %dot attrlist {% arr => { return new AttrToken(arr[0].value, arr[2].map(attr => attr.value))} %}
         #| %arobase name {% function(arr) { return { type: "dynvar", name: arr[1] } } %}
 
 attrlist -> attrlist %dot name {% function(arr) { return arr[0].concat([arr[2]]) } %}

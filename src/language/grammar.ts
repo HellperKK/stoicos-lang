@@ -53,7 +53,7 @@ const lexer = moo.compile({
   closeSqu: /\]/,
 
   // tokens
-  number: { match:/\d+\.?\d*/, value: str => parseFloat(str) },
+  number: { match:/-?\d+\.?\d*/, value: str => parseFloat(str) },
   string: { match:/"(?:[^"]|\\")*"/, value: str => str.slice(1, -1) },
   ident: /[A-Za-z_][A-Za-z0-9_]*/,
   operator: /[!%&*+./<=>?^|\-~]+/,
@@ -107,7 +107,7 @@ const grammar: Grammar = {
     {"name": "value", "symbols": ["array"], "postprocess": id},
     {"name": "value", "symbols": ["phrase"], "postprocess": id},
     {"name": "var", "symbols": ["name"], "postprocess": arr => new VarToken(arr[0].value)},
-    {"name": "var", "symbols": ["value", (lexer.has("dot") ? {type: "dot"} : dot), "attrlist"], "postprocess": arr => new AttrToken(arr[0].value, arr[2].map(attr => attr.value))},
+    {"name": "var", "symbols": ["value", (lexer.has("dot") ? {type: "dot"} : dot), "attrlist"], "postprocess": arr => { return new AttrToken(arr[0].value, arr[2].map(attr => attr.value))}},
     {"name": "attrlist", "symbols": ["attrlist", (lexer.has("dot") ? {type: "dot"} : dot), "name"], "postprocess": function(arr) { return arr[0].concat([arr[2]]) }},
     {"name": "attrlist", "symbols": ["name"], "postprocess": function(arr) { return [arr[0]] }},
     {"name": "curried", "symbols": [(lexer.has("arobase") ? {type: "arobase"} : arobase), "value"], "postprocess": function(arr) { return { type: "curried", value: arr[1] } }},
