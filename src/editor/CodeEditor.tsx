@@ -142,6 +142,7 @@ function CodeHighlightingExample(props: CompProps) {
             e.preventDefault();
             editor.insertText(" ".repeat(4));
           }
+          /*
           if (e.key === "(") {
             e.preventDefault();
             if (window.getSelection !== null) {
@@ -166,6 +167,7 @@ function CodeHighlightingExample(props: CompProps) {
               editor.insertText(`"${window.getSelection()?.toString()}"`);
             }
           }
+          */
         }}
         placeholder="Write some code..."
       />
