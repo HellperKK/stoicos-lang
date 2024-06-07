@@ -1,0 +1,6 @@
+(def :initial_value 11)
+(println (|> initial_value [
+    (#+ 3)
+    (#* 6)
+    (fun [:i] :(/ i 2))
+]))

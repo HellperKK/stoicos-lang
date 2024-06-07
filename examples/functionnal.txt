@@ -3,4 +3,3 @@
 (deffun :make_callback [:phrase] {(fun [] :(println phrase))})
 (def :shoutHello (make_callback "HELLO"))
 (repeat shoutHello 5)
-
