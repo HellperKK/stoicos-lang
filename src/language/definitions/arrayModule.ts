@@ -8,6 +8,7 @@ import BoolToken from '../tokens/BoolToken';
 import StringToken from '../tokens/StringToken';
 
 import { arrayType, makeArrayType } from '../utils/Types';
+import VarManager from '../manager/VarManager';
 
 const arrayInit = () => {
   const module = new Map<string, BaseToken>();
@@ -128,6 +129,15 @@ const arrayInit = () => {
       );
     })
   );
+  module.set(
+    'for_each',
+    FunToken.native((toks) => {
+      const fun = toks[0];
+      const arr = toks[1].request('array');
+      arr.forEach((tok) => fun.call([tok]));
+      return VarManager.unit;
+    })
+  );
 
   // Check functions
   module.set(
@@ -199,6 +209,13 @@ const arrayInit = () => {
       const arr = toks[0].request('array');
       const arrb = toks[1].request('array');
       return new ArrayToken(arr.concat(arrb));
+    })
+  );
+  module.set(
+    'length',
+    FunToken.native((toks) => {
+      const arr = toks[0].request('array');
+      return new NumberToken(arr.length);
     })
   );
 

@@ -113,6 +113,13 @@ const stringInit = () => {
       return new StringToken(res);
     })
   );
+  module.set(
+    'length',
+    FunToken.native((toks) => {
+      const str = toks[0].request('string');
+      return new NumberToken(str.length);
+    })
+  );
 
   return new StructToken(module);
 };
