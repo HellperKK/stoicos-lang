@@ -19,7 +19,6 @@ export default class AttrToken extends VarToken {
     if (manager.hasVar(this.value)) {
       const tok = manager.getVar(this.value);
 
-      console.log(this.attrs)
       const res = this.attrs.reduce(
         (tokent, attr) => {
           return tokent.request("struct").get(attr) ?? VarManager.unit
