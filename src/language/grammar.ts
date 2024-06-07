@@ -10,7 +10,7 @@ declare var number: any;
 declare var string: any;
 declare var colon: any;
 declare var dot: any;
-declare var arobase: any;
+declare var hash: any;
 declare var dollar: any;
 declare var openCur: any;
 declare var closeCur: any;
@@ -29,6 +29,7 @@ import BlockToken from "./tokens/BlockToken"
 import CallToken from "./tokens/CallToken"
 import NumberToken from "./tokens/NumberToken"
 import AttrToken from "./tokens/AttrToken"
+import FunToken from "./tokens/FunToken"
 
 const ignore = arr => null 
 
@@ -103,14 +104,15 @@ const grammar: Grammar = {
     {"name": "value", "symbols": [(lexer.has("string") ? {type: "string"} : string)], "postprocess": arr => new StringToken(arr[0].value)},
     {"name": "value", "symbols": [(lexer.has("colon") ? {type: "colon"} : colon), "name"], "postprocess": arr => new SymbolToken(arr[1].value)},
     {"name": "value", "symbols": ["var"], "postprocess": id},
+    {"name": "value", "symbols": ["curried"], "postprocess": id},
     {"name": "value", "symbols": ["block"], "postprocess": id},
     {"name": "value", "symbols": ["array"], "postprocess": id},
     {"name": "value", "symbols": ["phrase"], "postprocess": id},
     {"name": "var", "symbols": ["name"], "postprocess": arr => new VarToken(arr[0].value)},
-    {"name": "var", "symbols": ["value", (lexer.has("dot") ? {type: "dot"} : dot), "attrlist"], "postprocess": arr => { return new AttrToken(arr[0].value, arr[2].map(attr => attr.value))}},
+    {"name": "var", "symbols": ["name", (lexer.has("dot") ? {type: "dot"} : dot), "attrlist"], "postprocess": arr => { return new AttrToken(arr[0].value, arr[2].map(attr => attr.value))}},
     {"name": "attrlist", "symbols": ["attrlist", (lexer.has("dot") ? {type: "dot"} : dot), "name"], "postprocess": function(arr) { return arr[0].concat([arr[2]]) }},
     {"name": "attrlist", "symbols": ["name"], "postprocess": function(arr) { return [arr[0]] }},
-    {"name": "curried", "symbols": [(lexer.has("arobase") ? {type: "arobase"} : arobase), "value"], "postprocess": function(arr) { return { type: "curried", value: arr[1] } }},
+    {"name": "curried", "symbols": [(lexer.has("hash") ? {type: "hash"} : hash), "var"], "postprocess": function(arr) { return FunToken.native(tokens => FunToken.native(tokensbis => arr[1].get().call(tokens.concat(tokensbis)))) }},
     {"name": "macro", "symbols": [(lexer.has("dollar") ? {type: "dollar"} : dollar), "value"], "postprocess": function(arr) { return { type: "macro", value: arr[1] } }},
     {"name": "block$ebnf$1", "symbols": ["vallist"], "postprocess": id},
     {"name": "block$ebnf$1", "symbols": [], "postprocess": () => null},

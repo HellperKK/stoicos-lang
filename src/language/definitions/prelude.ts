@@ -390,6 +390,15 @@ const prelude = () => {
     }),
     true
   );
+  vars.setVar(
+    "|>",
+    FunToken.native((toks) => {
+      const initialValue = toks[0];
+      const funs = toks[1].request("array");
+      return funs.reduce((memo, token) => token.call([memo]), initialValue)
+    }),
+    true
+  );
 };
 
 export default prelude;

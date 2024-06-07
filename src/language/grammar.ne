@@ -8,6 +8,7 @@ import BlockToken from "./tokens/BlockToken"
 import CallToken from "./tokens/CallToken"
 import NumberToken from "./tokens/NumberToken"
 import AttrToken from "./tokens/AttrToken"
+import FunToken from "./tokens/FunToken"
 
 const ignore = arr => null 
 
@@ -58,20 +59,20 @@ value -> %number {% arr => new NumberToken(arr[0].value) %}
         | %string {% arr => new StringToken(arr[0].value) %}
         | %colon name {% arr => new SymbolToken(arr[1].value) %}
         | var {% id %}
-        #| curried {% id %}
+        | curried {% id %}
         #| macro {% id %}
         | block {% id %}
         | array {% id %}
         | phrase {% id %}
 
 var -> name {% arr => new VarToken(arr[0].value) %}
-        | value %dot attrlist {% arr => { return new AttrToken(arr[0].value, arr[2].map(attr => attr.value))} %}
+        | name %dot attrlist {% arr => { return new AttrToken(arr[0].value, arr[2].map(attr => attr.value))} %}
         #| %arobase name {% function(arr) { return { type: "dynvar", name: arr[1] } } %}
 
 attrlist -> attrlist %dot name {% function(arr) { return arr[0].concat([arr[2]]) } %}
         | name {% function(arr) { return [arr[0]] } %}
 
-curried -> %arobase value {% function(arr) { return { type: "curried", value: arr[1] } } %}
+curried -> %hash var {% function(arr) { return FunToken.native(tokens => FunToken.native(tokensbis => arr[1].get().call(tokens.concat(tokensbis)))) } %}
 
 macro -> %dollar value {% function(arr) { return { type: "macro", value: arr[1] } } %}
 
