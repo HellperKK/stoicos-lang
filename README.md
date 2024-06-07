@@ -30,7 +30,7 @@ Here are a few examples of what it can do
 (println (squared 12)) ; 144
 
 ; Functions can also be defined like that
-; It is however more verbose
+; It is however more verbose and doesn't allow recusion
 (def :squared (fun  [:x] {(* x x)}))
 (println (squared 12)) ; 144
 ```
