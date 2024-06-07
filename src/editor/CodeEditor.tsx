@@ -49,6 +49,7 @@ const Leaf = ({ attributes, children, leaf }: any) => {
       {...attributes}
       className={css`
         font-family: monospace;
+        font-size: 1.2em;
         caret-color: white;
 
         ${leaf.symbol &&
