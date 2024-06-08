@@ -89,6 +89,58 @@ const arrayInit = () => {
     })
   );
 
+  // Add or remove functions
+  module.set(
+    'push',
+    FunToken.native((toks) => {
+      const arr = toks[0].request('array');
+      const item = toks[1];
+      const newArr = arr.slice();
+      newArr.push(item);
+      return new ArrayToken(newArr);
+    })
+  );
+  module.set(
+    'pop',
+    FunToken.native((toks) => {
+      const arr = toks[0].request('array');
+      const newArr = arr.slice();
+      newArr.pop();
+      return new ArrayToken(newArr);
+    })
+  );
+  module.set(
+    'unshift',
+    FunToken.native((toks) => {
+      const arr = toks[0].request('array');
+      const item = toks[1];
+      const newArr = arr.slice();
+      newArr.unshift(item);
+      return new ArrayToken(newArr);
+    })
+  );
+  module.set(
+    'shift',
+    FunToken.native((toks) => {
+      const arr = toks[0].request('array');
+      const newArr = arr.slice();
+      newArr.shift();
+      return new ArrayToken(newArr);
+    })
+  );
+  module.set(
+    'splice',
+    FunToken.native((toks) => {
+      const arr = toks[0].request('array');
+      const index = toks[1].request('number');
+      const count = toks[2].request('number');
+      const replacement = toks[3].request('array');
+      const newArr = arr.slice();
+      newArr.splice(index, count, ...replacement);
+      return new ArrayToken(newArr);
+    })
+  );
+
   // Idiom functions
   module.set(
     'foldl',
