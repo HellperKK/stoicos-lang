@@ -30,6 +30,7 @@ import CallToken from "./tokens/CallToken"
 import NumberToken from "./tokens/NumberToken"
 import AttrToken from "./tokens/AttrToken"
 import FunToken from "./tokens/FunToken"
+import PartialFunToken from "./tokens/PartialFunToken"
 
 const ignore = arr => null 
 
@@ -112,7 +113,7 @@ const grammar: Grammar = {
     {"name": "var", "symbols": ["name", (lexer.has("dot") ? {type: "dot"} : dot), "attrlist"], "postprocess": arr => { return new AttrToken(arr[0].value, arr[2].map(attr => attr.value))}},
     {"name": "attrlist", "symbols": ["attrlist", (lexer.has("dot") ? {type: "dot"} : dot), "name"], "postprocess": function(arr) { return arr[0].concat([arr[2]]) }},
     {"name": "attrlist", "symbols": ["name"], "postprocess": function(arr) { return [arr[0]] }},
-    {"name": "curried", "symbols": [(lexer.has("hash") ? {type: "hash"} : hash), "var"], "postprocess": function(arr) { return FunToken.native(tokens => FunToken.native(tokensbis => arr[1].get().call(tokens.concat(tokensbis)))) }},
+    {"name": "curried", "symbols": [(lexer.has("hash") ? {type: "hash"} : hash), "var"], "postprocess": function(arr) { return new PartialFunToken(arr[1]) }},
     {"name": "macro", "symbols": [(lexer.has("dollar") ? {type: "dollar"} : dollar), "value"], "postprocess": function(arr) { return { type: "macro", value: arr[1] } }},
     {"name": "block$ebnf$1", "symbols": ["vallist"], "postprocess": id},
     {"name": "block$ebnf$1", "symbols": [], "postprocess": () => null},

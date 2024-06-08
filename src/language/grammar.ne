@@ -9,6 +9,7 @@ import CallToken from "./tokens/CallToken"
 import NumberToken from "./tokens/NumberToken"
 import AttrToken from "./tokens/AttrToken"
 import FunToken from "./tokens/FunToken"
+import PartialFunToken from "./tokens/PartialFunToken"
 
 const ignore = arr => null 
 
@@ -72,7 +73,7 @@ var -> name {% arr => new VarToken(arr[0].value) %}
 attrlist -> attrlist %dot name {% function(arr) { return arr[0].concat([arr[2]]) } %}
         | name {% function(arr) { return [arr[0]] } %}
 
-curried -> %hash var {% function(arr) { return FunToken.native(tokens => FunToken.native(tokensbis => arr[1].get().call(tokens.concat(tokensbis)))) } %}
+curried -> %hash var {% function(arr) { return new PartialFunToken(arr[1]) } %}
 
 macro -> %dollar value {% function(arr) { return { type: "macro", value: arr[1] } } %}
 
