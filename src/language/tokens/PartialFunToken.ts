@@ -4,8 +4,7 @@ import FunToken from "./FunToken";
 
 export default class PartialFunToken extends BaseToken {
   public constructor(value: BaseToken) {
-    super(value, "var");
-    this.value = this.value.update();
+    super(value.update(), "var");
   }
 
   public get(): BaseToken {
