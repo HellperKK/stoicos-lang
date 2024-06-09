@@ -1,0 +1,21 @@
+(import :Array)
+
+(deffun :fibbos_under [:max] {
+    (deffun :aux [:a :b :acc] {
+        (if (>= b max)
+          acc
+          {(aux b (+ a b) (Array.push b acc))}
+        )
+    })
+    (aux 0 1 [])
+})
+
+(def :sum (|>
+    (fibbos_under 4000000)
+    [
+        (#Array.filter (fun [:x] {(== 0 (% x 2))}))
+        (#Array.foldl + 0)
+    ]
+))
+
+(println sum)

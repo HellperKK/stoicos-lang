@@ -1,0 +1,29 @@
+(import :Loop)
+(def :number 600851475143)
+
+; Tells if x is a divisor of y
+(deffun :is_divisor [:x :y] {
+  (== 0 (% y x))
+})
+
+(deffun :smallest_prime_factor [:x] {
+  (def :i 2)
+  (Loop.while {(&& (< (* i i) x) (! (is_divisor i x)))} {
+    (def :i (+ i 1))
+  })
+  (if (> (* i i) x)
+    x
+    i
+  )
+})
+
+(deffun :biggest_prime_factor [:x] {
+    (def :sf (smallest_prime_factor x))
+    (if (== sf x) 
+        {x} 
+        {(biggest_prime_factor (/ x sf))}
+    )
+})
+
+(def :result (biggest_prime_factor number))
+(println result)
