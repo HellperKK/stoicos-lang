@@ -82,7 +82,7 @@ export default abstract class BaseToken {
         return this.value.toString();
 
       default:
-        throw new Error(`Resquested a ${type} for a ${this.type}`);
+        throw new Error(`Resquested a ${type} but got a ${this.type}`);
     }
   }
 
