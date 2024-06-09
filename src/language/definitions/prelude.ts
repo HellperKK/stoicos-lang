@@ -11,6 +11,7 @@ import loopInit from "./loopModule";
 import StringToken from "../tokens/StringToken";
 import StructToken from "../tokens/StructToken";
 import mapInit from "./mapModule";
+import mathInit from "./mathModule";
 // import serverInit from './serverModule';
 
 const prelude = () => {
@@ -46,6 +47,10 @@ const prelude = () => {
 
         case "Loop":
           val = loopInit();
+          break;
+
+        case "Math":
+          val = mathInit();
           break;
 
         /*
@@ -362,6 +367,14 @@ const prelude = () => {
     }),
     true
   );
+  vars.setVar(
+    "!",
+    FunToken.native((toks) => {
+      const bool = toks[0].request("bool");
+      return new BoolToken(!bool);
+    }),
+    true
+  );
 
   // Conversions
   vars.setVar(
@@ -396,6 +409,14 @@ const prelude = () => {
       const initialValue = toks[0];
       const funs = toks[1].request("array");
       return funs.reduce((memo, token) => token.call([memo]), initialValue)
+    }),
+    true
+  );
+  vars.setVar(
+    "to_string",
+    FunToken.native((toks) => {
+      const str = toks[0].request("string");
+      return new StringToken(str);
     }),
     true
   );

@@ -120,6 +120,13 @@ const stringInit = () => {
       return new NumberToken(str.length);
     })
   );
+  module.set(
+    'reverse',
+    FunToken.native((toks) => {
+      const str = toks[0].request('string');
+      return new StringToken(str.split("").reverse().join(""));
+    })
+  );
 
   return new StructToken(module);
 };
