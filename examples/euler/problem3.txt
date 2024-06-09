@@ -19,8 +19,8 @@
 
 (deffun :biggest_prime_factor [:x] {
     (def :sf (smallest_prime_factor x))
-    (if (== sf x) 
-        {x} 
+    (if (== sf x)
+        {x}
         {(biggest_prime_factor (/ x sf))}
     )
 })

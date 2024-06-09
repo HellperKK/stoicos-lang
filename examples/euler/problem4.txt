@@ -6,8 +6,6 @@
     (== str (String.reverse str))
 })
 
-(println (is_palindrome 101))
-
 (Loop.upto 900 999 (fun [:x] {
     (Loop.upto x 999 (fun [:y] {
         (if (is_palindrome (* x y)) {(println (* x y))} {})
