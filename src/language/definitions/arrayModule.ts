@@ -93,8 +93,8 @@ const arrayInit = () => {
   module.set(
     'push',
     FunToken.native((toks) => {
-      const arr = toks[0].request('array');
-      const item = toks[1];
+      const item = toks[0];
+      const arr = toks[1].request('array');
       const newArr = arr.slice();
       newArr.push(item);
       return new ArrayToken(newArr);
@@ -112,8 +112,8 @@ const arrayInit = () => {
   module.set(
     'unshift',
     FunToken.native((toks) => {
-      const arr = toks[0].request('array');
-      const item = toks[1];
+      const item = toks[0];
+      const arr = toks[1].request('array');
       const newArr = arr.slice();
       newArr.unshift(item);
       return new ArrayToken(newArr);
@@ -131,10 +131,10 @@ const arrayInit = () => {
   module.set(
     'splice',
     FunToken.native((toks) => {
-      const arr = toks[0].request('array');
-      const index = toks[1].request('number');
-      const count = toks[2].request('number');
-      const replacement = toks[3].request('array');
+      const index = toks[0].request('number');
+      const count = toks[1].request('number');
+      const replacement = toks[2].request('array');
+      const arr = toks[3].request('array');
       const newArr = arr.slice();
       newArr.splice(index, count, ...replacement);
       return new ArrayToken(newArr);
@@ -177,7 +177,7 @@ const arrayInit = () => {
       const fun = toks[0];
       const arr = toks[1].request('array');
       return new ArrayToken(
-        arr.filter((tok) => fun.call([tok]).request('boolean'))
+        arr.filter((tok) => fun.call([tok]).request('bool'))
       );
     })
   );
