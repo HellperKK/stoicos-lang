@@ -14,6 +14,36 @@ const stringInit = () => {
   // Main type
   module.set('type', new TypeToken(stringType));
 
+  // Case functions
+  module.set(
+    'uppercase',
+    FunToken.native((toks) => {
+      const str = toks[0].request('string');
+      return new StringToken(str.toUpperCase());
+    })
+  );
+  module.set(
+    'lowercase',
+    FunToken.native((toks) => {
+      const str = toks[0].request('string');
+      return new StringToken(str.toLowerCase());
+    })
+  );
+  module.set(
+    'capitalize',
+    FunToken.native((toks) => {
+      const str = toks[0].request('string');
+      return new StringToken(str[0].toUpperCase() + str.slice(1));
+    })
+  );
+  module.set(
+    'title',
+    FunToken.native((toks) => {
+      const str = toks[0].request('string');
+      return new StringToken(str.replaceAll(/\b\w+/g, s => s[0].toUpperCase() + s.slice(1)));
+    })
+  );
+
   // Building functions
   module.set(
     'make',
