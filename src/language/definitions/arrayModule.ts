@@ -143,7 +143,7 @@ const arrayInit = () => {
 
   // Idiom functions
   module.set(
-    'foldl',
+    'fold_left',
     FunToken.native((toks) => {
       const fun = toks[0];
       const base = toks[1];
@@ -155,7 +155,7 @@ const arrayInit = () => {
     })
   );
   module.set(
-    'foldr',
+    'fold_right',
     FunToken.native((toks) => {
       const fun = toks[0];
       const base = toks[1];
