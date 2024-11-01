@@ -157,7 +157,6 @@ const arrayInit = () => {
   module.set(
     'fold_right',
     FunToken.native((toks) => {
-      console.log(toks);
       const fun = toks[0];
       const base = toks[1];
       const arr = toks[2].request('array');
