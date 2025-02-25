@@ -1,5 +1,5 @@
 (import :Loop)
-(deffun :repeat [:callback :times] {(Loop.times times callback)})
-(deffun :make_callback [:phrase] {(fun [] :(println phrase))})
-(def :shout_hello (make_callback "HELLO"))
-(repeat shout_hello 5)
+
+(deffun :make_shouter [:phrase] {(fun [] :(println phrase))})
+(def :shout_hello (make_shouter "HELLO"))
+(Loop.times 5 shout_hello)
