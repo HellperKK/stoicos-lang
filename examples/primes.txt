@@ -18,4 +18,4 @@
 })
 
 
-(Loop.upto 2 100 (fun [:x] :(if (is_prime x) :(println x) unit)))
+(Loop.upto_fun 2 100 (fun [:x] :(if (is_prime x) :(println x) unit)))
