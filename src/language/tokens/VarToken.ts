@@ -23,7 +23,7 @@ export default class VarToken extends BaseToken {
 
     if (this.current === null) {
       const suggestions = didYouMean(this.value, manager.getLocalNames(), {returnType: ReturnTypeEnums.ALL_SORTED_MATCHES})
-      throw new Error(`Value ${this.value} not found, did you mean ${suggestions.slice(0, 5).join(', ')}`);
+      throw new Error(`Value ${this.value} not found, did you mean ${suggestions.join(', ')}?`);
     }
 
     return this.current;

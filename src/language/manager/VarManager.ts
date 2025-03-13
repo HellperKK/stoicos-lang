@@ -3,6 +3,7 @@ import UnitToken from '../tokens/UnitToken';
 import Var from './Var';
 import { dynamicType } from '../utils/Types';
 import Type from '../utils/Type';
+import didYouMean, { ReturnTypeEnums } from 'didyoumean2';
 
 export default class VarManager {
   private static instance: VarManager;
@@ -57,7 +58,8 @@ export default class VarManager {
       ?.getVal();
 
     if (token === undefined) {
-      throw new Error(`Value ${name} not found`);
+      const suggestions = didYouMean(name, this.getLocalNames(), {returnType: ReturnTypeEnums.ALL_SORTED_MATCHES})
+      throw new Error(`Value ${name} not found, did you mean ${suggestions.join(', ')}?`);
     }
 
     return token;
