@@ -33,14 +33,14 @@ const stringInit = () => {
     'capitalize',
     FunToken.native((toks) => {
       const str = toks[0].request('string');
-      return new StringToken(str[0].toUpperCase() + str.slice(1));
+      return new StringToken(str[0].toUpperCase() + str.slice(1).toLowerCase());
     })
   );
   module.set(
     'title',
     FunToken.native((toks) => {
       const str = toks[0].request('string');
-      return new StringToken(str.replaceAll(/\b\w+/g, s => s[0].toUpperCase() + s.slice(1)));
+      return new StringToken(str.replaceAll(/\b\w+/g, s => s[0].toUpperCase() + s.slice(1).toLowerCase()));
     })
   );
 
