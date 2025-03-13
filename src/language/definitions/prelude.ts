@@ -17,6 +17,9 @@ import mathInit from "./mathModule";
 const prelude = () => {
   const { stdOut } = VarManager;
   const vars = VarManager.get();
+  const varManager = VarManager.get()
+  varManager.setVar("Array", arrayInit(), true);
+  varManager.setVar("String", stringInit(), true);
 
   // Imports
   vars.setVar(
@@ -25,6 +28,7 @@ const prelude = () => {
       const mod = toks[0].request("symbol");
       let val: BaseToken;
       switch (mod) {
+        /*
         case "Array":
           val = arrayInit();
           break;
@@ -33,6 +37,7 @@ const prelude = () => {
           val = stringInit();
           break;
 
+        */
         case "Struct":
           val = structInit();
           break;
