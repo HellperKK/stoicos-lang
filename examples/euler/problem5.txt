@@ -1,0 +1,58 @@
+(import :Loop)
+(import :Map)
+(import :Math)
+
+(deffun :is_divisor [:x :y] {
+  (== 0 (% y x))
+})
+
+(deffun :smallest_prime_factor [:x] {
+  (def :i 2)
+  (Loop.while {(&& (< (* i i) x) (! (is_divisor i x)))} {
+    (def :i (+ i 1))
+  })
+  (if (> (* i i) x)
+    {x}
+    {i}
+  )
+})
+
+(deffun :prime_factors [:x] {
+  (def :acc [])
+  (def :small (smallest_prime_factor x))
+  (Loop.while {(!= small x)} {
+    (def :acc (Array.push small acc))
+    (def :x (/ x small))
+    (def :small (smallest_prime_factor x))
+  })
+  (def :acc (Array.push small acc))
+})
+
+(deffun :count_numbers [:values] {
+  (Array.fold_left (fun [:memo :value] {
+    (def :count (Map.get_or value 0 memo))
+    (Map.set value (+ count 1) memo)
+  }) Map.empty values)
+})
+
+(deffun :merge_numbers [:map1 :map2] {
+  (def :res (Array.fold_left (fun [:memo :value] {
+    (bind [:key :count] value)
+    (if (< (Map.get_or key 0 memo) count) {(Map.set key count memo)} memo)
+  }) Map.empty (Map.entries map1)))
+  (Array.fold_left (fun [:memo :value] {
+    (bind [:key :count] value)
+    (if (< (Map.get_or key 0 memo) count) {(Map.set key count memo)} memo)
+  }) res (Map.entries map2))
+})
+
+(def :range (Array.make_range 2 21))
+
+(def :factors (Array.fold_left (fun [:memo :value] {
+  (merge_numbers memo (count_numbers (prime_factors value)))
+}) Map.empty range))
+
+(println (Array.fold_left (fun [:memo :value] {
+  (bind [:key :count] value)
+  (* memo (Math.pow key count))
+}) 1 (Map.entries factors)))
