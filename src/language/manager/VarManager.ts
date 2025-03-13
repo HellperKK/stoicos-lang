@@ -85,4 +85,8 @@ export default class VarManager {
   public getStack() {
     return this.dicts[0];
   }
+
+  public getLocalNames() {
+    return Array.from(this.dicts[0].keys());
+  }
 }

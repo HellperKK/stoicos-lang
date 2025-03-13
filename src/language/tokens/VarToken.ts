@@ -1,3 +1,4 @@
+import didYouMean, { ReturnTypeEnums } from "didyoumean2";
 import VarManager from "../manager/VarManager";
 import BaseToken from "./BaseToken";
 
@@ -21,7 +22,8 @@ export default class VarToken extends BaseToken {
     }
 
     if (this.current === null) {
-      throw new Error(`Value ${this.value} not found`);
+      const suggestions = didYouMean(this.value, manager.getLocalNames(), {returnType: ReturnTypeEnums.ALL_SORTED_MATCHES})
+      throw new Error(`Value ${this.value} not found, did you mean ${suggestions.slice(0, 5).join(', ')}`);
     }
 
     return this.current;

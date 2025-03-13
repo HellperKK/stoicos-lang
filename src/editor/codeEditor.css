@@ -1,0 +1,31 @@
+.token.neutral {
+  color: black;
+}
+
+.token.comment {
+  color: #bcbcbc;
+}
+
+.token.string {
+  color: #6b3f24;
+}
+
+.token.ident {
+  color: #1d2550;
+}
+
+.token.operator {
+  color: #8a2b2b;
+}
+
+.token.number {
+  color: #276e2c;
+}
+
+.token.symbol {
+  color: #2b586c;
+}
+
+.npm__react-simple-code-editor__textarea {
+  caret-color: black;
+}

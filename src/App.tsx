@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import { css } from "@emotion/css";
 import "./App.global.css";
 
-import CodeEditor from "./editor/CodeEditor";
 import evaluate from "./language/utils/eval";
 import VarManager from "./language/manager/VarManager";
+import CodeEditor from "./editor/CodeEditor";
 
 export default function App() {
   const [code, setCode] = useState("");
@@ -31,7 +31,7 @@ export default function App() {
       <button type="button" onClick={evalClick}>
         Run
       </button>
-      <CodeEditor setCode={setCode} />
+      <CodeEditor code={code} setCode={setCode} />
       <div
         className={css`
           display: ${resultOpened ? "flex" : "none"};
