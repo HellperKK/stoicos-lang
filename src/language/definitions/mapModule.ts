@@ -76,8 +76,8 @@ const mapInit = () => {
     "get_or",
     FunToken.native((toks) => {
       const key = toks[0];
-      const struct = toks[1].request("map");
-      const defaultValue = toks[2];
+      const defaultValue = toks[1];
+      const struct = toks[2].request("map");
       const val = struct.get(key);
 
       if (val === undefined) {
