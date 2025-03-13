@@ -352,6 +352,15 @@ const prelude = () => {
     }),
     true
   );
+  vars.setVar(
+    "compare",
+    FunToken.native((toks) => {
+      const tok = toks[0];
+      const other = toks[1];
+      return new NumberToken(tok.compare(other));
+    }),
+    true
+  );
 
   // Logical operation
   vars.setVar(
