@@ -36,6 +36,11 @@ export default class ArrayToken extends BaseToken {
       case "array":
         return this.value;
 
+      case "string":
+        return "[" + this.value
+          .map((tok: BaseToken) => tok.request("string"))
+          .join(" ") + "]";
+
       default:
         return super.request(type);
     }
