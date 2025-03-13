@@ -193,7 +193,7 @@ const arrayInit = () => {
 
   // Check functions
   module.set(
-    'include',
+    'includes',
     FunToken.native((toks) => {
       const val = toks[0];
       const arr: Array<BaseToken> = toks[1].request('array');
@@ -268,6 +268,14 @@ const arrayInit = () => {
     FunToken.native((toks) => {
       const arr = toks[0].request('array');
       return new NumberToken(arr.length);
+    })
+  );
+  module.set(
+    'sort',
+    FunToken.native((toks) => {
+      const f = toks[0];
+      const arr = toks[1].request('array');
+      return new ArrayToken(arr.toSorted((a, b) => f.call([a, b]).request('number')));
     })
   );
 

@@ -11,6 +11,10 @@ const mathInit = () => {
     new NumberToken(Math.PI)
   );
   module.set(
+    'E',
+    new NumberToken(Math.E)
+  )
+  module.set(
     'abs',
     FunToken.native((toks) => {
       const num = toks[0].request('number');
@@ -84,6 +88,27 @@ const mathInit = () => {
     FunToken.native((toks) => {
       const num = toks[0].request('number');
       return new NumberToken(Math.sqrt(num));
+    })
+  );
+  module.set(
+    'exp',
+    FunToken.native((toks) => {
+      const num = toks[0].request('number');
+      return new NumberToken(Math.exp(num));
+    })
+  );
+  module.set(
+    'log',
+    FunToken.native((toks) => {
+      const num = toks[0].request('number');
+      return new NumberToken(Math.log(num));
+    })
+  );
+  module.set(
+    'log10',
+    FunToken.native((toks) => {
+      const num = toks[0].request('number');
+      return new NumberToken(Math.log10(num));
     })
   );
 

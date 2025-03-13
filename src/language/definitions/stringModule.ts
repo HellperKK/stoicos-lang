@@ -7,6 +7,7 @@ import StructToken from '../tokens/StructToken';
 import NumberToken from '../tokens/NumberToken';
 
 import { stringType } from '../utils/Types';
+import BoolToken from '../tokens/BoolToken';
 
 const stringInit = () => {
   const module = new Map<string, BaseToken>();
@@ -155,6 +156,14 @@ const stringInit = () => {
     FunToken.native((toks) => {
       const str = toks[0].request('string');
       return new StringToken(str.split("").reverse().join(""));
+    })
+  );
+  module.set(
+    'includes',
+    FunToken.native((toks) => {
+      const sub = toks[0].request('string');
+      const str = toks[1].request('string');
+      return new BoolToken(str.includes(sub));
     })
   );
 
