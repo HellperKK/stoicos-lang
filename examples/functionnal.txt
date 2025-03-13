@@ -2,4 +2,4 @@
 
 (deffun :make_shouter [:phrase] {(fun [] :(println phrase))})
 (def :shout_hello (make_shouter "HELLO"))
-(Loop.times 5 shout_hello)
+(Loop.times_fun 5 shout_hello)

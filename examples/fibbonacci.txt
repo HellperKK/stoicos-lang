@@ -11,4 +11,4 @@
 })
 
 
-(Loop.times 100 (fun [:x] {(println (fibbo x))}))
+(Loop.times_fun 100 (fun [:x] {(println (fibbo x))}))

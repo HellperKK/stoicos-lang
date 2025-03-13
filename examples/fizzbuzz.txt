@@ -13,4 +13,4 @@
   ])
 })
 
-(Loop.upto 1 100 (fun [:x] :(println (fizzbuzz x))))
+(Loop.upto_fun 1 100 (fun [:x] :(println (fizzbuzz x))))

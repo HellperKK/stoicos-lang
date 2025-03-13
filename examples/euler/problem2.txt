@@ -1,5 +1,3 @@
-(import :Array)
-
 (deffun :fibbos_under [:max] {
     (deffun :aux [:a :b :acc] {
         (if (>= b max)

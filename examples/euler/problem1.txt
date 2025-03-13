@@ -1,5 +1,3 @@
-(import :Array)
-
 ; Tells if x is a divisor of y
 (deffun :is_divisor [:x :y] {
   (== 0 (% y x))
