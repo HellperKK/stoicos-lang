@@ -1,5 +1,5 @@
 import Editor from "react-simple-code-editor";
-import Prism  from 'prismjs';
+import Prism from 'prismjs';
 
 import './codeEditor.css';
 
@@ -11,8 +11,8 @@ interface Props {
 // (;.*)|("(?:[^"]|\\")*")|(:[A-Za-z_][A-Za-z0-9_]*)|([A-Za-z_][A-Za-z0-9_]*)|([!%&*+./<=>?^|\-~]+)|(\d+\.?\d*)|(\n)|([^ ]+?)|( +?)
 
 Prism.languages.stoicos = {
-	'comment': {
-		pattern: /;.*/,
+  'comment': {
+    pattern: /;.*/,
   },
   'string': {
     pattern: /("(?:[^"]|\\")*")/,
@@ -42,15 +42,17 @@ Prism.languages.stoicos = {
 
 export default function CodeEditor({ setCode, code }: Props) {
   return (
-    <Editor
-      value={code}
-      onValueChange={code => setCode(code)}
-      highlight={code => Prism.highlight(code, Prism.languages.stoicos, 'soitcos')}
-      padding={2}
-      style={{
-        fontFamily: '"Fira code", "Fira Mono", monospace',
-        fontSize: 12,
-      }}
-    />
+    <div>
+      <Editor
+        value={code}
+        onValueChange={code => setCode(code)}
+        highlight={code => Prism.highlight(code, Prism.languages.stoicos, 'soitcos')}
+        padding={2}
+        style={{
+          fontFamily: '"Fira code", "Fira Mono", monospace',
+          fontSize: 12,
+        }}
+      />
+    </div>
   );
 }
