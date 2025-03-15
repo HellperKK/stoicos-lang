@@ -7,15 +7,15 @@
 }
 
 .token.string {
-  color: #6b3f24;
+  color: #955d3a;
 }
 
 .token.ident {
-  color: #1d2550;
+  color: #35407a;
 }
 
 .token.operator {
-  color: #8a2b2b;
+  color: #9e3737;
 }
 
 .token.number {
