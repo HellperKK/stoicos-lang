@@ -36,14 +36,10 @@
 })
 
 (deffun :merge_numbers [:map1 :map2] {
-  (def :res (Array.fold_left (fun [:memo :value] {
-    (bind [:key :count] value)
-    (if (< (Map.get_or key 0 memo) count) {(Map.set key count memo)} memo)
-  }) Map.empty (Map.entries map1)))
   (Array.fold_left (fun [:memo :value] {
     (bind [:key :count] value)
     (if (< (Map.get_or key 0 memo) count) {(Map.set key count memo)} memo)
-  }) res (Map.entries map2))
+  }) map1 (Map.entries map2))
 })
 
 (def :range (Array.make_range 2 21))
