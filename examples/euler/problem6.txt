@@ -14,11 +14,11 @@
   (> (* i i) x)
 })
 
-
 (def :count 0)
 (def :i 1)
-(Loop.while {(> count 25)} {
+(Loop.while {(< count 10001)} {
     (def :i (+ i 1))
-    (if (is_prime i {(def :count (+ count 1))} unit))
-  })
+    (if (is_prime i) {(def :count (+ count 1))} {})
+})
+
 (println i)
