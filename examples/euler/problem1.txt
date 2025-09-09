@@ -4,8 +4,8 @@
 })
 
 (def :numbers (Array.make_range 1 1000))
-(def :result (Array.foldl (fun [:acc :number] {
-    (if (|| (is_divisor 3 number) (is_divisor 5 number)) :(+ acc number) acc)
+(def :result (Array.fold_left (fun [:acc :number] {
+    (if (|| (is_divisor 3 number) (is_divisor 5 number)) {(+ acc number)} acc)
 }) 0 numbers))
 
 (println result)
