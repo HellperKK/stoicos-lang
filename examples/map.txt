@@ -7,5 +7,5 @@
 ]))
 
 ; Prints
-(debug (Map.get_or "name" test "world"))
-(debug (Map.get_or "adress" test "world"))
+(debug (Map.get_or "name" "world" test))
+(debug (Map.get_or "adress" "world" test))
