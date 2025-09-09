@@ -12,7 +12,7 @@
     (fibbos_under 4000000)
     [
         (#Array.filter (fun [:x] {(== 0 (% x 2))}))
-        (#Array.foldl + 0)
+        (#Array.fold_left + 0)
     ]
 ))
 
