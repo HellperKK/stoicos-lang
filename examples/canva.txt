@@ -1,0 +1,5 @@
+(import :Canva)
+(Canva.init 32 32)
+(Canva.drawRect 0 0 32 32 "blue")
+(Canva.drawRect 8 8 16 16 "red")
+(Canva.print)

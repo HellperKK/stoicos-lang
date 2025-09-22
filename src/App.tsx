@@ -47,7 +47,7 @@ export default function App() {
         `}
         onClick={() => setResultOpened(false)}
       >
-        <textarea
+        <pre
           className={css`
             width: 50vw;
             height: 50vh;
@@ -58,10 +58,8 @@ export default function App() {
             resize: none;
             padding: 4px;
           `}
-          spellCheck="false"
-          readOnly
           onClick={(e) => e.stopPropagation()}
-          value={output}
+          dangerouslySetInnerHTML={{__html:output}}
         />
       </div>
     </div>

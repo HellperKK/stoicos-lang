@@ -12,6 +12,8 @@ import StringToken from "../tokens/StringToken";
 import StructToken from "../tokens/StructToken";
 import mapInit from "./mapModule";
 import mathInit from "./mathModule";
+import { sanitizeHtml } from "../utils/sanitizeHtml";
+import canvaInit from "./canvaModule";
 // import serverInit from './serverModule';
 
 const prelude = () => {
@@ -56,6 +58,10 @@ const prelude = () => {
 
         case "Math":
           val = mathInit();
+          break;
+
+        case "Canva":
+          val = canvaInit();
           break;
 
         /*
@@ -155,7 +161,7 @@ const prelude = () => {
   vars.setVar(
     "println",
     FunToken.native((toks) => {
-      stdOut.content += `${toks[0].request("string")}\n`;
+      stdOut.content += `${sanitizeHtml(toks[0].request("string"))}\n`;
       return VarManager.unit;
     }),
     true
@@ -163,7 +169,7 @@ const prelude = () => {
   vars.setVar(
     "print",
     FunToken.native((toks) => {
-      stdOut.content += toks[0].request("string");
+      stdOut.content += sanitizeHtml(toks[0].request("string"));
       return VarManager.unit;
     }),
     true
