@@ -9,10 +9,11 @@
 ; Tells if x is prime
 (deffun :is_prime [:x] {
   (deffun :aux [:i] {
-    (if (> (* i i) x)
-      true
-      {(if (is_divisor i x) false {(aux (+ i 1))})}
-    )
+    (cond [
+      [{(> (* i i) x)} true]
+      [{(is_divisor i x)} false]
+      [true {(aux (+ i 1))}]
+    ])
   })
   (aux 2)
 })
