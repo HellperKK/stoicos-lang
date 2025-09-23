@@ -1,5 +1,4 @@
 import VarManager from "../manager/VarManager";
-import BaseToken from "./BaseToken";
 import VarToken from "./VarToken";
 
 export default class AttrToken extends VarToken {
@@ -40,7 +39,7 @@ export default class AttrToken extends VarToken {
       const newAttr = new AttrToken(this.value, this.attrs);
       newAttr.current = newAttr.get();
       return newAttr;
-    } catch (error) {
+    } catch (_error) {
       return this;
     }
   }

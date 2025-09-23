@@ -1,23 +1,23 @@
-import BaseToken from "./BaseToken";
 import { stringType } from "../utils/Types";
+import BaseToken from "./BaseToken";
 
 export default class StringToken extends BaseToken {
-  public constructor(value: string) {
-    super(value, "string");
-  }
+	public constructor(value: string) {
+		super(value, "string");
+	}
 
-  // eslint-disable-next-line class-methods-use-this
-  public getType() {
-    return stringType;
-  }
+	// eslint-disable-next-line class-methods-use-this
+	public getType() {
+		return stringType;
+	}
 
-  public request(type: string) {
-    switch (type) {
-      case "string":
-        return this.value;
+	public request(type: string) {
+		switch (type) {
+			case "string":
+				return this.value;
 
-      default:
-        return super.request(type);
-    }
-  }
+			default:
+				return super.request(type);
+		}
+	}
 }

@@ -33,7 +33,7 @@ export class HashMapTemp<K extends Hashable, V> {
   }
 
   public foreach(iterator: (key: K, value: V) => void) {
-    this.pairs.forEach((pair) => iterator(pair.key, pair.value));
+    this.pairs.forEach((pair) => {iterator(pair.key, pair.value)});
   }
 
   public *keys(): Generator<K> {

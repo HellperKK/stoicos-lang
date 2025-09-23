@@ -1,23 +1,23 @@
-import BaseToken from "./BaseToken";
 import { boolType } from "../utils/Types";
+import BaseToken from "./BaseToken";
 
 export default class BoolToken extends BaseToken {
-  public constructor(value: boolean) {
-    super(value, "bool");
-  }
+	public constructor(value: boolean) {
+		super(value, "bool");
+	}
 
-  // eslint-disable-next-line class-methods-use-this
-  public getType() {
-    return boolType;
-  }
+	// eslint-disable-next-line class-methods-use-this
+	public getType() {
+		return boolType;
+	}
 
-  public request(type: string) {
-    switch (type) {
-      case "bool":
-        return this.value;
+	public request(type: string) {
+		switch (type) {
+			case "bool":
+				return this.value;
 
-      default:
-        return super.request(type);
-    }
-  }
+			default:
+				return super.request(type);
+		}
+	}
 }

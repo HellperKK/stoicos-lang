@@ -1,24 +1,24 @@
-import Type from "../utils/Type";
-import BaseToken from "./BaseToken";
+import type Type from "../utils/Type";
 import { typeType } from "../utils/Types";
+import BaseToken from "./BaseToken";
 
 export default class TypeToken extends BaseToken {
-  public constructor(value: Type) {
-    super(value, "type");
-  }
+	public constructor(value: Type) {
+		super(value, "type");
+	}
 
-  // eslint-disable-next-line class-methods-use-this
-  public getType() {
-    return typeType;
-  }
+	// eslint-disable-next-line class-methods-use-this
+	public getType() {
+		return typeType;
+	}
 
-  public request(type: string) {
-    switch (type) {
-      case "type":
-        return this.value;
+	public request(type: string) {
+		switch (type) {
+			case "type":
+				return this.value;
 
-      default:
-        return super.request(type);
-    }
-  }
+			default:
+				return super.request(type);
+		}
+	}
 }

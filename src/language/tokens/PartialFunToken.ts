@@ -1,4 +1,3 @@
-import VarManager from "../manager/VarManager";
 import BaseToken from "./BaseToken";
 import FunToken from "./FunToken";
 

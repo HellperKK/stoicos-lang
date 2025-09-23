@@ -1,23 +1,23 @@
-import BaseToken from "./BaseToken";
 import { symbolType } from "../utils/Types";
+import BaseToken from "./BaseToken";
 
 export default class SymbolToken extends BaseToken {
-  public constructor(value: string) {
-    super(value, "symbol");
-  }
+	public constructor(value: string) {
+		super(value, "symbol");
+	}
 
-  // eslint-disable-next-line class-methods-use-this
-  public getType() {
-    return symbolType;
-  }
+	// eslint-disable-next-line class-methods-use-this
+	public getType() {
+		return symbolType;
+	}
 
-  public request(type: string) {
-    switch (type) {
-      case "symbol":
-        return this.value;
+	public request(type: string) {
+		switch (type) {
+			case "symbol":
+				return this.value;
 
-      default:
-        return super.request(type);
-    }
-  }
+			default:
+				return super.request(type);
+		}
+	}
 }

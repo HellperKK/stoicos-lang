@@ -29,6 +29,7 @@
     "stoicos-tauri": "file:"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.2.4",
     "@tauri-apps/cli": "^2.0.4",
     "@types/node": "^18.7.10",
     "@types/prismjs": "^1.26.5",
