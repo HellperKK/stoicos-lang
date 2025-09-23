@@ -76,6 +76,7 @@ export default abstract class BaseToken {
   public request(type: "map"): HashMapTemp<BaseToken, BaseToken>;
   public request(type: "type"): Type;
   public request(type: "fun"): (toks: Array<BaseToken>) => BaseToken;
+  public request<T>(type: "other"): T;
   public request(type: string) {
     switch (type) {
       case "string":
