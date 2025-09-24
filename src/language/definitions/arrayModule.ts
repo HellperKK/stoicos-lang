@@ -66,7 +66,7 @@ const arrayInit = () => {
 
 	// Update functions
 	module.set(
-		"update",
+		"set",
 		FunToken.native((toks) => {
 			const index = toks[0].request("number");
 			const item = toks[1];
@@ -77,7 +77,7 @@ const arrayInit = () => {
 		}),
 	);
 	module.set(
-		"update_fun",
+		"set_fun",
 		FunToken.native((toks) => {
 			const index = toks[0].request("number");
 			const item = toks[1];
