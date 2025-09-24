@@ -27,6 +27,7 @@ export default function App() {
         grid-template-rows: 50px 1fr;
         width: 100vw;
         height: 100vh;
+		background-color: white;
       `}
 		>
 			<button type="button" onClick={evalClick}>

@@ -53,6 +53,7 @@ export default function CodeEditor({ setCode, code }: Props) {
 				style={{
 					fontFamily: '"Fira code", "Fira Mono", monospace',
 					fontSize: 12,
+					backgroundColor: "lightgray",
 				}}
 			/>
 		</div>
