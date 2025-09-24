@@ -1,5 +1,7 @@
 (import :Canva)
-(def :canva (Canva.make 32 32))
-(Canva.drawRect 0 0 32 32 "blue" canva)
-(Canva.drawRect 8 8 16 16 "red" canva)
-(Canva.print canva)
+
+(|> (Canva.make 32 32) [
+  (#Canva.draw_rect 0 0 32 32 "blue")
+  (#Canva.draw_rect 8 8 16 16 "red")
+  (#Canva.print)
+])

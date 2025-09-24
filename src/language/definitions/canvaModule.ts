@@ -31,6 +31,7 @@ class Canva {
 	height: number;
 	canva: HTMLCanvasElement;
 	context: CanvasRenderingContext2D;
+
 	constructor(width: number, height: number) {
 		this.width = width;
 		this.height = height;
@@ -44,6 +45,12 @@ class Canva {
 		}
 
 		this.context = c;
+	}
+
+	clone() {
+		const newCanva = new Canva(this.width, this.height);
+		newCanva.context.drawImage(this.canva, 0, 0);
+		return newCanva;
 	}
 
 	clear() {
@@ -81,31 +88,31 @@ const canvaInit = () => {
 		}),
 	);
 	module.set(
-		"drawRect",
+		"draw_rect",
 		FunToken.native((toks) => {
 			const x = toks[0].request("number");
 			const y = toks[1].request("number");
 			const width = toks[2].request("number");
 			const height = toks[3].request("number");
 			const color = toks[4].request("string");
-			const canva = toks[5].request<Canva>("other");
+			const canva = toks[5].request<Canva>("other").clone();
 
 			canva.drawRect(x, y, width, height, color);
 
-			return VarManager.unit;
+			return new CanvaToken(canva);
 		}),
 	);
 	module.set(
-		"drawPixel",
+		"draw_pixel",
 		FunToken.native((toks) => {
 			const x = toks[0].request("number");
 			const y = toks[1].request("number");
 			const color = toks[2].request("string");
-			const canva = toks[3].request<Canva>("other");
+			const canva = toks[3].request<Canva>("other").clone();
 
 			canva.drawPixel(x, y, color);
 
-			return VarManager.unit;
+			return new CanvaToken(canva);
 		}),
 	);
 
