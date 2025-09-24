@@ -37,30 +37,28 @@ export default function App() {
 			</div>
 			<div
 				className={css`
-          display: ${resultOpened ? "flex" : "none"};
-          position: absolute;
-          justify-content: center;
-          background-color: #000000bd;
-          align-items: center;
-          top: 0px;
-          left: 0px;
-          width: 100vw;
-          height: 100vh;
-          z-index: 20;
-        `}
+					display: ${resultOpened ? "flex" : "none"};
+					position: absolute;
+					justify-content: center;
+					background-color: #000000bd;
+					align-items: center;
+					inset: 0;
+					z-index: 20;
+				`}
 				onClick={() => setResultOpened(false)}
 			>
 				<pre
 					className={css`
-            width: 50vw;
-            height: 50vh;
-            color: #d1d1d1;
-            background-color: #181716;
-            outline: none;
-            border: none;
-            resize: none;
-            padding: 4px;
-          `}
+						width: 50vw;
+						height: 50vh;
+						color: #d1d1d1;
+						background-color: #181716;
+						outline: none;
+						border: none;
+						resize: none;
+						padding: 4px;
+						overflow: scroll;
+					`}
 					onClick={(e) => e.stopPropagation()}
 					dangerouslySetInnerHTML={{ __html: output }}
 				/>
