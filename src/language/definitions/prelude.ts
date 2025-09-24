@@ -279,7 +279,7 @@ const prelude = () => {
 		true,
 	);
 	vars.setVar(
-		"// ",
+		"//",
 		FunToken.native((toks) => {
 			const x = toks[0].request("number");
 			const y = toks[1].request("number");
