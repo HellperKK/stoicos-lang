@@ -70,7 +70,7 @@ const makeUnionType = (types: Array<Type>) =>
 const numberType = new Type("number", [], function (token) {
 	return token.type === this.name;
 });
-const unitType = new Type("number", [], function (token) {
+const unitType = new Type("unit", [], function (token) {
 	return token.type === this.name;
 });
 
@@ -90,7 +90,7 @@ const blockType = new Type("block", [], function (token) {
 	return token.type === this.name;
 });
 
-const structType = new Type("block", [], function (token) {
+const structType = new Type("struct", [], function (token) {
 	return token.type === this.name;
 });
 
