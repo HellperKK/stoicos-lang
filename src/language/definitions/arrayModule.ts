@@ -226,6 +226,24 @@ const arrayInit = () => {
 		}),
 	);
 	module.set(
+		"get_or",
+		FunToken.native((toks) => {
+			const ind = toks[0].request("number");
+			const def = toks[1];
+			const arr = toks[2].request("array");
+			return arr[ind] ?? def;
+		}),
+	);
+	module.set(
+		"get_or_fun",
+		FunToken.native((toks) => {
+			const ind = toks[0].request("number");
+			const f = toks[1];
+			const arr = toks[2].request("array");
+			return arr[ind] ?? f.call([]);
+		}),
+	);
+	module.set(
 		"slice",
 		FunToken.native((toks) => {
 			const min = toks[0].request("number");

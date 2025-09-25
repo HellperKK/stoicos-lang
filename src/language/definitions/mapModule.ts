@@ -36,7 +36,6 @@ const mapInit = () => {
 			return new ArrayToken(Array.from(struct.keys()));
 		}),
 	);
-
 	module.set(
 		"values",
 		FunToken.native((toks) => {
@@ -45,7 +44,6 @@ const mapInit = () => {
 			return new ArrayToken(Array.from(struct.values()));
 		}),
 	);
-
 	module.set(
 		"entries",
 		FunToken.native((toks) => {
@@ -56,7 +54,6 @@ const mapInit = () => {
 			);
 		}),
 	);
-
 	module.set(
 		"get",
 		FunToken.native((toks) => {
@@ -71,7 +68,6 @@ const mapInit = () => {
 			return val;
 		}),
 	);
-
 	module.set(
 		"get_or",
 		FunToken.native((toks) => {
@@ -87,7 +83,6 @@ const mapInit = () => {
 			return val;
 		}),
 	);
-
 	module.set(
 		"get_or_fun",
 		FunToken.native((toks) => {
@@ -104,6 +99,7 @@ const mapInit = () => {
 		}),
 	);
 
+	// Setter functions
 	module.set(
 		"set",
 		FunToken.native((toks) => {
@@ -120,7 +116,6 @@ const mapInit = () => {
 			return new MapToken(newMap);
 		}),
 	);
-
 	module.set(
 		"set_fun",
 		FunToken.native((toks) => {
@@ -134,6 +129,19 @@ const mapInit = () => {
 			});
 			newMap.set(key, value.call([struct.get(key) ?? VarManager.unit]));
 			return new MapToken(newMap);
+		}),
+	);
+
+	// Other functions
+	module.set(
+		"for_each",
+		FunToken.native((toks) => {
+			const f = toks[0];
+			const pairs = toks[1].request("map");
+			pairs.entries().forEach((pair) => {
+				f.call(pair);
+			});
+			return VarManager.unit;
 		}),
 	);
 
