@@ -36,3 +36,4 @@ Here are a few examples of what it can do
 ```
 
 You can find more detailed examples in `examples`
+You can also check the [wiki](https://github.com/HellperKK/stoicos-lang/wiki) for more informations about the language.
