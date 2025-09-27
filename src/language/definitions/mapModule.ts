@@ -138,9 +138,9 @@ const mapInit = () => {
 		FunToken.native((toks) => {
 			const f = toks[0];
 			const pairs = toks[1].request("map");
-			pairs.entries().forEach((pair) => {
+			for (const pair of pairs.entries()) {
 				f.call(pair);
-			});
+			}
 			return VarManager.unit;
 		}),
 	);
