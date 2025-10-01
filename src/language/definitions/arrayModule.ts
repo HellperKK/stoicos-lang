@@ -222,7 +222,7 @@ const arrayInit = () => {
 		FunToken.native((toks) => {
 			const ind = toks[0].request("number");
 			const arr: Array<BaseToken> = toks[1].request("array");
-			return arr[ind];
+			return arr[ind] ?? VarManager.unit;
 		}),
 	);
 	module.set(
