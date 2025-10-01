@@ -24,7 +24,7 @@ Prism.languages.stoicos = {
 		pattern: /([A-Za-z_][A-Za-z0-9_]*)/,
 	},
 	operator: {
-		pattern: /([!%&*+./<=>?^|\-~]+)/,
+		pattern: /([!%&*+./<=>?^|\-~§£µ¤]+)/,
 	},
 	number: {
 		pattern: /(\d+\.?\d*)/,
