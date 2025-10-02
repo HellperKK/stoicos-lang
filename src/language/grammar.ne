@@ -40,7 +40,7 @@ const lexer = moo.compile({
   operator: /[!%&*+/<=>?^|\-~§£µ¤]+/,
 
   // spaces
-  ws: {match: /\s+/, lineBreaks: true}
+  whitespace: {match: /\s+/, lineBreaks: true}
 });
 %}
 
@@ -85,6 +85,6 @@ array -> %openSqu _ vallist:? _ %closeSqu {% arr => new ArrayModelToken((arr[2] 
 name -> %ident {% id %}
         | %operator {% id %}
 
-_ -> %ws:? {% ignore %}
+_ -> %whitespace:? {% ignore %}
 
-__ -> %ws {% ignore %}
+__ -> %whitespace {% ignore %}
