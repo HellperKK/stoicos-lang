@@ -1,3 +1,4 @@
 --cpp bin/cpp
 --main Main
 --class-path src
+--library mcli
