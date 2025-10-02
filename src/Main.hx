@@ -14,7 +14,6 @@ class Main extends mcli.CommandLine {
 	{
         var code = File.getContent(fileName);
         var parsed = Parser.parse(code);
-        File.saveContent("./res.txt", parsed.join("\n"));
 	}
 
 	public static function main()

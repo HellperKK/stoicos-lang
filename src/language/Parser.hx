@@ -15,25 +15,20 @@ class Parser {
 			var char = code.charAt(i);
 
 			if (char == ";") {
-                trace('a comment at ${i}');
 				i = parseComment(code, i);
 			} else if (char == "\"") {
-                trace('a string at ${i}');
 				var endString = parseString(code, i + 1);
 				tokens.push(code.substring(i, endString));
 				i = endString;
 			} else if (char == "(") {
-                trace('a block at ${i}');
 				var endBlock = parseBlock(code, i + 1, "(", ")");
 				tokens.push(code.substring(i, endBlock));
 				i = endBlock;
 			} else if (char == "{") {
-                trace('a block at ${i}');
 				var endBlock = parseBlock(code, i + 1, "{", "}");
 				tokens.push(code.substring(i, endBlock));
 				i = endBlock;
 			} else if (char == "[") {
-                trace('a block at ${i}');
 				var endBlock = parseBlock(code, i + 1, "[", "]");
 				tokens.push(code.substring(i, endBlock));
 				i = endBlock;
