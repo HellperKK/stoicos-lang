@@ -1,5 +1,6 @@
 package language;
 
+import language.tokens.NumberToken;
 import language.tokens.BaseToken;
 import language.tokens.VariableToken;
 import language.tokens.CallToken;
@@ -146,6 +147,16 @@ class Parser {
 
 		if (~/[A-Za-z_][A-Za-z0-9_]*/.match(content)) {
 			return new VariableToken(content);
+		}
+
+		var rule = new EReg("[!%&*+/<=>?^|-~§£µ¤]+", "");
+		if (rule.match(content)) {
+			return new VariableToken(content);
+		}
+
+		var rule = ~/-?[0-9]+(.[0-9]*)?/;
+		if (rule.match(content)) {
+			return new NumberToken(Std.parseFloat(content));
 		}
 
         throw 'uknown content ${content}, did you miss some space ?';
