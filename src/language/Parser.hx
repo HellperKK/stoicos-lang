@@ -94,7 +94,7 @@ class Parser {
 			i++;
 		}
 
-		return i + 1;
+		return i;
 	}
 
 	private static function parseElement(code:String, i:Int) {
