@@ -1,5 +1,6 @@
 package;
 
+import language.definitions.Prelude;
 import language.Parser;
 import sys.io.File;
 
@@ -13,7 +14,12 @@ class Main extends mcli.CommandLine {
 	public function run(fileName:String)
 	{
         var code = File.getContent(fileName);
-        var parsed = Parser.parse(code);
+        var tokens = Parser.parse(code);
+		Prelude.load();
+        for (token in tokens) {
+            trace(token);
+            token.getValue();
+        }
 	}
 
 	public static function main()

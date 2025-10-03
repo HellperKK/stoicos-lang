@@ -1,7 +1,12 @@
 package language;
 
+import language.tokens.BaseToken;
+import language.tokens.VariableToken;
+import language.tokens.CallToken;
+import language.tokens.StringToken;
+
 class Parser {
-	public static function parse(code:String) {
+	public static function parse(code:String):Array<BaseToken> {
 		var tokens:Array<String> = [];
 		var i = 0;
 
@@ -39,7 +44,7 @@ class Parser {
 			}
 		}
 
-		return tokens;
+		return tokens.map(toToken);
 	}
 
 	private static function parseComment(code:String, i:Int) {
@@ -71,7 +76,8 @@ class Parser {
 		var openCount = 1;
 		while (openCount > 0) {
 			if (i == code.length) {
-				throw "Missing bloc termination";
+				trace(openCount);
+				throw 'Missing bloc termination ${closeChar}';
 			}
 
 			var char = code.charAt(i);
@@ -81,6 +87,7 @@ class Parser {
 
 			if (char == "\"") {
 				i = parseString(code, i + 1);
+				continue;
 			}
 
 			if (char == openChar) {
@@ -124,5 +131,23 @@ class Parser {
 		}
 
 		return i;
+	}
+
+	private static function toToken(content:String):BaseToken {
+		var char = content.charAt(0);
+
+		if (char == "\"") {
+			return new StringToken(content.substr(1, content.length - 2));
+		}
+
+		if (char == "(") {
+			return new CallToken(parse(content.substr(1, content.length - 2)));
+		}
+
+		if (~/[A-Za-z_][A-Za-z0-9_]*/.match(content)) {
+			return new VariableToken(content);
+		}
+
+        throw 'uknown content ${content}, did you miss some space ?';
 	}
 }
