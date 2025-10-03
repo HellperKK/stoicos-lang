@@ -13,6 +13,29 @@ class Prelude {
 		manager.setVar("true", new BooleanToken(true));
 		manager.setVar("false", new BooleanToken(false));
 
+        manager.setVar("def", new FunctionToken((values) -> {
+			var name = values[0].request("symbol");
+			var value = values[1];
+
+            var manager = VarManager.get();
+
+            manager.setVar(name, value);
+
+            return VarManager.unit;
+		}, 1));
+        manager.setVar("deffun", new FunctionToken((values) -> {
+			var name = values[0].request("symbol");
+			var params = values[1].request("array").map(value -> value.request("symbol"));
+            var block = values[2];
+
+            var fun = new FunctionToken((_values) -> VarManager.unit, 0);
+
+            var manager = VarManager.get();
+
+            manager.setVar(name, value);
+
+            return VarManager.unit;
+		}, 1));
 
 		manager.setVar("print", new FunctionToken((values) -> {
 			Sys.print(values[0].request("string"));
@@ -56,6 +79,21 @@ class Prelude {
 			var num = values[0].request("number");
 			var numBis = values[1].request("number");
 			return new NumberToken(Math.floor(num / numBis));
+		}, 1));
+
+		manager.setVar("&&", new FunctionToken((values) -> {
+			var bool = values[0].request("boolean");
+			var boolBis = values[1].request("boolean");
+			return new BooleanToken(bool && boolBis);
+		}, 1));
+		manager.setVar("||", new FunctionToken((values) -> {
+			var bool = values[0].request("boolean");
+			var boolBis = values[1].request("boolean");
+			return new BooleanToken(bool || boolBis);
+		}, 1));
+		manager.setVar("%", new FunctionToken((values) -> {
+			var bool = values[0].request("boolean");
+			return new BooleanToken(!bool);
 		}, 1));
 	}
 }
