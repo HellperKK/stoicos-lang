@@ -17,7 +17,6 @@ class Main extends mcli.CommandLine {
         var tokens = Parser.parse(code);
 		Prelude.load();
         for (token in tokens) {
-            trace(token);
             token.getValue();
         }
 	}
