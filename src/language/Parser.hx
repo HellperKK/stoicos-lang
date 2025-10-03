@@ -1,5 +1,7 @@
 package language;
 
+import language.tokens.BlockToken;
+import language.tokens.ArrayModelToken;
 import language.tokens.NumberToken;
 import language.tokens.BaseToken;
 import language.tokens.VariableToken;
@@ -143,6 +145,14 @@ class Parser {
 
 		if (char == "(") {
 			return new CallToken(parse(content.substr(1, content.length - 2)));
+		}
+
+		if (char == "[") {
+			return new ArrayModelToken(parse(content.substr(1, content.length - 2)));
+		}
+
+		if (char == "{") {
+			return new BlockToken(parse(content.substr(1, content.length - 2)));
 		}
 
 		if (~/[A-Za-z_][A-Za-z0-9_]*/.match(content)) {
