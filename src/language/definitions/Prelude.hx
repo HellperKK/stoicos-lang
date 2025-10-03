@@ -1,5 +1,7 @@
 package language.definitions;
 
+import language.tokens.BaseToken;
+import language.tokens.BlockToken;
 import language.tokens.BooleanToken;
 import language.tokens.NumberToken;
 import language.tokens.FunctionToken;
@@ -26,16 +28,34 @@ class Prelude {
         manager.setVar("deffun", new FunctionToken((values) -> {
 			var name = values[0].request("symbol");
 			var params = values[1].request("array").map(value -> value.request("symbol"));
-            var block = values[2];
+            var blocks:Array<BaseToken> = values[2].request("block");
 
             var fun = new FunctionToken((_values) -> VarManager.unit, 0);
 
             var manager = VarManager.get();
 
-            manager.setVar(name, value);
+            manager.setVar(name, fun);
+
+			fun.value = ((values: Array<Value>) -> {
+				var manager = VarManager.get();
+
+				var capturedBlock = new BlockToken(blocks.map(tok -> tok.capture()));
+
+				manager.addStack();
+				for (i in 0...params.length) {
+					manager.setVar(params[i], values[i]);
+				}
+
+				var result = capturedBlock.eval();
+
+				manager.delStack();
+
+				return result;
+			});
 
             return VarManager.unit;
 		}, 1));
+		manager.setAlias("deffun", "fn");
 
 		manager.setVar("print", new FunctionToken((values) -> {
 			Sys.print(values[0].request("string"));
@@ -46,7 +66,6 @@ class Prelude {
 			return VarManager.unit;
 		}, 1));
 		manager.setVar("debug", new FunctionToken((values) -> {
-			trace(values[0]);
 			return VarManager.unit;
 		}, 1));
 

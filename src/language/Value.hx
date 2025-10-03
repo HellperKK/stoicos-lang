@@ -2,9 +2,9 @@ package language;
 
 using StringTools;
 
-class Value {
+abstract class Value {
 	private var type:String;
-	private var value:Dynamic;
+	public var value:Dynamic;
 
 	public function new(type:String, value:Dynamic) {
 		this.type = type;

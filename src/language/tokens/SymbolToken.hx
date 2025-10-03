@@ -8,4 +8,8 @@ class SymbolToken implements BaseToken extends Value {
     public function getValue():Value {
         return this;
     }
+
+    public function capture() {
+        return new SymbolToken(this.value);
+    }
 }

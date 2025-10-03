@@ -45,7 +45,23 @@ class VarManager {
 		this.dicts[0].set(name, value);
 	}
 
+	public function setAlias(name:String, alias:String) {
+		var token = this.dicts[0].get(name);
+
+		if (token == null) {
+			throw 'Value ${name} not found';
+		}
+
+		return this.dicts[0].set(alias, token);
+	}
+
 	public function getVar(name:String):Value {
+		var token = this.dicts[0].get(name);
+
+		return token;
+	}
+
+	public function getVarRec(name:String):Value {
 		var token = this.dicts.find((d) -> d.exists(name));
 
 		if (token == null) {

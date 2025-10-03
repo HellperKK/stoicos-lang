@@ -8,4 +8,8 @@ class NumberToken implements BaseToken extends Value {
     public function getValue():Value {
         return this;
     }
+
+    public function capture() {
+        return new NumberToken(this.value);
+    }
 }

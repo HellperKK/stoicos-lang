@@ -10,4 +10,8 @@ class ArrayModelToken implements BaseToken {
     public function getValue():Value {
         return new ArrayToken(tokens.map(token -> token.getValue()));
     }
+
+    public function capture() {
+        return new ArrayModelToken(this.tokens.map(token -> token.capture()));
+    }
 }

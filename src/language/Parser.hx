@@ -1,5 +1,6 @@
 package language;
 
+import language.tokens.SymbolToken;
 import language.tokens.BlockToken;
 import language.tokens.ArrayModelToken;
 import language.tokens.NumberToken;
@@ -79,7 +80,6 @@ class Parser {
 		var openCount = 1;
 		while (openCount > 0) {
 			if (i == code.length) {
-				trace(openCount);
 				throw 'Missing bloc termination ${closeChar}';
 			}
 
@@ -155,16 +155,25 @@ class Parser {
 			return new BlockToken(parse(content.substr(1, content.length - 2)));
 		}
 
-		if (~/[A-Za-z_][A-Za-z0-9_]*/.match(content)) {
+		if (~/^:[A-Za-z_][A-Za-z0-9_]*$/.match(content)) {
+			return new SymbolToken(content.substr(1));
+		}
+
+		var rule = new EReg("^:[!%&*+/<=>?^|-~§£µ¤]+$", "");
+		if (rule.match(content)) {
+			return new SymbolToken(content.substr(1));
+		}
+
+		if (~/^[A-Za-z_][A-Za-z0-9_]*$/.match(content)) {
 			return new VariableToken(content);
 		}
 
-		var rule = new EReg("[!%&*+/<=>?^|-~§£µ¤]+", "");
+		var rule = new EReg("^[!%&*+/<=>?^|-~§£µ¤]+$", "");
 		if (rule.match(content)) {
 			return new VariableToken(content);
 		}
 
-		var rule = ~/-?[0-9]+(.[0-9]*)?/;
+		var rule = ~/^-?[0-9]+(.[0-9]*)?$/;
 		if (rule.match(content)) {
 			return new NumberToken(Std.parseFloat(content));
 		}

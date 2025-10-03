@@ -17,4 +17,8 @@ class BlockToken implements BaseToken extends Value {
 		var tokens:Array<BaseToken> = this.value;
 		return tokens.fold((token, _memo) -> token.getValue(), VarManager.unit);
 	}
+
+    public function capture() {
+        return new BlockToken(this.value.map(token -> token.capture()));
+    }
 }

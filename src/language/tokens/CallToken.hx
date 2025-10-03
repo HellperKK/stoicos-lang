@@ -17,4 +17,8 @@ class CallToken implements BaseToken {
         var f = values.shift();
         return f.call(values);
     }
+
+    public function capture() {
+        return new CallToken(this.tokens.map(token -> token.capture()));
+    }
 }
