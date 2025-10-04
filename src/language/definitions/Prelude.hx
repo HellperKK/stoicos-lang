@@ -15,6 +15,8 @@ class Prelude {
 		manager.setVar("true", new BooleanToken(true));
 		manager.setVar("false", new BooleanToken(false));
 
+		manager.setVar("Math", MathModule.load());
+
         manager.setVar("def", new FunctionToken((values) -> {
 			var name = values[0].request("symbol");
 			var value = values[1];
