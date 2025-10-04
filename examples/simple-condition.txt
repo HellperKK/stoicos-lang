@@ -1,0 +1,1 @@
+(if false {(println "it is true")} {(println "it is false")})
