@@ -19,6 +19,8 @@ class Prelude {
 		manager.setVar("true", new BooleanToken(true));
 		manager.setVar("false", new BooleanToken(false));
 
+		manager.setVar("String", StringModule.load());
+
 		manager.setVar("import", new FunctionToken((values) -> {
 			var name = values[0].request("symbol");
 

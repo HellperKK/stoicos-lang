@@ -1,0 +1,5 @@
+(def :str "Je suis quelqu'un qui aime CRIER")
+(println (String.uppercase str))
+(println (String.lowercase str))
+(println (String.capitalize str))
+(println (String.title str))
