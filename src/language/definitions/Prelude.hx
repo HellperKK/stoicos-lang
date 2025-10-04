@@ -66,6 +66,7 @@ class Prelude {
 			return VarManager.unit;
 		}, 1));
 		manager.setVar("debug", new FunctionToken((values) -> {
+			trace(values[0]);
 			return VarManager.unit;
 		}, 1));
 
