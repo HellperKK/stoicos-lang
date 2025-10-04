@@ -15,35 +15,95 @@ class Prelude {
 		manager.setVar("true", new BooleanToken(true));
 		manager.setVar("false", new BooleanToken(false));
 
-		manager.setVar("Math", MathModule.load());
-
-        manager.setVar("def", new FunctionToken((values) -> {
+		manager.setVar("import", new FunctionToken((values) -> {
 			var name = values[0].request("symbol");
-			var value = values[1];
 
-            var manager = VarManager.get();
+			switch (name) {
+				case "Math": manager.setVar("Math", MathModule.load());
+			}
 
-            manager.setVar(name, value);
+			return VarManager.unit;
+		}, 1));
 
-            return VarManager.unit;
-		}, 2));
-        manager.setVar("deffun", new FunctionToken((values) -> {
-			var name = values[0].request("symbol");
-			var params = values[1].request("array").map(value -> value.request("symbol"));
-            var blocks:Array<BaseToken> = values[2].request("block");
+		manager.setVar("if", new FunctionToken((values) -> {
+			var condition = values[0].request("boolean");
+			var ifTrue = values[1];
+			var ifFalse = values[2];
 
-            var fun = new FunctionToken((_values) -> VarManager.unit, 0);
+			if (condition) {
+				return ifTrue.eval();
+			}
 
-            var manager = VarManager.get();
+			return ifFalse.eval();
+		}, 3));
 
-            manager.setVar(name, fun);
+		manager.setVar("cond", new FunctionToken((values) -> {
+			var conditions: Array<Value> = values[0].request("array");
 
-			fun.value = ((values: Array<Value>) -> {
+			for (condition in conditions) {
+				var truePair: Array<Value> = condition.request("array");
+				var trueCondition = truePair[0].eval().request("boolean");
+
+				if (trueCondition) {
+					return truePair[1].eval();
+				}
+			}
+
+			return VarManager.unit;
+		}, 1));
+		manager.setVar("fun", new FunctionToken((values) -> {
+			var params = values[0].request("array").map(value -> value.request("symbol"));
+			var blocks:Array<BaseToken> = values[1].request("block");
+
+			var fun = new FunctionToken((values:Array<Value>) -> {
 				var manager = VarManager.get();
 
 				var capturedBlock = new BlockToken(blocks.map(tok -> tok.capture()));
 
 				manager.addStack();
+
+				for (i in 0...params.length) {
+					manager.setVar(params[i], values[i]);
+				}
+
+				var result = capturedBlock.eval();
+
+				manager.delStack();
+
+				return result;
+			}, params.length);
+
+			return fun;
+		}, 2));
+
+		manager.setVar("def", new FunctionToken((values) -> {
+			var name = values[0].request("symbol");
+			var value = values[1];
+
+			var manager = VarManager.get();
+
+			manager.setVar(name, value);
+
+			return VarManager.unit;
+		}, 2));
+		manager.setVar("deffun", new FunctionToken((values) -> {
+			var name = values[0].request("symbol");
+			var params = values[1].request("array").map(value -> value.request("symbol"));
+			var blocks:Array<BaseToken> = values[2].request("block");
+
+			var fun = new FunctionToken((_values) -> VarManager.unit, 0);
+
+			var manager = VarManager.get();
+
+			manager.setVar(name, fun);
+
+			fun.value = ((values:Array<Value>) -> {
+				var manager = VarManager.get();
+
+				var capturedBlock = new BlockToken(blocks.map(tok -> tok.capture()));
+
+				manager.addStack();
+				
 				for (i in 0...params.length) {
 					manager.setVar(params[i], values[i]);
 				}
@@ -55,7 +115,9 @@ class Prelude {
 				return result;
 			});
 
-            return VarManager.unit;
+			fun.arity = params.length;
+
+			return VarManager.unit;
 		}, 3));
 		manager.setAlias("deffun", "fn");
 
