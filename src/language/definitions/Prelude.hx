@@ -24,7 +24,7 @@ class Prelude {
             manager.setVar(name, value);
 
             return VarManager.unit;
-		}, 1));
+		}, 2));
         manager.setVar("deffun", new FunctionToken((values) -> {
 			var name = values[0].request("symbol");
 			var params = values[1].request("array").map(value -> value.request("symbol"));
@@ -54,7 +54,7 @@ class Prelude {
 			});
 
             return VarManager.unit;
-		}, 1));
+		}, 3));
 		manager.setAlias("deffun", "fn");
 
 		manager.setVar("print", new FunctionToken((values) -> {
@@ -73,43 +73,43 @@ class Prelude {
 			var num = values[0].request("number");
 			var numBis = values[1].request("number");
 			return new NumberToken(num + numBis);
-		}, 1));
+		}, 2));
 		manager.setVar("-", new FunctionToken((values) -> {
 			var num = values[0].request("number");
 			var numBis = values[1].request("number");
 			return new NumberToken(num - numBis);
-		}, 1));
+		}, 2));
 		manager.setVar("*", new FunctionToken((values) -> {
 			var num = values[0].request("number");
 			var numBis = values[1].request("number");
 			return new NumberToken(num * numBis);
-		}, 1));
+		}, 2));
 		manager.setVar("**", new FunctionToken((values) -> {
 			var num = values[0].request("number");
 			var numBis = values[1].request("number");
 			return new NumberToken(Math.pow(num, numBis));
-		}, 1));
+		}, 2));
 		manager.setVar("/", new FunctionToken((values) -> {
 			var num = values[0].request("number");
 			var numBis = values[1].request("number");
 			return new NumberToken(num / numBis);
-		}, 1));
+		}, 2));
 		manager.setVar("//", new FunctionToken((values) -> {
 			var num = values[0].request("number");
 			var numBis = values[1].request("number");
 			return new NumberToken(Math.floor(num / numBis));
-		}, 1));
+		}, 2));
 
 		manager.setVar("&&", new FunctionToken((values) -> {
 			var bool = values[0].request("boolean");
 			var boolBis = values[1].request("boolean");
 			return new BooleanToken(bool && boolBis);
-		}, 1));
+		}, 2));
 		manager.setVar("||", new FunctionToken((values) -> {
 			var bool = values[0].request("boolean");
 			var boolBis = values[1].request("boolean");
 			return new BooleanToken(bool || boolBis);
-		}, 1));
+		}, 2));
 		manager.setVar("%", new FunctionToken((values) -> {
 			var bool = values[0].request("boolean");
 			return new BooleanToken(!bool);
