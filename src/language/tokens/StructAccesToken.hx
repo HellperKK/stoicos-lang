@@ -2,7 +2,7 @@ package language.tokens;
 
 import language.managers.VarManager;
 
-class StrcutAccesToken implements BaseToken {
+class StructAccesToken implements BaseToken {
 	private var name:String;
 	private var property:String;
     private var captured: Value;
@@ -34,10 +34,10 @@ class StrcutAccesToken implements BaseToken {
 
 	public function capture() {
         try {
-            return new StrcutAccesToken(this.name, this.property, VarManager.get().getVarRec(this.name));
+            return new StructAccesToken(this.name, this.property, VarManager.get().getVarRec(this.name));
         }
         catch(e:Dynamic) {
-            return new StrcutAccesToken(this.name, this.property);
+            return new StructAccesToken(this.name, this.property);
         }
 	}
 }

@@ -1,6 +1,6 @@
 package language;
 
-import language.tokens.StrcutAccesToken;
+import language.tokens.StructAccesToken;
 import language.tokens.SymbolToken;
 import language.tokens.BlockToken;
 import language.tokens.ArrayModelToken;
@@ -176,13 +176,13 @@ class Parser {
 
 		var rule = ~/^([A-Za-z_][A-Za-z0-9_]*)\.([A-Za-z_][A-Za-z0-9_]*)$/;
 		if (rule.match(content)) {
-			return new StrcutAccesToken(rule.matched(1), rule.matched(2));
+			return new StructAccesToken(rule.matched(1), rule.matched(2));
 		}
 
 
 		var rule = new EReg("^([A-Za-z_][A-Za-z0-9_]*)\\.([!%&*+/<=>?^|\\-~§£µ¤]+)$", "");
 		if (rule.match(content)) {
-			return new StrcutAccesToken(rule.matched(1), rule.matched(2));
+			return new StructAccesToken(rule.matched(1), rule.matched(2));
 		}
 
 		var rule = ~/^-?[0-9]+(.[0-9]*)?$/;
