@@ -36,6 +36,14 @@ abstract class Value {
 			return -1;
 		}
 
+		if (this.value > otherValue.value) {
+			return 1;
+		}
+
+		if (this.value < otherValue.value) {
+			return -1;
+		}
+
 		return 0;
 	}
 
