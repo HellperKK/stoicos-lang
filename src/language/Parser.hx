@@ -156,6 +156,10 @@ class Parser {
 			return new BlockToken(parse(content.substr(1, content.length - 2)));
 		}
 
+		if (~/^:\(/.match(content)) {
+			return new BlockToken([new CallToken(parse(content.substr(2, content.length - 3)))]);
+		}
+
 		if (~/^:[A-Za-z_][A-Za-z0-9_]*$/.match(content)) {
 			return new SymbolToken(content.substr(1));
 		}
@@ -178,7 +182,6 @@ class Parser {
 		if (rule.match(content)) {
 			return new StructAccesToken(rule.matched(1), rule.matched(2));
 		}
-
 
 		var rule = new EReg("^([A-Za-z_][A-Za-z0-9_]*)\\.([!%&*+/<=>?^|\\-~§£µ¤]+)$", "");
 		if (rule.match(content)) {
