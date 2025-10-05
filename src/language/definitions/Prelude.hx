@@ -20,6 +20,7 @@ class Prelude {
 		manager.setVar("false", new BooleanToken(false));
 
 		manager.setVar("String", StringModule.load());
+		manager.setVar("Array", ArrayModule.load());
 
 		manager.setVar("import", new FunctionToken((values) -> {
 			var name = values[0].request("symbol");
