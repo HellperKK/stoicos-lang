@@ -62,23 +62,7 @@ class Prelude {
 			var params = values[0].request("array").map(value -> value.request("symbol"));
 			var blocks:Array<BaseToken> = values[1].request("block");
 
-			var fun = new FunctionToken((values:Array<Value>) -> {
-				var manager = VarManager.get();
-
-				var capturedBlock = new BlockToken(blocks.map(tok -> tok.capture()));
-
-				manager.addStack();
-
-				for (i in 0...params.length) {
-					manager.setVar(params[i], values[i]);
-				}
-
-				var result = capturedBlock.eval();
-
-				manager.delStack();
-
-				return result;
-			}, params.length);
+			var fun = new FunctionToken(FunctionToken.customFunction(params, blocks), params.length);
 
 			return fun;
 		}, 2));
@@ -115,23 +99,7 @@ class Prelude {
 
 			manager.setVar(name, fun);
 
-			fun.value = ((values:Array<Value>) -> {
-				var manager = VarManager.get();
-
-				var capturedBlock = new BlockToken(blocks.map(tok -> tok.capture()));
-
-				manager.addStack();
-
-				for (i in 0...params.length) {
-					manager.setVar(params[i], values[i]);
-				}
-
-				var result = capturedBlock.eval();
-
-				manager.delStack();
-
-				return result;
-			});
+			fun.value = FunctionToken.customFunction(params, blocks);
 
 			fun.arity = params.length;
 
