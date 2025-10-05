@@ -1,5 +1,6 @@
 package language;
 
+import language.tokens.SuspendedApplicationToken;
 import language.tokens.StructAccesToken;
 import language.tokens.SymbolToken;
 import language.tokens.BlockToken;
@@ -162,6 +163,15 @@ class Parser {
 
 		if (~/^:\(/.match(content)) {
 			return new BlockToken([new CallToken(parse(content.substr(2, content.length - 3)))]);
+		}
+
+		if (~/^#[A-Za-z_][A-Za-z0-9_]*/.match(content)) {
+			return new SuspendedApplicationToken(toToken(content.substr(1)));
+		}
+
+		var rule = new EReg("^#[!%&*+/<=>?^|-~§£µ¤]+", "");
+		if (rule.match(content)) {
+			return new SuspendedApplicationToken(toToken(content.substr(1)));
 		}
 
 		if (~/^:[A-Za-z_][A-Za-z0-9_]*$/.match(content)) {
