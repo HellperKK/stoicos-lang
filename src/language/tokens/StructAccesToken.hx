@@ -16,7 +16,8 @@ class StructAccesToken implements BaseToken {
 	public function getValue():Value {
 		var manager = VarManager.get();
         if (manager.hasVar(this.name)) {
-            var value = manager.getVar(name).request("struct").get(this.property);
+            var struct: Map<String, Value> = manager.getVar(name).request("struct");
+            var value = struct.get(this.property);
 
             if (value == null) {
                 throw 'Property ${this.property} not found in ${this.name}';
@@ -34,7 +35,9 @@ class StructAccesToken implements BaseToken {
 
 	public function capture() {
         try {
-            return new StructAccesToken(this.name, this.property, VarManager.get().getVarRec(this.name));
+		    var manager = VarManager.get();
+            var struct: Map<String, Value> = manager.getVarRec(name).request("struct");
+            return new StructAccesToken(this.name, this.property, struct.get(this.property));
         }
         catch(e:Dynamic) {
             return new StructAccesToken(this.name, this.property);
