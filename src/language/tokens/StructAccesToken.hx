@@ -30,7 +30,7 @@ class StructAccesToken implements BaseToken {
             return this.captured;
         }
         
-		throw 'Value ${this.name} not found';
+		throw 'Value ${this.name}.${this.property} not found';
 	}
 
 	public function capture() {
