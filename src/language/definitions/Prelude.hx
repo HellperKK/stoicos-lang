@@ -144,8 +144,9 @@ class Prelude {
 
 			var manager = VarManager.get();
 
-			for (i in 0...names.length) {
-				manager.setVar(names[i], elements[i] != null ? elements[i] : VarManager.unit);
+			for (pair in names.keyValueIterator()) {
+				var i = pair.key;
+				manager.setVar(pair.value, elements[i] ?? VarManager.unit);
 			}
 
 			return VarManager.unit;
