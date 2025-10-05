@@ -10,15 +10,16 @@ import language.tokens.VariableToken;
 import language.tokens.CallToken;
 import language.tokens.StringToken;
 
+using StringTools;
+
 class Parser {
 	public static function parse(code:String):Array<BaseToken> {
 		var tokens:Array<String> = [];
 		var i = 0;
 
 		while (i < code.length) {
-			var rule = ~/\s+/m;
-			if (rule.matchSub(code, i) && rule.matchedPos().pos == i) {
-				i += rule.matched(0).length;
+			if (code.isSpace(i)) {
+				i ++;
 				continue;
 			}
 
@@ -57,7 +58,7 @@ class Parser {
 			i++;
 		}
 
-		return i - 1;
+		return i;
 	}
 
 	private static function parseString(code:String, i:Int) {
@@ -109,7 +110,7 @@ class Parser {
 	}
 
 	private static function parseElement(code:String, i:Int) {
-		while (code.charAt(i) != " " && i < code.length) {
+		while (!code.isSpace(i) && i < code.length) {
 			var char = code.charAt(i);
 			if (char == ";") {
 				break;
@@ -121,14 +122,17 @@ class Parser {
 
 			if (char == "(") {
 				i = parseBlock(code, i + 1, "(", ")");
+				continue;
 			}
 
 			if (char == "{") {
 				i = parseBlock(code, i + 1, "{", "}");
+				continue;
 			}
 
 			if (char == "[") {
 				i = parseBlock(code, i + 1, "[", "]");
+				continue;
 			}
 
 			i++;
