@@ -3,3 +3,6 @@
 (println (String.lowercase str))
 (println (String.capitalize str))
 (println (String.title str))
+(println (String.replace "qu" "k" str))
+(println (String.replace_all "qu" "k" str))
+(println (String.format "My name is {0} and I'm {1} years old" ["Paul" 42]))
