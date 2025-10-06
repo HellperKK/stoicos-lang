@@ -9,6 +9,7 @@ class MathModule {
 		var module = new Map<String, Value>();
 
 		module.set("PI", new NumberToken(Math.PI));
+		module.set("E", new NumberToken(Math.exp(1)));
 
 		module.set("abs", new FunctionToken((values) -> {
 			var num = values[0].request("number");
