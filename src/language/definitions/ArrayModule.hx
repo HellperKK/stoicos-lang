@@ -158,7 +158,7 @@ class ArrayModule {
 			
 			return new ArrayToken(newArr);
 		}, 2));
-		module.set("filter", new FunctionToken((values) -> {
+		module.set("for_each", new FunctionToken((values) -> {
 			var fun = values[0];
 			var arr:Array<Value> = values[1].request("array");
 
