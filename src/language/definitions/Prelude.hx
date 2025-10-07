@@ -1,5 +1,6 @@
 package language.definitions;
 
+import language.definitions.gameModule.GameModule;
 import language.tokens.StructToken;
 import language.tokens.StringToken;
 import language.tokens.BaseToken;
@@ -31,6 +32,7 @@ class Prelude {
 				case "Struct": manager.setVar(name, StructModule.load());
 				case "Server": manager.setVar(name, ServerModule.load());
 				case "File": manager.setVar(name, FileModule.load());
+				case "Game": manager.setVar(name, GameModule.load());
 			}
 
 			return VarManager.unit;

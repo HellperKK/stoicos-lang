@@ -1,0 +1,12 @@
+(import :Game)
+(import :Struct)
+
+(def :settings (Struct.make [
+  [:width 640]
+  [:height 480]
+  [:initial_state 0]
+  [:update (fun [:state] {(% (+ state 1) (+ 640 32))})]
+  [:draw (fun [:state] {[(Game.sprite (- state 32) 32 "./square.png")]})]
+]))
+
+(Game.start settings)
