@@ -1,5 +1,0 @@
-(import :Server)
-(Server.start [
-    ["/" (fun [] {"Hello world!"})]
-    ["/paul" (fun [] {"Hello Paul!"})]
-])
