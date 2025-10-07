@@ -30,6 +30,7 @@ class Prelude {
 				case "Loop": manager.setVar(name, LoopModule.load());
 				case "Struct": manager.setVar(name, StructModule.load());
 				case "Server": manager.setVar(name, ServerModule.load());
+				case "File": manager.setVar(name, FileModule.load());
 			}
 
 			return VarManager.unit;
