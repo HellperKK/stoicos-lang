@@ -7,7 +7,7 @@ import language.tokens.FunctionToken;
 using Lambda;
 
 class GameModule {
-	public static var moduleKeys = ["initial_state", "update", "draw", "width", "height"];
+	public static var moduleKeys = ["initial_state", "update", "draw", "width", "height", "title"];
 
 	public static function load() {
 		var module = new Map<String, Value>();

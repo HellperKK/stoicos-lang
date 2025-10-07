@@ -18,7 +18,8 @@ class Window extends Application {
 		#if native
 		createWindow({
 			width: Math.floor(module.get("width").request("number")),
-			height: Math.floor(module.get("height").request("number"))
+			height: Math.floor(module.get("height").request("number")),
+            title: module.get("title").request("string")
 		});
 		#elseif html5
 		createWindow({width: 550, height: 400, element: js.Browser.document.getElementById("content")});
