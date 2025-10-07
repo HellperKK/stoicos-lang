@@ -3,3 +3,5 @@
 --class-path src
 --library mcli
 --library hx_webserver
+--library openfl
+--library lime

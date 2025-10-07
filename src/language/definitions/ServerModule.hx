@@ -41,13 +41,13 @@ class ServerModule {
 		}, 2));
 
 		module.set("response", new FunctionToken((values) -> {
-			var content:String = values[0].request("string");
-			var type:String = values[0].request("string");
+			var content = values[0];
+			var type = values[1];
 
 			var struct = new Map<String, Value>();
 
-			struct.set("content", new StringToken(content));
-			struct.set("type", new StringToken(type));
+			struct.set("content", content);
+			struct.set("type", type);
 
 			return new StructToken(struct);
 		}, 2));
