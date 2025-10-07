@@ -2,3 +2,4 @@
 --main Main
 --class-path src
 --library mcli
+--library hx_webserver
