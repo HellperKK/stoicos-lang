@@ -16,6 +16,7 @@ class Window extends Application {
 	private var module:Map<String, Value>;
 	private var state:Value;
 	private var inputs:Array<Map<String, Bool>>;
+	private var sprites:Map<String, BitmapData>;
 
 	public function new(module:Map<String, Value>) {
 		super();
@@ -23,6 +24,7 @@ class Window extends Application {
 		this.module = module;
 		this.state = module.get("initial_state");
 		this.inputs = [new Map<String, Bool>(), new Map<String, Bool>()];
+		this.sprites = new Map<String, BitmapData>();
 
 		#if native
 		createWindow({
@@ -79,7 +81,19 @@ class Window extends Application {
 		for (drawing in drawings) {
 			var drawStruct:Map<String, Value> = drawing.request("struct");
 
-			var bitmap = new Bitmap(BitmapData.fromFile(drawStruct.get("name").request("string")));
+			var path:String = drawStruct.get("name").request("string");
+
+			var bitmapData:BitmapData;
+
+			if (this.sprites.exists(path)) {
+				bitmapData = this.sprites.get(path);
+			}
+			else {
+				bitmapData = BitmapData.fromFile(path);
+				this.sprites.set(path, bitmapData);
+			}
+
+			var bitmap = new Bitmap(bitmapData);
 			bitmap.x = drawStruct.get("x").request("number");
 			bitmap.y = drawStruct.get("y").request("number");
 			window.stage.addChild(bitmap);
