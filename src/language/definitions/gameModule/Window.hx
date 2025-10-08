@@ -1,5 +1,6 @@
 package language.definitions.gameModule;
 
+import language.tokens.FunctionToken;
 import language.tokens.BooleanToken;
 import language.tokens.StructToken;
 import language.tokens.NumberToken;
@@ -31,9 +32,12 @@ class Window extends Application {
 		});
 
 		window.stage.addEventListener(KeyboardEvent.KEY_DOWN, (listener) -> {
-			trace(listener.keyCode);
 			var name = keynameFromKeycode(listener.keyCode);
-			trace(name);
+			inputs[0].set(name, true);
+		});
+		window.stage.addEventListener(KeyboardEvent.KEY_UP, (listener) -> {
+			var name = keynameFromKeycode(listener.keyCode);
+			inputs[0].set(name, false);
 		});
 
 		window.stage.addEventListener(MouseEvent.MOUSE_DOWN, (listener) -> {
@@ -93,6 +97,10 @@ class Window extends Application {
 			case 13: "enter";
 			case 8: "backspace";
 			case 9: "tab";
+			case 37: "left";
+			case 38: "up";
+			case 39: "right";
+			case 40: "down";
 			case 112: "F1";
 			case 113: "F2";
 			case 114: "F3";
@@ -127,6 +135,22 @@ class Window extends Application {
 
 			module.set(key, new StructToken(keyModule));
 		}
+
+		module.set("get_input", new FunctionToken(values -> {
+			var name = values[0].request("symbol");
+			var pression = values[1].request("symbol");
+
+			var inputModule = new Map<String, Value>();
+
+			var pressed = inputs[0].get(name) ?? false;
+			var previousPressed = inputs[1].get(name) ?? false;
+
+			return switch (pression) {
+				case "pressed": new BooleanToken(pressed);
+				case "just_pressed": new BooleanToken(pressed && ! previousPressed);
+				default: throw 'unsupported pression ${pression}';
+			}
+		}, 1));
 
 		return new StructToken(module);
 	}
