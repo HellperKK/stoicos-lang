@@ -28,6 +28,7 @@ class Prelude {
 
 			switch (name) {
 				case "Math": manager.setVar(name, MathModule.load());
+				case "Random": manager.setVar(name, RandomModule.load());
 				case "Loop": manager.setVar(name, LoopModule.load());
 				case "Struct": manager.setVar(name, StructModule.load());
 				case "Server": manager.setVar(name, ServerModule.load());
