@@ -5,3 +5,4 @@
 --library hx_webserver
 --library openfl
 --library lime
+--dce full
