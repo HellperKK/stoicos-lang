@@ -1,0 +1,31 @@
+(import :Game)
+(import :Struct)
+
+(def :default_mouse (Struct.make [
+  [:pressed false]
+]))
+
+(def :settings (Struct.make [
+  [:title "My first game"]
+  [:width 640]
+  [:height 480]
+  [:initial_state [100 100]]
+  [:update (fun [:state :inputs] {
+    (bind [:x :y] state)
+    (def :x (if (inputs.get_input :left :pressed) {(- x 1)} {x}))
+    (def :x (if (inputs.get_input :right :pressed) {(+ x 1)} {x}))
+    (def :y (if (inputs.get_input :up :pressed) {(- y 1)} {y}))
+    (def :y (if (inputs.get_input :down :pressed) {(+ y 1)} {y}))
+    [x y]
+  })]
+  [:draw (fun [:state] {
+    (def :file_name "./square.png")
+    (bind [:x :y] state)
+    [
+      (Game.sprite x y file_name)
+      (Game.sprite (- x 640) y file_name)
+    ]
+  })]
+]))
+
+(Game.start settings)

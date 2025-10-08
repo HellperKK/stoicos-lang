@@ -1,0 +1,16 @@
+; Tells if x is a divisor of y
+(deffun :is_divisor [:x :y] {
+  (== 0 (% y x))
+})
+
+(deffun :is_perfect [:num] {
+  (|> num [
+    (#Array.make_range 1)
+    (#Array.filter (fun [:x] {(is_divisor x num)}))
+    (#Array.fold_left + 0)
+    (#== num)
+  ])
+})
+
+(println (is_perfect 6)) ; true
+(println (is_perfect 12)) ; false

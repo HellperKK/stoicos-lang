@@ -1,5 +1,5 @@
 (import :Loop)
 
-(deffun :make_shouter [:phrase] {(fun [] :(println phrase))})
-(def :shout_hello (make_shouter "HELLO"))
+(deffun :make_shouter [:phrase] {(fun [] :(println (String.uppercase phrase)))})
+(def :shout_hello (make_shouter "hello"))
 (Loop.times_fun 5 shout_hello)

@@ -4,3 +4,4 @@
 (def :point (Point2D.make 42 27))
 (println point.x)
 (println point.y)
+(println (Point2D.is point))

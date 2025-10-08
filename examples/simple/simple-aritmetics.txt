@@ -1,0 +1,4 @@
+(import :Math)
+
+(println (+ 14 (* 7 4)))
+(println (Math.pow 5 2))

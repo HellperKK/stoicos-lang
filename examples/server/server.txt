@@ -1,0 +1,13 @@
+(import :Server)
+(import :File)
+
+(def :mimes Server.mimes)
+
+(Server.start [
+    ["/" (fun [] {
+        (Server.response (File.get_content "./examples/server/index.html") mimes.html)
+    })]
+    ["/paul" (fun [] {
+        (Server.response "Hello Paul!" mimes.text)
+    })]
+])

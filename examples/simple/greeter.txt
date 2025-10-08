@@ -1,0 +1,7 @@
+(deffun :greet [:name] {
+    (print "Hello ")
+    (print name)
+    (println "!")
+})
+
+(greet "world")
