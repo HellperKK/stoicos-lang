@@ -1,0 +1,20 @@
+(import :Game)
+(import :Struct)
+(import :Random)
+
+(def :Point2D (Struct.build [:x :y]))
+
+(def :settings (Struct.make [
+  [:title "My first game"]
+  [:width 640]
+  [:height 480]
+  [:initial_state (Array.make 1000 (Point2D.make 320 240))]
+  [:update (fun [:state :_inputs] {
+    (Array.map (fun [:point] {(Point2D.make (+ point.x (Random.range -1 1)) (+ point.y (Random.range -1 1)))}) state)
+  })]
+  [:draw (fun [:state] {
+    (Array.map (fun [:point] {(Game.sprite point.x point.y "./fly.png")}) state)
+  })]
+]))
+
+(Game.start settings)
