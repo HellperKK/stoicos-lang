@@ -1,10 +1,6 @@
 (import :Game)
 (import :Struct)
 
-(def :default_mouse (Struct.make [
-  [:pressed false]
-]))
-
 (def :settings (Struct.make [
   [:title "My first game"]
   [:width 640]
