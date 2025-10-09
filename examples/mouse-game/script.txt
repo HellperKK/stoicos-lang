@@ -22,7 +22,6 @@
   ])
   })]
   [:draw (fun [:state] {
-
     (def :file_name (if state.clicked "./square-red.png" "./square.png"))
     [
       (Game.sprite state.x state.y file_name)
