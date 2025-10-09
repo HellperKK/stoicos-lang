@@ -70,9 +70,6 @@ class Window extends Application {
 	}
 
 	public override function render(context:RenderContext) {
-		inputs.unshift(inputs[0].copy());
-		inputs.pop();
-
 		state = module.get("update").call([state, getInputs()]);
 
 		var drawings:Array<Value> = module.get("draw").call([state]).request("array");
@@ -98,6 +95,9 @@ class Window extends Application {
 			bitmap.y = drawStruct.get("y").request("number");
 			window.stage.addChild(bitmap);
 		}
+		
+		inputs.unshift(inputs[0].copy());
+		inputs.pop();
 	}
 
 	public static function main(module:Map<String, Value>) {
