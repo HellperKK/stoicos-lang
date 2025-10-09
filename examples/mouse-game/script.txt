@@ -15,11 +15,10 @@
   ])]
   [:update (fun [:state :inputs] {
     (def :mouse inputs.mouse)
-    (def :click (Struct.get_or :mouse_left default_mouse inputs))
     (Struct.make [
       [:x mouse.x]
       [:y mouse.y]
-      [:clicked click.pressed]
+      [:clicked (inputs.get_input :mouse_left :pressed)]
   ])
   })]
   [:draw (fun [:state] {
