@@ -95,7 +95,7 @@ class Window extends Application {
 			bitmap.y = drawStruct.get("y").request("number");
 			window.stage.addChild(bitmap);
 		}
-		
+
 		inputs.unshift(inputs[0].copy());
 		inputs.pop();
 	}
@@ -150,20 +150,20 @@ class Window extends Application {
 			module.set(key, new StructToken(keyModule));
 		}
 
-		module.set("get_input", new FunctionToken(values -> {
+		module.set("pressed", new FunctionToken(values -> {
 			var name = values[0].request("symbol");
-			var pression = values[1].request("symbol");
 
-			var inputModule = new Map<String, Value>();
+			var pressed = inputs[0].get(name) ?? false;
+
+			return new BooleanToken(pressed);
+		}, 1));
+		module.set("just_pressed", new FunctionToken(values -> {
+			var name = values[0].request("symbol");
 
 			var pressed = inputs[0].get(name) ?? false;
 			var previousPressed = inputs[1].get(name) ?? false;
 
-			return switch (pression) {
-				case "pressed": new BooleanToken(pressed);
-				case "just_pressed": new BooleanToken(pressed && ! previousPressed);
-				default: throw 'unsupported pression ${pression}';
-			}
+			return new BooleanToken(pressed && ! previousPressed);
 		}, 1));
 
 		return new StructToken(module);

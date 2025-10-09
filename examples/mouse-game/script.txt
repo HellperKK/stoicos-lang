@@ -14,7 +14,7 @@
     (Struct.make [
       [:x mouse.x]
       [:y mouse.y]
-      [:clicked (inputs.get_input :mouse_left :pressed)]
+      [:clicked (inputs.pressed :mouse_left)]
   ])
   })]
   [:draw (fun [:state] {
