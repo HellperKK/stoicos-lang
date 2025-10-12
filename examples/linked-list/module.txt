@@ -1,0 +1,47 @@
+(import :Struct)
+
+(def :empty unit)
+
+(deffun :cons [:value :next] {(Struct.make [
+    [:value value]
+    [:next next]
+])})
+
+(deffun :from_array [:arr] {
+    (Array.fold_right (fun [:memo :value] {(cons value memo)}) empty arr)
+})
+
+(deffun :fold_left [:f :default :list] {
+    (deffun :fold [:acc :l] {
+        (if (== l unit) 
+            {acc} 
+            {(fold (f acc l.value) l.next)}
+        )
+    })
+    (fold default list)
+})
+
+
+(deffun :fold_right [:f :default :list] {
+    (deffun :fold [:acc :l] {
+        (if (== l unit) 
+            {acc} 
+            {(f (fold acc l.next) l.value)}
+        )
+    })
+    (fold default list)
+})
+
+(deffun :map [:f :list] {
+    (fold_right (fun [:memo :value] {
+        (cons (f value) memo)
+    }) empty list)
+})
+
+(deffun :to_array [:list] {
+    (fold_left (fun [:memo :value] {(Array.push value memo)}) Array.empty list)
+})
+
+(deffun :print [:list] {
+    (fold_right (fun [:_memo :value] {(println value)}) unit list)
+})
