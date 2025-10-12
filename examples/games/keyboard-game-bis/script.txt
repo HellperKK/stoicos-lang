@@ -1,0 +1,36 @@
+(import :Game)
+(import :Struct)
+(import :Math)
+
+(def :title "My first game")
+(def :width 640)
+(def :height 480)
+(def :initial_state [100 100])
+
+(fn :update [:state :inputs] {
+  (bind [:x :y] state)
+  (def :x (if (inputs.pressed :left) {(- x 1)} {x}))
+  (def :x (if (inputs.pressed :right) {(+ x 1)} {x}))
+  (def :y (if (inputs.pressed :up) {(- y 1)} {y}))
+  (def :y (if (inputs.pressed :down) {(+ y 1)} {y}))
+  [(Math.clamp x 0 (- width 32)) (Math.clamp y 0 (- height 32))]
+})
+
+(fn :draw [:state] {
+  (bind [:x :y] state)
+  [
+    (Game.sprite x y "./square.png")
+    (Game.sprite (- x 640) y "./square.png")
+  ]
+})
+
+(def :settings (Struct.make [
+  [:title title]
+  [:width width]
+  [:height height]
+  [:initial_state initial_state]
+  [:update update]
+  [:draw draw]
+]))
+
+(Game.start settings)
