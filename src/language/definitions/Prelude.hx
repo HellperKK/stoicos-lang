@@ -1,5 +1,6 @@
 package language.definitions;
 
+import sys.io.File;
 import language.definitions.gameModule.GameModule;
 import language.tokens.StructToken;
 import language.tokens.StringToken;
@@ -39,6 +40,34 @@ class Prelude {
 			return VarManager.unit;
 		}, 1));
 
+		manager.setVar("require", new FunctionToken((values) -> {
+			var fileName = values[0].request("string");
+
+			var code = File.getContent(fileName);
+			var tokens = Parser.parse(code);
+
+			for (token in tokens) {
+				token.getValue();
+			}
+
+			return VarManager.unit;
+		}, 1));
+		manager.setVar("require_module", new FunctionToken((values) -> {
+			var fileName = values[0].request("string");
+			var manager = VarManager.get();
+
+			var code = File.getContent(fileName);
+			var tokens = Parser.parse(code).map(token -> token.capture());
+
+			manager.addStack();
+			
+			for (token in tokens) {
+				token.getValue();
+			}
+
+			return new StructToken(manager.delStack());
+		}, 1));
+
 		manager.setVar("if", new FunctionToken((values) -> {
 			var condition = values[0].request("boolean");
 			var ifTrue = values[1];
@@ -74,7 +103,7 @@ class Prelude {
 			return fun;
 		}, 2));
 		manager.setVar("enum", new FunctionToken((values) -> {
-			var names: Array<String> = values[0].request("array").map(value -> value.request("symbol"));
+			var names:Array<String> = values[0].request("array").map(value -> value.request("symbol"));
 
 			var enumMap = new Map<String, Value>();
 
@@ -239,7 +268,6 @@ class Prelude {
 			var str:String = values[0].request("string");
 			return new StringToken(str);
 		}, 1));
-
 
 		manager.setVar("|>", new FunctionToken((values) -> {
 			var initalValue = values[0];
