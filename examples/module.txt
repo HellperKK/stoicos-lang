@@ -1,0 +1,15 @@
+(import :Struct)
+
+(def :module (Struct.module {
+    (def :x 37)
+    (def :y 42)
+
+    (deffun :print [] {
+        (println x)
+        (println y)
+    })
+}))
+
+(println module.x)
+(println module.y)
+(module.print)
