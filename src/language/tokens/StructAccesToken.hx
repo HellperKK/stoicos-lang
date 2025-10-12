@@ -40,7 +40,7 @@ class StructAccesToken implements BaseToken {
             return new StructAccesToken(this.name, this.property, struct.get(this.property));
         }
         catch(e:Dynamic) {
-            return new StructAccesToken(this.name, this.property);
+            return new StructAccesToken(this.name, this.property, this.captured);
         }
 	}
 }

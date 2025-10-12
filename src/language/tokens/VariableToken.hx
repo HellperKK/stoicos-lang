@@ -13,6 +13,7 @@ class VariableToken implements BaseToken {
 
     public function getValue():Value {
         var manager = VarManager.get();
+
         if (manager.hasVar(this.name)) {
             return manager.getVar(name);
         }
@@ -29,7 +30,7 @@ class VariableToken implements BaseToken {
             return new VariableToken(this.name, VarManager.get().getVarRec(this.name));
         }
         catch(e:Dynamic) {
-            return new VariableToken(this.name);
+            return new VariableToken(this.name, this.captured);
         }
     }
 }
