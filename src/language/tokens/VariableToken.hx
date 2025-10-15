@@ -26,6 +26,10 @@ class VariableToken implements BaseToken {
     }
 
     public function capture() {
+        if (this.captured != null) {
+            return new VariableToken(this.name, this.captured);
+        }
+
         try {
             return new VariableToken(this.name, VarManager.get().getVarRec(this.name));
         }

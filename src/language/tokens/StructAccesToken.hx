@@ -34,6 +34,10 @@ class StructAccesToken implements BaseToken {
 	}
 
 	public function capture() {
+        if (this.captured != null) {
+            return new StructAccesToken(this.name, this.property, this.captured);
+        }
+
         try {
 		    var manager = VarManager.get();
             var struct: Map<String, Value> = manager.getVarRec(name).request("struct");
