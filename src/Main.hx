@@ -21,6 +21,10 @@ class Main extends mcli.CommandLine {
         }
 	}
 
+	public function version() {
+		Sys.println("Stoicos version 1.1.0");
+	}
+
 	public static function main()
 	{
 		new mcli.Dispatch(Sys.args()).dispatch(new Main());
