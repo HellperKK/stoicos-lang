@@ -32,4 +32,8 @@ class FunctionToken extends Value {
 	public override function call(args:Array<Value>):Value {
 		return this.value(args);
 	}
+
+	public function hash():String {
+		return 'function';
+	}
 }

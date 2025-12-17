@@ -12,4 +12,8 @@ class NumberToken implements BaseToken extends Value {
     public function capture() {
         return new NumberToken(this.value);
     }
+
+    public function hash():String {
+        return 'number(${this.value})';
+    }
 }

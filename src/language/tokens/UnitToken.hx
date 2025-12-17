@@ -12,4 +12,8 @@ class UnitToken extends Value {
 
         return super.request(type);
     }
+
+    public function hash():String {
+        return "unit";
+    }
 }

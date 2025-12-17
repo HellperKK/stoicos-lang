@@ -1,8 +1,9 @@
 package language;
 
+import utils.Hashable;
 using StringTools;
 
-abstract class Value {
+abstract class Value implements Hashable {
 	private var type:String;
 	public var value:Dynamic;
 

@@ -12,4 +12,9 @@ class ArrayToken extends Value {
 
         return super.request(type);
     }
+
+    public function hash():String {
+        var hashes = this.value.map(val -> val.hash());
+        return 'array([${hashes.join(",")}])';
+    }
 }

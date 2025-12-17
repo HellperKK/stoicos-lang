@@ -13,4 +13,8 @@ class StringToken implements BaseToken extends Value {
     public function capture() {
         return new StringToken(this.value);
     }
+
+    public function hash():String {
+        return 'string(${this.value})';
+    }
 }
