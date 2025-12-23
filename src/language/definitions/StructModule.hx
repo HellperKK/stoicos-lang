@@ -16,7 +16,7 @@ class StructModule {
 	public static function load() {
 		var module = new Map<String, Value>();
 
-		module.set("empty", new ArrayToken([]));
+		module.set("empty", new StructToken(new Map<String, Value>()));
 
 		module.set("make", new FunctionToken((values) -> {
 			var pairs:Array<Value> = values[0].request("array");

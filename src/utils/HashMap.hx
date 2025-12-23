@@ -46,4 +46,12 @@ class HashMap<K: Hashable, V> {
     public function keyValueIterator():Iterator<{ key: K, value: V }> {
         return this.hashEntries.map(e -> { key: e.key, value: e.value }).iterator();
     }
+
+    public function copy():HashMap<K, V> {
+        var newMap = new HashMap<K, V>();
+        for (entry in this.hashEntries) {
+            newMap.set(entry.key, entry.value);
+        }
+        return newMap;
+    }
 }

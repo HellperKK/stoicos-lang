@@ -5,7 +5,6 @@ import language.definitions.gameModule.GameModule;
 import language.tokens.StructToken;
 import language.tokens.StringToken;
 import language.tokens.BaseToken;
-import language.tokens.BlockToken;
 import language.tokens.BooleanToken;
 import language.tokens.NumberToken;
 import language.tokens.FunctionToken;
@@ -29,6 +28,7 @@ class Prelude {
 
 			switch (name) {
 				case "Math": manager.setVar(name, MathModule.load());
+				case "Map": manager.setVar(name, MapModule.load());
 				case "Random": manager.setVar(name, RandomModule.load());
 				case "Loop": manager.setVar(name, LoopModule.load());
 				case "Struct": manager.setVar(name, StructModule.load());

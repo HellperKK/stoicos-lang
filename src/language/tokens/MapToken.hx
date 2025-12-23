@@ -27,7 +27,7 @@ class MapToken extends Value {
             else if (aStr > bStr) return 1;
             else return 0;
         });
-        var hashes = [for (key in sortedKeys) '${key}:${map.get(key).hash()}'];
+        var hashes = [for (key in sortedKeys) '${key.hash()}:${map.get(key).hash()}'];
         return 'map({${hashes.join(",")}})';
     }
 }
