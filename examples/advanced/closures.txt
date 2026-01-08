@@ -1,0 +1,13 @@
+(fn :test [] {
+    (def :x 5)
+    (fun [] {
+        (fun [] {
+            (Array.for_each (fun [:x] {(println x)}) (Array.make_range 0 x))
+        })
+    })
+})
+
+(def :printer (test))
+((printer))
+(def :x 10)
+((printer))
