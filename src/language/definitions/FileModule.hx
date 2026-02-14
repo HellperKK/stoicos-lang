@@ -2,7 +2,6 @@ package language.definitions;
 
 import sys.io.File;
 import language.tokens.StringToken;
-import language.tokens.NumberToken;
 import language.managers.VarManager;
 import language.tokens.StructToken;
 import language.tokens.FunctionToken;
