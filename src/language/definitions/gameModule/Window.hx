@@ -1,5 +1,9 @@
 package language.definitions.gameModule;
 
+import openfl.text.TextFieldAutoSize;
+import openfl.text.TextField;
+import openfl.text.TextFormat;
+import openfl.text.TextFieldType;
 import language.tokens.FunctionToken;
 import language.tokens.BooleanToken;
 import language.tokens.StructToken;
@@ -17,6 +21,7 @@ class Window extends Application {
 	private var state:Value;
 	private var inputs:Array<Map<String, Bool>>;
 	private var sprites:Map<String, BitmapData>;
+	private var texts:Map<String, BitmapData>;
 
 	public function new(module:Map<String, Value>) {
 		super();
@@ -25,6 +30,7 @@ class Window extends Application {
 		this.state = module.get("initial_state");
 		this.inputs = [new Map<String, Bool>(), new Map<String, Bool>()];
 		this.sprites = new Map<String, BitmapData>();
+		this.texts = new Map<String, BitmapData>();
 
 		#if native
 		createWindow({
@@ -56,14 +62,12 @@ class Window extends Application {
 			inputs[0].set("mouse_middle", false);
 		});
 
-
 		window.stage.addEventListener(MouseEvent.RIGHT_MOUSE_UP, (listener) -> {
 			inputs[0].set("mouse_right", false);
 		});
 		window.stage.addEventListener(MouseEvent.RIGHT_MOUSE_DOWN, (listener) -> {
 			inputs[0].set("mouse_right", true);
 		});
-
 		#elseif html5
 		createWindow({width: 550, height: 400, element: js.Browser.document.getElementById("content")});
 		#end
@@ -77,23 +81,59 @@ class Window extends Application {
 		window.stage.removeChildren();
 		for (drawing in drawings) {
 			var drawStruct:Map<String, Value> = drawing.request("struct");
+			var type = drawStruct.get("type").request("string");
+			if (type == "sprite") {
+				var path:String = drawStruct.get("name").request("string");
 
-			var path:String = drawStruct.get("name").request("string");
+				var bitmapData:BitmapData;
 
-			var bitmapData:BitmapData;
+				if (this.sprites.exists(path)) {
+					bitmapData = this.sprites.get(path);
+				} else {
+					bitmapData = BitmapData.fromFile(path);
+					this.sprites.set(path, bitmapData);
+				}
 
-			if (this.sprites.exists(path)) {
-				bitmapData = this.sprites.get(path);
+				var bitmap = new Bitmap(bitmapData);
+				bitmap.x = drawStruct.get("x").request("number");
+				bitmap.y = drawStruct.get("y").request("number");
+				window.stage.addChild(bitmap);
+			} /* else if (type == "text") {
+				var textContent = drawStruct.get("content").request("string");
+				var x = drawStruct.get("x").request("number");
+				var y = drawStruct.get("y").request("number");
+
+				var bitmapData:BitmapData;
+
+				if (this.texts.exists(textContent)) {
+					bitmapData = this.texts.get(textContent);
+				} else {
+					// Render text to BitmapData instead of using TextField
+					var textField = new TextField();
+					textField.width = 500;
+					textField.height = 200;
+					textField.wordWrap = true;
+					textField.multiline = true;
+
+					var format = new TextFormat();
+					format.color = 0x000000;
+					format.size = 14;
+					textField.defaultTextFormat = format;
+					textField.text = "hello world";
+
+					bitmapData = new BitmapData(500, 200, true, 0xFFFFFF);
+					bitmapData.draw(textField);
+
+					this.texts.set(textContent, bitmapData);
+				}
+
+				var textBitmapDisplay = new Bitmap(bitmapData);
+				textBitmapDisplay.x = 100;
+				textBitmapDisplay.y = 100;
+				window.stage.addChild(textBitmapDisplay);
+			}  */else {
+				throw 'unsupported type ${type} to display on screen';
 			}
-			else {
-				bitmapData = BitmapData.fromFile(path);
-				this.sprites.set(path, bitmapData);
-			}
-
-			var bitmap = new Bitmap(bitmapData);
-			bitmap.x = drawStruct.get("x").request("number");
-			bitmap.y = drawStruct.get("y").request("number");
-			window.stage.addChild(bitmap);
 		}
 
 		inputs.unshift(inputs[0].copy());
