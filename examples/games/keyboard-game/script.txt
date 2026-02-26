@@ -1,10 +1,6 @@
 (import :Game)
 (import :Struct)
 
-(def :default_mouse (Struct.make [
-  [:pressed false]
-]))
-
 (def :settings (Struct.make [
   [:title "My first game"]
   [:width 640]
@@ -12,10 +8,10 @@
   [:initial_state [100 100]]
   [:update (fun [:state :inputs] {
     (bind [:x :y] state)
-    (def :x (if (inputs.get_input :left :pressed) {(- x 1)} {x}))
-    (def :x (if (inputs.get_input :right :pressed) {(+ x 1)} {x}))
-    (def :y (if (inputs.get_input :up :pressed) {(- y 1)} {y}))
-    (def :y (if (inputs.get_input :down :pressed) {(+ y 1)} {y}))
+    (def :x (if (inputs.pressed :left) {(- x 1)} {x}))
+    (def :x (if (inputs.pressed :right) {(+ x 1)} {x}))
+    (def :y (if (inputs.pressed :up) {(- y 1)} {y}))
+    (def :y (if (inputs.pressed :down) {(+ y 1)} {y}))
     [x y]
   })]
   [:draw (fun [:state] {

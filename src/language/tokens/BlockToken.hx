@@ -21,4 +21,8 @@ class BlockToken implements BaseToken extends Value {
     public function capture() {
         return new BlockToken(this.value.map(token -> token.capture()));
     }
+
+	public function hash():String {
+		return 'block';
+	}
 }

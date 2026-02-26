@@ -1,0 +1,6 @@
+(def :List (require_module "./module.txt"))
+
+(def :test (List.from_array [1 2 3 4 5 6]))
+
+(println (List.to_array test))
+(println (List.to_array (List.map (fun [:value] {(+ value 1)}) test)))

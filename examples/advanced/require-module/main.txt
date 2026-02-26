@@ -1,0 +1,2 @@
+(def :module (require_module "./deps.txt"))
+(println module.x)

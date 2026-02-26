@@ -1,5 +1,6 @@
 package language.definitions.gameModule;
 
+import language.tokens.StringToken;
 import language.managers.VarManager;
 import language.tokens.StructToken;
 import language.tokens.FunctionToken;
@@ -36,9 +37,24 @@ class GameModule {
 			module.set("x", x);
 			module.set("y", y);
 			module.set("name", name);
+			module.set("type", new StringToken("sprite"));
 
 			return new StructToken(module);
 		}, 2));
+		/* module.set("text", new FunctionToken((values) -> {
+			var x = values[0];
+			var y = values[1];
+			var content = values[2];
+
+			var module = new Map<String, Value>();
+
+			module.set("x", x);
+			module.set("y", y);
+			module.set("content", content);
+			module.set("type", new StringToken("text"));
+
+			return new StructToken(module);
+		}, 2)); */
 
 		return new StructToken(module);
 	}

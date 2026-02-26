@@ -12,4 +12,8 @@ class SymbolToken implements BaseToken extends Value {
     public function capture() {
         return new SymbolToken(this.value);
     }
+
+    public function hash():String {
+        return 'symbol(${this.value})';
+    }
 }

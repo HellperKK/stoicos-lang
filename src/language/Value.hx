@@ -1,8 +1,9 @@
 package language;
 
+import utils.Hashable;
 using StringTools;
 
-abstract class Value {
+abstract class Value implements Hashable {
 	private var type:String;
 	public var value:Dynamic;
 
@@ -21,7 +22,7 @@ abstract class Value {
 		}
 
 		if (type != this.type) {
-			throw 'type ${type} can\'t be converted into ${this.type}';
+			throw 'type ${this.type} can\'t be converted into ${type}';
 		}
 
 		return this.value;

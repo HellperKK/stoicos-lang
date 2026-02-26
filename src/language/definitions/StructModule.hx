@@ -1,5 +1,7 @@
 package language.definitions;
 
+import language.tokens.BlockToken;
+import language.tokens.BaseToken;
 import language.tokens.StringToken;
 import language.tokens.BooleanToken;
 import language.managers.VarManager;
@@ -14,7 +16,7 @@ class StructModule {
 	public static function load() {
 		var module = new Map<String, Value>();
 
-		module.set("empty", new ArrayToken([]));
+		module.set("empty", new StructToken(new Map<String, Value>()));
 
 		module.set("make", new FunctionToken((values) -> {
 			var pairs:Array<Value> = values[0].request("array");
@@ -27,6 +29,20 @@ class StructModule {
 			}
 
 			return new StructToken(struct);
+		}, 1));
+		module.set("module", new FunctionToken((values) -> {
+			var tokens:Array<BaseToken> = values[0].request("block");
+			var manager = VarManager.get();
+
+			var capturedBlock = new BlockToken(tokens.map(token -> token.capture()));
+
+			manager.addStack();
+
+			capturedBlock.eval();
+
+			var stack = manager.delStack();
+
+			return new StructToken(stack);
 		}, 1));
 		module.set("build", new FunctionToken((values) -> {
 			var values:Array<Value> = values[0].request("array");

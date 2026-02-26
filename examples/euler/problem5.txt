@@ -26,6 +26,7 @@
     (def :small (smallest_prime_factor x))
   })
   (def :acc (Array.push small acc))
+  acc
 })
 
 (deffun :count_numbers [:values] {
