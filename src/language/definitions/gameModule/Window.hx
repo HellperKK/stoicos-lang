@@ -185,7 +185,7 @@ class Window extends Application {
 			var previousPressed = inputs[1].get(key) ?? false;
 
 			keyModule.set("pressed", new BooleanToken(pressed));
-			keyModule.set("just_pressed", new BooleanToken(pressed && ! previousPressed));
+			keyModule.set("just_pressed", new BooleanToken(pressed && !previousPressed));
 
 			module.set(key, new StructToken(keyModule));
 		}
@@ -203,7 +203,7 @@ class Window extends Application {
 			var pressed = inputs[0].get(name) ?? false;
 			var previousPressed = inputs[1].get(name) ?? false;
 
-			return new BooleanToken(pressed && ! previousPressed);
+			return new BooleanToken(pressed && !previousPressed);
 		}, 1));
 
 		return new StructToken(module);
