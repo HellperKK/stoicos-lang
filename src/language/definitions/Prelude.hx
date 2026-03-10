@@ -1,5 +1,6 @@
 package language.definitions;
 
+import language.tokens.BlockToken;
 import sys.io.File;
 import language.definitions.gameModule.GameModule;
 import language.tokens.StructToken;
@@ -155,6 +156,40 @@ class Prelude {
 
 			return VarManager.unit;
 		}, 2));
+		manager.setVar("class", new FunctionToken((values) -> {
+			var name = values[0].request("symbol");
+			var body:Array<BaseToken> = values[1].request("block");
+
+			var manager = VarManager.get();
+			var capturedBlock = new BlockToken(body.map(token -> token.capture()));
+			manager.addStack();
+			capturedBlock.eval();
+			var stack = manager.delStack();
+
+			var classStruct = new Map<String, Value>();
+
+			for (pair in stack.keyValueIterator()) {
+				classStruct.set(pair.key, pair.value);
+			}
+
+			classStruct.set("new", new FunctionToken((values) -> {
+				var instanceStruct = new Map<String, Value>();
+				var instanceStructToken = new StructToken(instanceStruct);
+
+				for (pair in stack.keyValueIterator()) {
+					instanceStruct.set(pair.key, new FunctionToken(args -> {
+						args.unshift(instanceStructToken);
+						return pair.value.call(args);
+					}, -1));
+				}
+
+				return new StructToken(instanceStruct);
+			}, 0));
+
+			manager.setVar(name, new StructToken(classStruct));
+
+			return VarManager.unit;
+		}, 1));
 
 		manager.setVar("print", new FunctionToken((values) -> {
 			Sys.print(values[0].request("string"));

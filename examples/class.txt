@@ -1,0 +1,16 @@
+(import :Struct)
+
+(class :Dog {
+  (fn :talk [:self] {
+    (println "Woof!")
+  })
+  (fn :setName [:self :name] {
+    (Struct.set :name name self)
+  })
+})
+
+(def :dog (Dog.new))
+(dog.talk)
+(def :toby (dog.setName "Toby"))
+(println toby.name)
+(toby.talk)
