@@ -29,6 +29,14 @@ class FunctionToken extends Value {
 		this.arity = arity;
 	}
 
+		public override function request(type:String):Dynamic {
+		if (type == 'string') {
+			return "Function";
+		}
+
+		return super.request(type);
+	}
+
 	public override function call(args:Array<Value>):Value {
 		return this.value(args);
 	}
