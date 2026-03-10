@@ -138,6 +138,19 @@ class StructModule {
 			return new StructToken(newStruct);
 		}, 3));
 
+		module.set("merge", new FunctionToken((values) -> {
+			var struct1:Map<String, Value> = values[0].request("struct");
+			var struct2:Map<String, Value> = values[1].request("struct");
+
+			var newStruct = struct1.copy();
+
+			for (pair in struct2.keyValueIterator()) {
+				newStruct.set(pair.key, pair.value);
+			}
+
+			return new StructToken(newStruct);
+		}, 2));
+
 		return new StructToken(module);
 	}
 }
