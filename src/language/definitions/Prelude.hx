@@ -61,7 +61,7 @@ class Prelude {
 			var tokens = Parser.parse(code).map(token -> token.capture());
 
 			manager.addStack();
-			
+
 			for (token in tokens) {
 				token.getValue();
 			}
@@ -169,18 +169,26 @@ class Prelude {
 			var classStruct = new Map<String, Value>();
 
 			for (pair in stack.keyValueIterator()) {
+				if (pair.key == "new") {
+					continue;
+				}
 				classStruct.set(pair.key, pair.value);
 			}
 
 			classStruct.set("new", new FunctionToken((values) -> {
 				var instanceStruct = new Map<String, Value>();
-				var instanceStructToken = new StructToken(instanceStruct);
 
 				for (pair in stack.keyValueIterator()) {
-					instanceStruct.set(pair.key, new FunctionToken(args -> {
-						args.unshift(instanceStructToken);
-						return pair.value.call(args);
-					}, -1));
+					if (pair.key == "new") {
+						continue;
+					}
+					instanceStruct.set(pair.key, pair.value);
+				}
+
+				if (stack.exists("new")) {
+					var params = values.slice(0);
+					params.unshift(new StructToken(instanceStruct));
+					return stack.get("new").call(params);
 				}
 
 				return new StructToken(instanceStruct);

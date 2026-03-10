@@ -142,11 +142,17 @@ class StructModule {
 			var struct1:Map<String, Value> = values[0].request("struct");
 			var struct2:Map<String, Value> = values[1].request("struct");
 
+			trace(struct1);
+			trace(struct2);
+
 			var newStruct = struct1.copy();
 
 			for (pair in struct2.keyValueIterator()) {
 				newStruct.set(pair.key, pair.value);
 			}
+
+			trace(newStruct);
+			trace(new StructToken(newStruct).request("string"));
 
 			return new StructToken(newStruct);
 		}, 2));
