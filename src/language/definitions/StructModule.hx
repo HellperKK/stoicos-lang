@@ -99,21 +99,21 @@ class StructModule {
 			var struct:Map<String, Value> = values[1].request("struct");
 
 			return struct.get(name) ?? VarManager.unit;
-		}, 1));
+		}, 2));
 		module.set("get_or", new FunctionToken((values) -> {
 			var name:String = values[0].request("symbol");
 			var defaultValue = values[1];
 			var struct:Map<String, Value> = values[2].request("struct");
 
 			return struct.get(name) ?? defaultValue;
-		}, 1));
+		}, 3));
 		module.set("get_or_fun", new FunctionToken((values) -> {
 			var name:String = values[0].request("symbol");
 			var fun = values[1];
 			var struct:Map<String, Value> = values[2].request("struct");
 
 			return struct.get(name) ?? fun.call([]);
-		}, 1));
+		}, 3));
 
 		module.set("set", new FunctionToken((values) -> {
 			var name:String = values[0].request("symbol");
@@ -125,7 +125,7 @@ class StructModule {
 			newStruct.set(name, value);
 
 			return new StructToken(newStruct);
-		}, 1));
+		}, 3));
 		module.set("set_fun", new FunctionToken((values) -> {
 			var name:String = values[0].request("symbol");
 			var fun = values[1];
@@ -136,7 +136,7 @@ class StructModule {
 			newStruct.set(name, fun.call([newStruct.get(name) ?? VarManager.unit]));
 
 			return new StructToken(newStruct);
-		}, 1));
+		}, 3));
 
 		return new StructToken(module);
 	}
