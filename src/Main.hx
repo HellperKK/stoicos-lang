@@ -1,5 +1,6 @@
 package;
 
+import language.managers.PathManager;
 import language.definitions.Prelude;
 import language.Parser;
 import sys.io.File;
@@ -14,6 +15,7 @@ class Main extends mcli.CommandLine {
 	public function run(fileName:String)
 	{
         var code = File.getContent(fileName);
+		PathManager.get().addPath(fileName);
         var tokens = Parser.parse(code);
 		Prelude.load();
         for (token in tokens) {

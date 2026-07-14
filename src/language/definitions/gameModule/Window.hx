@@ -1,5 +1,6 @@
 package language.definitions.gameModule;
 
+import language.managers.PathManager;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextField;
 import openfl.text.TextFormat;
@@ -83,7 +84,7 @@ class Window extends Application {
 			var drawStruct:Map<String, Value> = drawing.request("struct");
 			var type = drawStruct.get("type").request("string");
 			if (type == "sprite") {
-				var path:String = drawStruct.get("name").request("string");
+				var path:String = PathManager.get().resolvePath(drawStruct.get("name").request("string"));
 
 				var bitmapData:BitmapData;
 

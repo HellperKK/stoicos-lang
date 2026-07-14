@@ -1,5 +1,6 @@
 package language.definitions;
 
+import language.managers.PathManager;
 import sys.io.File;
 import language.definitions.gameModule.GameModule;
 import language.tokens.StructToken;
@@ -54,18 +55,7 @@ class Prelude {
 		}, 1));
 		manager.setVar("require_module", new FunctionToken((values) -> {
 			var fileName = values[0].request("string");
-			var manager = VarManager.get();
-
-			var code = File.getContent(fileName);
-			var tokens = Parser.parse(code).map(token -> token.capture());
-
-			manager.addStack();
-			
-			for (token in tokens) {
-				token.getValue();
-			}
-
-			return new StructToken(manager.delStack());
+			return PathManager.get().resolveModule(fileName);
 		}, 1));
 
 		manager.setVar("if", new FunctionToken((values) -> {

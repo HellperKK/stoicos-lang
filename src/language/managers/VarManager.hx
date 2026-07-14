@@ -1,5 +1,6 @@
 package language.managers;
 
+import language.definitions.Prelude;
 import language.tokens.UnitToken;
 import language.tokens.BaseToken;
 
@@ -23,6 +24,7 @@ class VarManager {
 	}
 
 	private var dicts:Array<Map<String, Value>>;
+	private var saveDicts:Array<Map<String, Value>>;
 
 	private function new() {
 		this.dicts = [new Map<String, Value>()];
@@ -99,6 +101,17 @@ class VarManager {
 
 	public function getStack() {
 		return this.dicts[0];
+	}
+
+	public function prepareModule() {
+		this.saveDicts = this.dicts;
+		this.dicts = [new Map<String, Value>()];
+
+		Prelude.load();
+	}
+
+	public function restoreModule() {
+		this.dicts = this.saveDicts;
 	}
 	/*
 		public function getLocalNames() {
