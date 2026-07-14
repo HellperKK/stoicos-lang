@@ -42,7 +42,7 @@ class Prelude {
 		}, 1));
 
 		manager.setVar("require", new FunctionToken((values) -> {
-			var fileName = values[0].request("string");
+			var fileName = PathManager.get().resolvePath(values[0].request("string"));
 
 			var code = File.getContent(fileName);
 			var tokens = Parser.parse(code);
