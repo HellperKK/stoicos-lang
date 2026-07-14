@@ -5,7 +5,7 @@
 
 (Server.start [
     ["/" (fun [] {
-        (Server.response (File.get_content "./examples/server/index.html") mimes.html)
+        (Server.response (File.get_content "./index.html") mimes.html)
     })]
     ["/paul" (fun [] {
         (Server.response "Hello Paul!" mimes.text)
