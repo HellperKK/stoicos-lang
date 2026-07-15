@@ -2,11 +2,7 @@ package language.managers;
 
 import language.tokens.StructToken;
 import sys.io.File;
-import language.definitions.Prelude;
-import sys.FileSystem;
 import haxe.io.Path;
-import language.tokens.UnitToken;
-import language.tokens.BaseToken;
 
 using StringTools;
 
