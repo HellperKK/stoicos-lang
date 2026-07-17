@@ -32,7 +32,7 @@ class PathManager {
 	public function resolvePath(path:String):String {
 		if (path.startsWith("/")) {
 			var rootPath = paths[paths.length - 1];
-			return Path.join([Path.directory(rootPath), path]);
+			return Path.join([Sys.getCwd(), path]);
 		}
 
 		var relativePath = paths[0];
