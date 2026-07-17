@@ -50,8 +50,8 @@ class StructModule {
 			var struct = new Map<String, Value>();
 
 			struct.set("make", new FunctionToken(values -> {
-				var innerStruct: Map<String, Value> = new Map<String, Value>();
-				
+				var innerStruct:Map<String, Value> = new Map<String, Value>();
+
 				for (pair in names.keyValueIterator()) {
 					innerStruct.set(pair.value, values[pair.key]);
 				}
@@ -59,7 +59,7 @@ class StructModule {
 				return new StructToken(innerStruct);
 			}, names.length));
 			struct.set("is", new FunctionToken(values -> {
-				var innerStruct: Map<String, Value> = values[0].request("struct");
+				var innerStruct:Map<String, Value> = values[0].request("struct");
 
 				var isValid = names.foreach(name -> innerStruct.exists(name));
 
@@ -99,21 +99,21 @@ class StructModule {
 			var struct:Map<String, Value> = values[1].request("struct");
 
 			return struct.get(name) ?? VarManager.unit;
-		}, 1));
+		}, 2));
 		module.set("get_or", new FunctionToken((values) -> {
 			var name:String = values[0].request("symbol");
 			var defaultValue = values[1];
 			var struct:Map<String, Value> = values[2].request("struct");
 
 			return struct.get(name) ?? defaultValue;
-		}, 1));
+		}, 3));
 		module.set("get_or_fun", new FunctionToken((values) -> {
 			var name:String = values[0].request("symbol");
 			var fun = values[1];
 			var struct:Map<String, Value> = values[2].request("struct");
 
 			return struct.get(name) ?? fun.call([]);
-		}, 1));
+		}, 3));
 
 		module.set("set", new FunctionToken((values) -> {
 			var name:String = values[0].request("symbol");
@@ -125,7 +125,7 @@ class StructModule {
 			newStruct.set(name, value);
 
 			return new StructToken(newStruct);
-		}, 1));
+		}, 3));
 		module.set("set_fun", new FunctionToken((values) -> {
 			var name:String = values[0].request("symbol");
 			var fun = values[1];
@@ -136,7 +136,20 @@ class StructModule {
 			newStruct.set(name, fun.call([newStruct.get(name) ?? VarManager.unit]));
 
 			return new StructToken(newStruct);
-		}, 1));
+		}, 3));
+
+		module.set("merge", new FunctionToken((values) -> {
+			var struct1:Map<String, Value> = values[0].request("struct");
+			var struct2:Map<String, Value> = values[1].request("struct");
+
+			var newStruct = struct1.copy();
+
+			for (pair in struct2.keyValueIterator()) {
+				newStruct.set(pair.key, pair.value);
+			}
+
+			return new StructToken(newStruct);
+		}, 2));
 
 		return new StructToken(module);
 	}

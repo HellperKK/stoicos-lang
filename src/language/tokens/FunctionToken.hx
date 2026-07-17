@@ -3,7 +3,7 @@ package language.tokens;
 import language.managers.VarManager;
 
 class FunctionToken extends Value {
-	public static function customFunction(params: Array<String>, blocks: Array<BaseToken>) {
+	public static function customFunction(params:Array<String>, blocks:Array<BaseToken>) {
 		var capturedBlock = new BlockToken(blocks.map(tok -> tok.capture()));
 		return (values:Array<Value>) -> {
 			var manager = VarManager.get();
@@ -35,5 +35,13 @@ class FunctionToken extends Value {
 
 	public function hash():String {
 		return 'function';
+	}
+
+	public override function request(type:String):Dynamic {
+		if (type == 'string') {
+			return "Function";
+		}
+
+		return super.request(type);
 	}
 }
