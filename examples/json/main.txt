@@ -1,0 +1,6 @@
+(import :Json)
+(import :File)
+
+(def :text (File.get_content "./data.json"))
+(def :data (Json.parse text))
+(println data)

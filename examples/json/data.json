@@ -1,0 +1,20 @@
+{
+    "numbers" : [1, 2, 3, 4.5],
+    "string" : "hello world",
+    "bool": true,
+    "null": null,
+    "complex": [
+        {
+            "x": 42,
+            "y": 37
+        },
+        {
+            "x": 42,
+            "y": 37
+        },
+        {
+            "x": 42,
+            "y": 37
+        }
+    ]
+}

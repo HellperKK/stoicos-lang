@@ -37,6 +37,7 @@ class Prelude {
 				case "Server": manager.setVar(name, ServerModule.load());
 				case "File": manager.setVar(name, FileModule.load());
 				case "Game": manager.setVar(name, GameModule.load());
+				case "Json": manager.setVar(name, JsonModule.load());
 			}
 
 			return VarManager.unit;
