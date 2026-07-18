@@ -13,11 +13,8 @@
 })
 
 (deffun :is_perfect [:num] {
-  (|> num [
-    divisors
-    sum
-    (#== num)
-  ])
+  (def :value (sum (divisors num)))
+  (== value num)
 })
 
 (println (is_perfect 6)) ; true
