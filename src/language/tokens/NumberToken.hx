@@ -16,4 +16,8 @@ class NumberToken implements BaseToken extends Value {
     public function hash():String {
         return 'number(${this.value})';
     }
+
+    public override function toJsonValue(): Dynamic {
+        return this.value;
+	}
 }

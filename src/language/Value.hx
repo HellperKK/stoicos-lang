@@ -51,4 +51,12 @@ abstract class Value implements Hashable {
 	public function call(args:Array<Value>):Value {
 		throw 'can\'t call a non function type like ${this.type}';
 	}
+
+	public function toJsonValue(): Dynamic {
+		throw 'value ${this.value} should not be serialized !';
+	}
+
+	public function canBeSerialized() {
+		return true;
+	}
 }

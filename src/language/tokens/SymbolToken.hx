@@ -16,4 +16,8 @@ class SymbolToken implements BaseToken extends Value {
     public function hash():String {
         return 'symbol(${this.value})';
     }
+
+	public override function canBeSerialized():Bool {
+		return false;
+	}
 }

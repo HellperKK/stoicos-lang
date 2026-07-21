@@ -25,4 +25,8 @@ class BlockToken implements BaseToken extends Value {
 	public function hash():String {
 		return 'block';
 	}
+
+	public override function canBeSerialized():Bool {
+		return false;
+	}
 }

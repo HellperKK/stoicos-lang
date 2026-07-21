@@ -44,4 +44,8 @@ class FunctionToken extends Value {
 
 		return super.request(type);
 	}
+
+	public override function canBeSerialized():Bool {
+		return false;
+	}
 }

@@ -16,4 +16,8 @@ class UnitToken extends Value {
     public function hash():String {
         return "unit";
     }
+
+    public override function toJsonValue(): Dynamic {
+        return null;
+	}
 }

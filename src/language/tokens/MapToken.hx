@@ -30,4 +30,8 @@ class MapToken extends Value {
         var hashes = [for (key in sortedKeys) '${key.hash()}:${map.get(key).hash()}'];
         return 'map({${hashes.join(",")}})';
     }
+
+	public override function canBeSerialized():Bool {
+		return false;
+	}
 }

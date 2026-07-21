@@ -17,4 +17,8 @@ class StringToken implements BaseToken extends Value {
     public function hash():String {
         return 'string(${this.value})';
     }
+
+    public override function toJsonValue(): Dynamic {
+        return this.value;
+	}
 }

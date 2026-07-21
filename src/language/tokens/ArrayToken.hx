@@ -17,4 +17,9 @@ class ArrayToken extends Value {
         var hashes = this.value.map(val -> val.hash());
         return 'array([${hashes.join(",")}])';
     }
+
+    public override function toJsonValue(): Dynamic {
+        var values: Array<Value> = this.value;
+		return values.filter(value -> value.canBeSerialized()).map(value -> value.toJsonValue());
+	}
 }

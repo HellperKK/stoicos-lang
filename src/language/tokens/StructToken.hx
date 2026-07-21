@@ -26,4 +26,17 @@ class StructToken extends Value {
         var hashes = [for (key in sortedKeys) '${key}:${map.get(key).hash()}'];
         return 'struct({${hashes.join(",")}})';
     }
+
+    public override function toJsonValue(): Dynamic {
+        var obj = {};
+        var value:Map<String, Value> = this.value;
+        
+        for (pair in value.keyValueIterator()) {
+            if (pair.value.canBeSerialized()) {
+                Reflect.setField(obj, pair.key, pair.value.toJsonValue());
+            }
+        }
+
+        return obj;
+	}
 }
