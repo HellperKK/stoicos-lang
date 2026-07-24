@@ -1,0 +1,20 @@
+(import :File)
+
+(def :lines (String.split "\n" (File.get_content "./input-1.txt")))
+(def :results (Array.fold_left (fun [:memo :line] {
+    (bind [:code :acc] memo)
+    (def :number (|> line
+        [
+            (#String.replace_all "L" "-")
+            (#String.replace_all "R" "")
+            parse_int
+        ]
+    ))
+    (def :newCode (mod (+ code number) 100))
+    (if (== newCode 0)
+        {[newCode (+ acc 1)]}
+        {[newCode  acc]}
+    )
+}) [50 0] lines))
+
+(println results)
