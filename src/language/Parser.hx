@@ -147,7 +147,13 @@ class Parser {
 		var char = content.charAt(0);
 
 		if (char == "\"") {
-			return new StringToken(content.substr(1, content.length - 2));
+			var newContent = ~/\\(.)/.map(content.substr(1, content.length - 2), ereg -> switch (ereg.matched(1)) {
+				case "n": "\n";
+				case "t": "\t";
+				case "\\": "\\";
+				case x: throw 'unsupported escaped char ${x}';
+			});
+			return new StringToken(newContent);
 		}
 
 		if (char == "(") {
