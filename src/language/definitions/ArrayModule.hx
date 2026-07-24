@@ -237,7 +237,7 @@ class ArrayModule {
 			return new ArrayToken(arr.concat(arrBis));
 		}, 2));
 		module.set("length", new FunctionToken((values) -> {
-			var arr:Array<Value>= values[0].request("string");
+			var arr:Array<Value> = values[0].request("array");
 
 			return new NumberToken(arr.length);
 		}, 1));
