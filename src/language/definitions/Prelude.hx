@@ -238,6 +238,12 @@ class Prelude {
 			var numBis = values[1].request("number");
 			return new NumberToken(num % numBis);
 		}, 2));
+		manager.setVar("mod", new FunctionToken((values) -> {
+			var num = values[0].request("number");
+			var numBis = values[1].request("number");
+
+			return new NumberToken(((num % numBis) + numBis) % numBis);
+		}, 2));
 
 		manager.setVar("&&", new FunctionToken((values) -> {
 			var bool = values[0].request("boolean");
