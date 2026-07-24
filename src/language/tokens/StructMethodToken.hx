@@ -45,7 +45,6 @@ class StructMethodToken implements BaseToken {
         try {
 		    var manager = VarManager.get();
             var instanceValue: Value = manager.getVarRec(name);
-            trace(instanceValue);
             var struct: Map<String, Value> = instanceValue.request("struct");
             return new StructMethodToken(this.name, this.property, instanceValue, struct.get(this.property));
         }
