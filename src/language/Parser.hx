@@ -199,14 +199,16 @@ class Parser {
 			return new VariableToken(content);
 		}
 
-		var rule = ~/^([A-Za-z_][A-Za-z0-9_]*)\.([A-Za-z_][A-Za-z0-9_]*)$/;
-		if (rule.match(content)) {
-			return new StructAccesToken(rule.matched(1), rule.matched(2));
-		}
+		// var rule = ~/^[A-Za-z_][A-Za-z0-9_]*(\.)+$/;
+		// if (rule.match(content)) {
+		// 	var params = content.split(".");
+		// 	return new StructAccesToken(params.shift(), params);
+		// }
 
-		var rule = new EReg("^([A-Za-z_][A-Za-z0-9_]*)\\.([!%&*+/<=>?^|\\-~§£µ¤]+)$", "");
+		var rule = new EReg("^[A-Za-z_][A-Za-z0-9_]*(\\.([!%&*+/<=>?^|\\-~§£µ¤]+|[A-Za-z_][A-Za-z0-9_]*))+$", "");
 		if (rule.match(content)) {
-			return new StructAccesToken(rule.matched(1), rule.matched(2));
+			var params = content.split(".");
+			return new StructAccesToken(params.shift(), params);
 		}
 
 		var rule = ~/^([A-Za-z_][A-Za-z0-9_]*)#([A-Za-z_][A-Za-z0-9_]*)$/;
