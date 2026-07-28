@@ -1,7 +1,15 @@
 (import :Server)
 (import :File)
+(import :Struct)
+(import :Json)
 
 (def :mimes Server.mimes)
+
+(def :data (Struct.make [
+    [:name "Paul Dupont"]
+    [:age 42]
+    [:old false]
+]))
 
 (Server.start [
     ["/" (fun [] {
@@ -9,5 +17,8 @@
     })]
     ["/paul" (fun [] {
         (Server.response "Hello Paul!" mimes.text)
+    })]
+    ["/json" (fun [] {
+        (Server.response (Json.serialize data) mimes.json)
     })]
 ])
