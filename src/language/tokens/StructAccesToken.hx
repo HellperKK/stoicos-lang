@@ -24,6 +24,11 @@ class StructAccesToken implements BaseToken {
         return value;
     }
 
+    private function canDig() {
+		var manager = VarManager.get();
+        return manager.hasVar(this.name);
+    }
+
 	public function getValue():Value {
 		var manager = VarManager.get();
         if (manager.hasVar(this.name)) {
@@ -48,11 +53,10 @@ class StructAccesToken implements BaseToken {
             return new StructAccesToken(this.name, this.properties, this.captured);
         }
 
-        try {
+        else if (canDig()) {
             return new StructAccesToken(this.name, this.properties, this.dig());
         }
-        catch(e:Dynamic) {
-            return new StructAccesToken(this.name, this.properties, this.captured);
-        }
+        
+        return new StructAccesToken(this.name, this.properties, this.captured);
 	}
 }
