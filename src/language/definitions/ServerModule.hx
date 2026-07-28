@@ -60,6 +60,7 @@ class ServerModule {
 
 		module.set("text", new StringToken("text/plain"));
 		module.set("html", new StringToken("text/html"));
+		module.set("json", new StringToken("application/json"));
 
 		return new StructToken(module);
 	}
