@@ -22,7 +22,7 @@ class Main extends mcli.CommandLine {
 	}
 
 	public function version() {
-		Sys.println("Stoicos version 1.2.0");
+		Sys.println("Stoicos version 1.3.0");
 	}
 
 	public static function main() {
