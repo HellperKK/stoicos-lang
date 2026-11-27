@@ -1,5 +1,6 @@
 package;
 
+import haxe.io.Path;
 import language.managers.PathManager;
 import language.definitions.Prelude;
 import language.Parser;
@@ -19,6 +20,10 @@ class Main extends mcli.CommandLine {
 		for (token in tokens) {
 			token.getValue();
 		}
+	}
+
+	public function createDB(fileName: String) {
+		File.saveContent(Path.join([".", fileName + ".db"]), "");
 	}
 
 	public function version() {
