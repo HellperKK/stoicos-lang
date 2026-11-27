@@ -8,6 +8,6 @@
 (Connection.request "INSERT INTO user (username, password) VALUES ('PAUL', 'password'), ('John', 'password2'), ('World', 'password3')" Map.empty)
 
 (def :rows (Connection.request "SELECT rowid, username, password from user" Map.empty))
+(println rows)
 (def :paul (Array.get 2 rows))
 (println paul.password)
-(println rows)
